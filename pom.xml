@@ -21,6 +21,13 @@
 		<commons-math3.version>3.6.1</commons-math3.version>
 		<jafama.version>2.3.1</jafama.version>
 		<guava.version>27.1-jre</guava.version>
+
+
+
+		<nd4j.backend>nd4j-native-platform</nd4j.backend>
+		<!--<nd4j.backend>nd4j-cuda-9.2-platform</nd4j.backend> -->
+
+		<nd4j.version>1.0.0-beta3</nd4j.version>
 	</properties>
 
 	<description>JQuante is essentially a JAVA QM toolkit that was inspired by PyQuante.</description>
@@ -209,7 +216,11 @@
 			<artifactId>guava</artifactId>
 			<version>${guava.version}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.nd4j</groupId>
+			<artifactId>${nd4j.backend}</artifactId>
+			<version>${nd4j.version}</version>
+		</dependency>
 
 	</dependencies>
 </project>
