@@ -114,7 +114,48 @@ public final class HuzinagaTwoElectronTerm implements TwoElectronTerm {
 			double cAlpha, double dx, double dy, double dz, double dNorm, double dl, double dm, double dn,
 			double dAlpha) {
 
-		return 0.0;
+		double sum = 0.0;
+		int i;
+		int j;
+		int k;
+
+		double radiusABSquared = ((ax - bx) * (ax - bx) + (ay - by) * (ay - by) + (az - bz) * (az - bz));
+		double radiusCDSquared = ((cx - dx) * (cx - dx) + (cy - dy) * (cy - dy) + (cz - dz) * (cz - dz));
+
+		double[] p = IntegralsUtil.gaussianProductCenter(aAlpha, ax, ay, az, bAlpha, bx, by, bz);
+		double[] q = IntegralsUtil.gaussianProductCenter(cAlpha, cx, cy, cz, dAlpha, dx, dy, dz);
+
+		double radiusPQSquared = (p[0] - q[0]) * (p[0] - q[0]) + (p[1] - q[1]) * (p[1] - q[1])
+				+ (p[2] - q[2]) * (p[2] - q[2]);
+
+		double gamma1 = aAlpha + bAlpha;
+		double gamma2 = cAlpha + dAlpha;
+		double delta = 0.25 * (1 / gamma1 + 1 / gamma2);
+
+		double quartRadiusPQSquaredOverDelta = 0.25 * radiusPQSquared / delta;
+
+		INDArray bxx = constructBArray((int) al, (int) bl, (int) cl, (int) dl, p[0], ax, bx, q[0], cx, dx, gamma1,
+				gamma2, delta);
+
+		INDArray byy = constructBArray((int) am, (int) bm, (int) cm, (int) dm, p[1], ay, by, q[1], cy, dy, gamma1,
+				gamma2, delta);
+
+		INDArray bzz = constructBArray((int) an, (int) bn, (int) cn, (int) dn, p[2], az, bz, q[2], cz, dz, gamma1,
+				gamma2, delta);
+
+		for (i = 0; i < bxx.size(1); i++) {
+			for (j = 0; j < byy.size(1); j++) {
+				for (k = 0; k < bzz.size(1); k++) {
+					sum += bxx.getDouble(i) * byy.getDouble(j) * bzz.getDouble(k)
+							* IntegralsUtil.computeFGamma(i + j + k, quartRadiusPQSquaredOverDelta);
+				}
+			}
+		}
+
+		return (2 * FastMath.pow(Math.PI, 2.5) / (gamma1 * gamma2 * FastMath.sqrt(gamma1 + gamma2))
+				* FastMath.exp(-aAlpha * bAlpha * radiusABSquared / gamma1)
+				* FastMath.exp(-cAlpha * dAlpha * radiusCDSquared / gamma2) * sum * aNorm * bNorm * cNorm * dNorm);
+
 	}
 
 	/**

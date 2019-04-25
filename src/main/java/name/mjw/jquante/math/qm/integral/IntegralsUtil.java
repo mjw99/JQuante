@@ -36,6 +36,15 @@ public final class IntegralsUtil {
 				(alpha1 * a.getY() + alpha2 * b.getY()) / gamma, (alpha1 * a.getZ() + alpha2 * b.getZ()) / gamma);
 	}
 
+	public static double[] gaussianProductCenter(double alpha1, double ax, double ay, double az, double alpha2,
+			double bx, double by, double bz) {
+
+		final double gamma = alpha1 + alpha2;
+
+		return new double[] { (alpha1 * ax + alpha2 * bx) / gamma, (alpha1 * ay + alpha2 * by) / gamma,
+				(alpha1 * az + alpha2 * bz) / gamma };
+	}
+
 	/**
 	 * 
 	 * Index into the array using ⟨ij|kl⟩.

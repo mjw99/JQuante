@@ -1,6 +1,7 @@
 package name.mjw.jquante.math.qm.integral;
 
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
@@ -23,6 +24,12 @@ public class IntegralsUtilTest {
 
 		assertEquals(new Vector3D(0.5, 0.5, 0.5),
 				IntegralsUtil.gaussianProductCenter(1.0, new Vector3D(0, 0, 0), 1.0, new Vector3D(1, 1, 1)));
+	}
+
+	@Test
+	public void gaussianProductCenterTwoPrimitive() {
+
+		assertArrayEquals(new double[] { 0.5, 0.5, 0.5 }, IntegralsUtil.gaussianProductCenter(1.0, 0, 0, 0, 1.0, 1, 1, 1));
 	}
 
 	@Test
