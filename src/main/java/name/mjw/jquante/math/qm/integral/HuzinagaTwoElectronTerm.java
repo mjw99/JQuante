@@ -1,7 +1,5 @@
 package name.mjw.jquante.math.qm.integral;
 
-import java.util.ArrayList;
-
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.nd4j.linalg.api.ndarray.INDArray;
@@ -54,26 +52,26 @@ public final class HuzinagaTwoElectronTerm implements TwoElectronTerm {
 		INDArray aExps = Nd4j.create(a.getExponents());
 		INDArray aCoefs = Nd4j.create(a.getCoefficients());
 		INDArray aNorms = Nd4j.create(a.getPrimNorms());
-		Vector3D aOrigin = a.getOrigin();
-		Power aPower = a.getPowers();
+		INDArray aOrigin = Nd4j.create(a.getOrigin().toArray());
+		INDArray aPower = Nd4j.create(a.getPowers().toArray());
 
 		INDArray bExps = Nd4j.create(b.getExponents());
 		INDArray bCoefs = Nd4j.create(b.getCoefficients());
 		INDArray bNorms = Nd4j.create(b.getPrimNorms());
-		Vector3D bOrigin = b.getOrigin();
-		Power bPower = b.getPowers();
+		INDArray bOrigin = Nd4j.create(b.getOrigin().toArray());
+		INDArray bPower = Nd4j.create(b.getPowers().toArray());
 
 		INDArray cExps = Nd4j.create(c.getExponents());
 		INDArray cCoefs = Nd4j.create(c.getCoefficients());
 		INDArray cNorms = Nd4j.create(c.getPrimNorms());
-		Vector3D cOrigin = c.getOrigin();
-		Power cPower = c.getPowers();
+		INDArray cOrigin = Nd4j.create(c.getOrigin().toArray());
+		INDArray cPower = Nd4j.create(c.getPowers().toArray());
 
 		INDArray dExps = Nd4j.create(d.getExponents());
 		INDArray dCoefs = Nd4j.create(d.getCoefficients());
 		INDArray dNorms = Nd4j.create(d.getPrimNorms());
-		Vector3D dOrigin = d.getOrigin();
-		Power dPower = d.getPowers();
+		INDArray dOrigin = Nd4j.create(d.getOrigin().toArray());
+		INDArray dPower = Nd4j.create(d.getPowers().toArray());
 
 		for (i = 0; i < aExps.size(1); i++) {
 			iaCoef = aCoefs.getDouble(i);
@@ -91,9 +89,15 @@ public final class HuzinagaTwoElectronTerm implements TwoElectronTerm {
 					kcNorm = cNorms.getDouble(k);
 
 					for (l = 0; l < dExps.size(1); l++) {
-						repulsionTerm = coulombRepulsion(aOrigin, iaNorm, aPower, iaExp, bOrigin, jbNorm, bPower, jbExp,
-								cOrigin, kcNorm, cPower, kcExp, dOrigin, dNorms.getDouble(l), dPower,
-								dExps.getDouble(l));
+						repulsionTerm = coulombRepulsion(aOrigin.getDouble(0), aOrigin.getDouble(1),
+								aOrigin.getDouble(2), iaNorm, aPower.getDouble(0), aPower.getDouble(1),
+								aPower.getDouble(2), iaExp, bOrigin.getDouble(0), bOrigin.getDouble(1),
+								bOrigin.getDouble(2), jbNorm, bPower.getDouble(0), bPower.getDouble(1),
+								bPower.getDouble(2), jbExp, cOrigin.getDouble(0), cOrigin.getDouble(1),
+								cOrigin.getDouble(2), kcNorm, cPower.getDouble(0), cPower.getDouble(1),
+								cPower.getDouble(2), kcExp, dOrigin.getDouble(0), dOrigin.getDouble(1),
+								dOrigin.getDouble(2), dNorms.getDouble(l), dPower.getDouble(0), dPower.getDouble(1),
+								dPower.getDouble(2), dExps.getDouble(l));
 
 						jij += iaCoef * jbCoef * kcCoef * dCoefs.getDouble(l) * repulsionTerm;
 					}
@@ -102,6 +106,15 @@ public final class HuzinagaTwoElectronTerm implements TwoElectronTerm {
 		}
 
 		return (a.getNormalization() * b.getNormalization() * c.getNormalization() * d.getNormalization() * jij);
+	}
+
+	public final double coulombRepulsion(double ax, double ay, double az, double aNorm, double al, double am, double an,
+			double aAlpha, double bx, double by, double bz, double bNorm, double bl, double bm, double bn,
+			double bAlpha, double cx, double cy, double cz, double cNorm, double cl, double cm, double cn,
+			double cAlpha, double dx, double dy, double dz, double dNorm, double dl, double dm, double dn,
+			double dAlpha) {
+
+		return 0.0;
 	}
 
 	/**

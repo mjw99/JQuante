@@ -99,8 +99,8 @@ public class Power {
 	 *
 	 * @return powers
 	 */
-	public int[] toArray() {
-		return new int[] { l, m, n };
+	public double[] toArray() {
+		return new double[] { l, m, n };
 	}
 
 	/**
