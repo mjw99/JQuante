@@ -57,7 +57,7 @@ public class PowerTest {
 
 	@Test
 	public void testToArrayF() {
-		assertArrayEquals(new int[] { 0, 2, 1 }, f.toArray());
+		assertArrayEquals(new double[] { 0, 2, 1 }, f.toArray());
 
 	}
 
