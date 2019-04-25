@@ -95,6 +95,15 @@ public class Power {
 	}
 
 	/**
+	 * Get the power as a dimension 3 array.
+	 *
+	 * @return powers
+	 */
+	public int[] toArray() {
+		return new int[] { l, m, n };
+	}
+
+	/**
 	 * overloaded toString()
 	 */
 	@Override
