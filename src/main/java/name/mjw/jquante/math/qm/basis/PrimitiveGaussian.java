@@ -24,54 +24,61 @@ import net.jafama.FastMath;
  * @author mw529
  * @version 2.0 (Part of MeTA v2.0)
  */
-public class PrimitiveGaussian {
+public final class PrimitiveGaussian {
 
 	/**
 	 * Holds value of property exponent.
 	 */
-	private double exponent;
+	private final double exponent;
 
 	/**
 	 * Holds value of property origin.
 	 */
-	private Vector3D origin;
+	private final Vector3D origin;
 
 	/**
 	 * Holds value of property powers.
 	 */
-	private Power powers;
+	private final Power powers;
 
 	/**
 	 * Holds value of property coefficient.
 	 */
-	private double coefficient;
+	private final double coefficient;
 
 	/**
 	 * normalization factor
 	 */
-	private double normalization;
+	private final double normalization;
 
 	private static final double PI_RAISE_TO_1DOT5 = FastMath.pow(Math.PI, 1.5);
 
 	/**
 	 * Creates a new instance of PrimitiveGaussian
 	 * 
-	 * @param origin
-	 *            - the (x, y, z) on which this Gaussian is centered
-	 * @param powers
-	 *            - the powers of this Gaussian
-	 * @param exponent
-	 *            - the exponent for this PG
-	 * @param coefficient
-	 *            - the coefficient for this PG
+	 * @param origin      - the (x, y, z) on which this Gaussian is centered
+	 * @param powers      - the powers of this Gaussian
+	 * @param exponent    - the exponent for this PG
+	 * @param coefficient - the coefficient for this PG
 	 */
 	public PrimitiveGaussian(Vector3D origin, Power powers, double exponent, double coefficient) {
 		this.origin = origin;
 		this.powers = powers;
 		this.exponent = exponent;
 		this.coefficient = coefficient;
-		
-		normalize();
+
+		int l = powers.getL();
+		int m = powers.getM();
+		int n = powers.getN();
+
+		/**
+		 * Normalize this primitive Gaussian.
+		 * 
+		 * Equ 2.2 http://dx.doi.org/10.1143/JPSJ.21.2313 -
+		 */
+		normalization = FastMath.sqrt(Math.pow(2, 2 * (l + m + n) + 1.5) * FastMath.pow(exponent, l + m + n + 1.5)
+				/ MathUtil.factorial2(2 * l - 1) / MathUtil.factorial2(2 * m - 1) / MathUtil.factorial2(2 * n - 1)
+				/ PI_RAISE_TO_1DOT5);
 	}
 
 	/**
@@ -84,32 +91,12 @@ public class PrimitiveGaussian {
 	}
 
 	/**
-	 * Setter for property exponent.
-	 * 
-	 * @param exponent
-	 *            New value of property exponent.
-	 */
-	public void setExponent(double exponent) {
-		this.exponent = exponent;
-	}
-
-	/**
 	 * Getter for property origin.
 	 * 
 	 * @return Value of property origin.
 	 */
 	public Vector3D getOrigin() {
 		return this.origin;
-	}
-
-	/**
-	 * Setter for property origin.
-	 * 
-	 * @param origin
-	 *            New value of property origin.
-	 */
-	public void setOrigin(Vector3D origin) {
-		this.origin = origin;
 	}
 
 	/**
@@ -122,16 +109,6 @@ public class PrimitiveGaussian {
 	}
 
 	/**
-	 * Setter for property powers.
-	 * 
-	 * @param powers
-	 *            New value of property powers.
-	 */
-	public void setPowers(Power powers) {
-		this.powers = powers;
-	}
-
-	/**
 	 * Getter for property coefficient.
 	 * 
 	 * @return Value of property coefficient.
@@ -141,21 +118,10 @@ public class PrimitiveGaussian {
 	}
 
 	/**
-	 * Setter for property coefficient.
-	 * 
-	 * @param coefficient
-	 *            New value of property coefficient.
-	 */
-	public void setCoefficient(double coefficient) {
-		this.coefficient = coefficient;
-	}
-
-	/**
 	 * Gaussian product center. Return a new PG with product of this PG with a new
 	 * PG. The powers of the resulting PG is set to 0,0,0 and the coefficient to 0.0
 	 * 
-	 * @param pg
-	 *            the PG with which to multiply
+	 * @param pg the PG with which to multiply
 	 * @return the product of the PG
 	 */
 	public PrimitiveGaussian mul(PrimitiveGaussian pg) {
@@ -168,26 +134,10 @@ public class PrimitiveGaussian {
 	}
 
 	/**
-	 * Normalize this primitive Gaussian.
-	 * 
-	 * Equ 2.2 http://dx.doi.org/10.1143/JPSJ.21.2313
-	 */
-	public void normalize() {
-		int l = powers.getL();
-		int m = powers.getM();
-		int n = powers.getN();
-
-		normalization = FastMath.sqrt(Math.pow(2, 2 * (l + m + n) + 1.5) * FastMath.pow(exponent, l + m + n + 1.5)
-				/ MathUtil.factorial2(2 * l - 1) / MathUtil.factorial2(2 * m - 1) / MathUtil.factorial2(2 * n - 1)
-				/ PI_RAISE_TO_1DOT5);
-	}
-
-	/**
 	 * Overlap matrix element with another PrimitiveGaussian
 	 * 
-	 * @param pg
-	 *            the PrimitiveGaussian with which the overlap is to be be
-	 *            determined.
+	 * @param pg the PrimitiveGaussian with which the overlap is to be be
+	 *           determined.
 	 * @return the overlap value
 	 */
 	public double overlap(PrimitiveGaussian pg) {
@@ -198,8 +148,7 @@ public class PrimitiveGaussian {
 	/**
 	 * Kinetic Energy (KE) matrix element with another PrimitiveGaussian
 	 * 
-	 * @param pg
-	 *            the PrimitiveGaussian with which KE is to be determined.
+	 * @param pg the PrimitiveGaussian with which KE is to be determined.
 	 * @return the KE value
 	 */
 	public double kinetic(PrimitiveGaussian pg) {
@@ -210,11 +159,9 @@ public class PrimitiveGaussian {
 	/**
 	 * Nuclear matrix element with another PrimitiveGaussian
 	 * 
-	 * @param pg
-	 *            the PrimitiveGaussian with which nuclear interaction is to be
-	 *            determined.
-	 * @param center
-	 *            the center at which nuclear energy is to be computed
+	 * @param pg     the PrimitiveGaussian with which nuclear interaction is to be
+	 *               determined.
+	 * @param center the center at which nuclear energy is to be computed
 	 * @return the nuclear value
 	 */
 	public double nuclear(PrimitiveGaussian pg, Vector3D center) {
@@ -225,10 +172,8 @@ public class PrimitiveGaussian {
 	/**
 	 * Return the nuclear gradient of this PG w.r.t a center
 	 * 
-	 * @param pg
-	 *            the other PG
-	 * @param center
-	 *            the reference center
+	 * @param pg     the other PG
+	 * @param center the reference center
 	 * @return partial derivatives w.r.t the center
 	 */
 	public Vector3D nuclearAttractionGradient(PrimitiveGaussian pg, Vector3D center) {
@@ -242,8 +187,7 @@ public class PrimitiveGaussian {
 	/**
 	 * The amplitude of this primitive Gaussian at a given point.
 	 * 
-	 * @param point
-	 *            the reference point
+	 * @param point the reference point
 	 * @return the amplitude of this PG at the specified point
 	 */
 	public double amplitude(Vector3D point) {
@@ -263,8 +207,7 @@ public class PrimitiveGaussian {
 	/**
 	 * Calculate Laplacian at the specified point
 	 * 
-	 * @param point
-	 *            the point where Laplacian is to be computed
+	 * @param point the point where Laplacian is to be computed
 	 * @return the Laplacian at this point
 	 */
 	public double laplacian(Vector3D point) {
@@ -284,8 +227,7 @@ public class PrimitiveGaussian {
 	/**
 	 * Evaluate gradient of this function at a given point
 	 * 
-	 * @param point
-	 *            the point where gradient is to be evaluated
+	 * @param point the point where gradient is to be evaluated
 	 * @return partial derivatives with respect to x, y, z
 	 */
 	public Vector3D gradient(Vector3D point) {
@@ -323,16 +265,6 @@ public class PrimitiveGaussian {
 	 */
 	public double getNormalization() {
 		return this.normalization;
-	}
-
-	/**
-	 * Setter for property normalization.
-	 * 
-	 * @param normalization
-	 *            New value of property normalization.
-	 */
-	public void setNormalization(double normalization) {
-		this.normalization = normalization;
 	}
 
 	/**

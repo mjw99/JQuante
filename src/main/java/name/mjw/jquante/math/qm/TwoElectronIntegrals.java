@@ -255,7 +255,6 @@ public class TwoElectronIntegrals {
 		double coeff = iPG.getCoefficient() * jPG.getCoefficient() * kPG.getCoefficient() * lPG.getCoefficient();
 
 		PrimitiveGaussian xPG = new PrimitiveGaussian(currentOrigin, new Power(l + 1, m, n), currentAlpha, coeff);
-		xPG.normalize();
 
 		PrimitiveGaussian[] pgs = new PrimitiveGaussian[] { iPG, jPG, kPG, lPG, xPG };
 
@@ -266,25 +265,22 @@ public class TwoElectronIntegrals {
 		double termbz = 0.0;
 
 		if (l > 0) {
-			xPG.setPowers(new Power(l - 1, m, n));
-			xPG.normalize();
+			xPG = new PrimitiveGaussian(currentOrigin, new Power(xPG.getPowers().getL() - 1, xPG.getPowers().getM(), xPG.getPowers().getN()), coeff, currentAlpha);
 			termbx = -2.0 * l * FastMath.sqrt(currentAlpha / (2. * l - 1)) * coeff
 					* Integrals.coulomb(pgs[paramIdx[0]], pgs[paramIdx[1]], pgs[paramIdx[2]], pgs[paramIdx[3]]);
-		} // end if
+		}
 
 		if (m > 0) {
-			xPG.setPowers(new Power(l, m - 1, n));
-			xPG.normalize();
+			xPG = new PrimitiveGaussian(currentOrigin, new Power(xPG.getPowers().getL(), xPG.getPowers().getM() - 1, xPG.getPowers().getN()), coeff, currentAlpha);
 			termby = -2.0 * m * FastMath.sqrt(currentAlpha / (2. * m - 1)) * coeff
 					* Integrals.coulomb(pgs[paramIdx[0]], pgs[paramIdx[1]], pgs[paramIdx[2]], pgs[paramIdx[3]]);
-		} // end if
+		}
 
 		if (n > 0) {
-			xPG.setPowers(new Power(l, m, n - 1));
-			xPG.normalize();
+			xPG = new PrimitiveGaussian(currentOrigin, new Power(xPG.getPowers().getL(), xPG.getPowers().getM(), xPG.getPowers().getN() - 1), coeff, currentAlpha);
 			termbz = -2.0 * n * FastMath.sqrt(currentAlpha / (2. * n - 1)) * coeff
 					* Integrals.coulomb(pgs[paramIdx[0]], pgs[paramIdx[1]], pgs[paramIdx[2]], pgs[paramIdx[3]]);
-		} // end if
+		}
 
 		derEle = new Vector3D(derEle.getX() + terma + termbx, derEle.getY() + terma + termby,
 				derEle.getZ() + terma + termbz);
