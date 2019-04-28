@@ -668,6 +668,44 @@ public final class ContractedGaussian {
 		return true;
 	}
 
+	public double[] flattern() {
+
+		int preDynamicSize = 3 + 3 + 1;
+		int numberOfExp = this.getCoefficients().size();
+
+		double[] flatContractedGaussian = new double[preDynamicSize + numberOfExp + numberOfExp + numberOfExp];
+
+		flatContractedGaussian[0] = this.origin.getX();
+		flatContractedGaussian[1] = this.origin.getY();
+		flatContractedGaussian[2] = this.origin.getZ();
+
+		flatContractedGaussian[3] = this.powers.getL();
+		flatContractedGaussian[4] = this.powers.getM();
+		flatContractedGaussian[5] = this.powers.getN();
+
+		flatContractedGaussian[6] = numberOfExp;
+
+		int offset = preDynamicSize;
+
+		for (int i = 0; i < this.getCoefficients().size(); i++) {
+
+			flatContractedGaussian[i + offset] = this.getCoefficients().get(i);
+		}
+
+		offset = offset + numberOfExp;
+		for (int i = 0; i < this.getCoefficients().size(); i++) {
+
+			flatContractedGaussian[i + offset] = this.getExponents().get(i);
+		}
+
+		offset = offset + numberOfExp;
+		for (int i = 0; i < this.getCoefficients().size(); i++) {
+
+			flatContractedGaussian[i + offset] = this.getPrimNorms().get(i);
+		}
+
+		return flatContractedGaussian;
+	}
 	/**
 	 * overloaded toString()
 	 */
