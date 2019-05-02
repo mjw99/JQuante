@@ -73,22 +73,22 @@ public final class HuzinagaTwoElectronTerm implements TwoElectronTerm {
 		INDArray dOrigin = Nd4j.create(d.getOrigin().toArray());
 		INDArray dPower = Nd4j.create(d.getPowers().toArray());
 
-		for (i = 0; i < aExps.size(1); i++) {
+		for (i = 0; i < aExps.size(0); i++) {
 			iaCoef = aCoefs.getDouble(i);
 			iaExp = aExps.getDouble(i);
 			iaNorm = aNorms.getDouble(i);
 
-			for (j = 0; j < bExps.size(1); j++) {
+			for (j = 0; j < bExps.size(0); j++) {
 				jbCoef = bCoefs.getDouble(j);
 				jbExp = bExps.getDouble(j);
 				jbNorm = bNorms.getDouble(j);
 
-				for (k = 0; k < cExps.size(1); k++) {
+				for (k = 0; k < cExps.size(0); k++) {
 					kcCoef = cCoefs.getDouble(k);
 					kcExp = cExps.getDouble(k);
 					kcNorm = cNorms.getDouble(k);
 
-					for (l = 0; l < dExps.size(1); l++) {
+					for (l = 0; l < dExps.size(0); l++) {
 						repulsionTerm = coulombRepulsion(aOrigin.getDouble(0), aOrigin.getDouble(1),
 								aOrigin.getDouble(2), iaNorm, aPower.getDouble(0), aPower.getDouble(1),
 								aPower.getDouble(2), iaExp, bOrigin.getDouble(0), bOrigin.getDouble(1),
@@ -143,9 +143,9 @@ public final class HuzinagaTwoElectronTerm implements TwoElectronTerm {
 		INDArray bzz = constructBArray((int) an, (int) bn, (int) cn, (int) dn, p[2], az, bz, q[2], cz, dz, gamma1,
 				gamma2, delta);
 
-		for (i = 0; i < bxx.size(1); i++) {
-			for (j = 0; j < byy.size(1); j++) {
-				for (k = 0; k < bzz.size(1); k++) {
+		for (i = 0; i < bxx.size(0); i++) {
+			for (j = 0; j < byy.size(0); j++) {
+				for (k = 0; k < bzz.size(0); k++) {
 					sum += bxx.getDouble(i) * byy.getDouble(j) * bzz.getDouble(k)
 							* IntegralsUtil.computeFGamma(i + j + k, quartRadiusPQSquaredOverDelta);
 				}
@@ -194,9 +194,9 @@ public final class HuzinagaTwoElectronTerm implements TwoElectronTerm {
 		INDArray bz = constructBArray(aPower.getN(), bPower.getN(), cPower.getN(), dPower.getN(), p.getZ(), a.getZ(),
 				b.getZ(), q.getZ(), c.getZ(), d.getZ(), gamma1, gamma2, delta);
 
-		for (i = 0; i < bx.size(1); i++) {
-			for (j = 0; j < by.size(1); j++) {
-				for (k = 0; k < bz.size(1); k++) {
+		for (i = 0; i < bx.size(0); i++) {
+			for (j = 0; j < by.size(0); j++) {
+				for (k = 0; k < bz.size(0); k++) {
 					sum += bx.getDouble(i) * by.getDouble(j) * bz.getDouble(k)
 							* IntegralsUtil.computeFGamma(i + j + k, quartRadiusPQSquaredOverDelta);
 				}
