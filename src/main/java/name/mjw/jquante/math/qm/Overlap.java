@@ -12,6 +12,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import name.mjw.jquante.math.MathUtil;
+import name.mjw.jquante.math.qm.basis.BasisSetLibrary;
 import name.mjw.jquante.math.qm.basis.ContractedGaussian;
 import net.jafama.FastMath;
 
@@ -21,7 +22,7 @@ import net.jafama.FastMath;
  * @author V.Ganesh
  * @version 2.0 (Part of MeTA v2.0)
  */
-public class Overlap extends Array2DRowRealMatrix {
+public final class Overlap extends Array2DRowRealMatrix {
 
 	private static final Logger LOG = LogManager.getLogger(Overlap.class);
 

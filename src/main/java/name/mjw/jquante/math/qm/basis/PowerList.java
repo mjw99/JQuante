@@ -11,7 +11,7 @@ import java.util.Iterator;
  * @author V.Ganesh
  * @version 2.0 (Part of MeTA v2.0)
  */
-public class PowerList {
+public final class PowerList {
 
 	private static WeakReference<PowerList> _powerList = null;
 
@@ -21,7 +21,7 @@ public class PowerList {
 	private PowerList() {
 		// put in the standard powers for the orbital symbols
 
-		thePowerList = new HashMap<String, ArrayList<Power>>(6);
+		thePowerList = new HashMap<>(6);
 
 		// the S orbital
 		thePowerList.put("S", generatePowerList(0));

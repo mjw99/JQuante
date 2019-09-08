@@ -15,9 +15,8 @@ public class OneElectronTermTest {
 	OneElectronTerm oneElectronTerm = new OneElectronTerm();
 
 	@Test
-	public void kinetic() {
-		assertEquals(2.953052, oneElectronTerm.kinetic(1, new Power(0, 0, 0), new Vector3D(0, 0, 0), 1,
-				new Power(0, 0, 0), new Vector3D(0, 0, 0)), delta);
+	public void overlap1D() {
+		assertEquals(1.0, oneElectronTerm.overlap1D(0, 0, 0, 0, 1), delta);
 	}
 
 	@Test
@@ -27,8 +26,9 @@ public class OneElectronTermTest {
 	}
 
 	@Test
-	public void overlap1D() {
-		assertEquals(1.0, oneElectronTerm.overlap1D(0, 0, 0, 0, 1), delta);
+	public void kinetic() {
+		assertEquals(2.953052, oneElectronTerm.kinetic(1, new Power(0, 0, 0), new Vector3D(0, 0, 0), 1,
+				new Power(0, 0, 0), new Vector3D(0, 0, 0)), delta);
 	}
 
 }

@@ -28,7 +28,7 @@ import name.mjw.jquante.config.event.AtomInfoChangeListener;
  * @author V.Ganesh
  * @version 2.0 (Part of MeTA v2.0)
  */
-public class AtomInfo implements Configuration {
+public final class AtomInfo implements Configuration {
 
 	private static AtomInfo atomInfo;
 

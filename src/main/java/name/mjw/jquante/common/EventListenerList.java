@@ -16,7 +16,7 @@ public class EventListenerList<T> {
 
 	/** Creates a new instance of EventListenerList */
 	public EventListenerList() {
-		listenerList = new HashMap<Class<T>, ArrayList<T>>();
+		listenerList = new HashMap<>();
 	}
 
 	/**

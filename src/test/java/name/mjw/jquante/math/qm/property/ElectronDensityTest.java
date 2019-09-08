@@ -6,12 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import org.junit.jupiter.api.Test;
 
-import name.mjw.jquante.math.qm.BasisSetLibrary;
 import name.mjw.jquante.math.qm.OneElectronIntegrals;
 import name.mjw.jquante.math.qm.SCFMethod;
 import name.mjw.jquante.math.qm.SCFMethodFactory;
 import name.mjw.jquante.math.qm.SCFType;
 import name.mjw.jquante.math.qm.TwoElectronIntegrals;
+import name.mjw.jquante.math.qm.basis.BasisSetLibrary;
 import name.mjw.jquante.molecule.Atom;
 import name.mjw.jquante.molecule.Molecule;
 import name.mjw.jquante.molecule.impl.MoleculeImpl;
@@ -25,10 +25,10 @@ public class ElectronDensityTest {
 	@Test
 	public void test() throws Exception {
 		// Create a molecule of water
-		Atom O = new Atom("O", 6.0, new Vector3D(0.0000000, 0.000000, 0.119748));
-		Atom H1 = new Atom("H", 1.0, new Vector3D(0.00000000, 0.761561,
+		Atom O = new Atom("O", new Vector3D(0.0000000, 0.000000, 0.119748));
+		Atom H1 = new Atom("H", new Vector3D(0.00000000, 0.761561,
 				-0.478993));
-		Atom H2 = new Atom("H", 1.0, new Vector3D(0.00000000, -0.761561,
+		Atom H2 = new Atom("H", new Vector3D(0.00000000, -0.761561,
 				-0.478993));
 
 		Molecule water = new MoleculeImpl("water");

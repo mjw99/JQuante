@@ -9,7 +9,7 @@ import net.jafama.FastMath;
 /**
  * Point information on a Lebedev grid.
  */
-public class LebedevGridPoint {
+public final class LebedevGridPoint {
 
 	/** x coordinate of the point in the unit sphere. */
 	private final double x;

@@ -11,7 +11,7 @@ import name.mjw.jquante.math.MathUtil;
  * @author V.Ganesh
  * @version 2.0 (Part of MeTA v2.0)
  */
-public class Fock extends Array2DRowRealMatrix {
+public final class Fock extends Array2DRowRealMatrix {
 
 	private static final long serialVersionUID = 8771239880594969731L;
 

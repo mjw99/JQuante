@@ -11,7 +11,7 @@ import name.mjw.jquante.config.Parameter;
  * @author V.Ganesh
  * @version 2.0 (Part of MeTA v2.0)
  */
-public class ClassImplParameter implements Parameter {
+public final class ClassImplParameter implements Parameter {
 
 	private String implClass;
 

@@ -8,7 +8,7 @@ import java.util.EventObject;
  * @author V.Ganesh
  * @version 2.0 (Part of MeTA v2.0)
  */
-public class AtomInfoChangeEvent extends EventObject {
+public final class AtomInfoChangeEvent extends EventObject {
 
 	private static final long serialVersionUID = -5378842897630157145L;
 

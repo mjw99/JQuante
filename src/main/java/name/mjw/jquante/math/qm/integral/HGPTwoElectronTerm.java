@@ -99,7 +99,7 @@ public final class HGPTwoElectronTerm implements TwoElectronTerm {
 	 * 
 	 * @return Contribution to Horizontal Recurrence Relation.
 	 */
-	protected double contractedHrr(Vector3D a, Power aPower, ArrayList<Double> aCoeff, ArrayList<Double> aExps,
+	protected final double contractedHrr(Vector3D a, Power aPower, ArrayList<Double> aCoeff, ArrayList<Double> aExps,
 			ArrayList<Double> aNorms, Vector3D b, Power bPower, ArrayList<Double> bCoeff, ArrayList<Double> bExps,
 			ArrayList<Double> bNorms, Vector3D c, Power cPower, ArrayList<Double> cCoeff, ArrayList<Double> cExps,
 			ArrayList<Double> cNorms, Vector3D d, Power dPower, ArrayList<Double> dCoeff, ArrayList<Double> dExps,
@@ -212,7 +212,7 @@ public final class HGPTwoElectronTerm implements TwoElectronTerm {
 	 * 
 	 * @return Contribution to Vertical Recurrence Relation.
 	 */
-	protected double contractedVrr(Vector3D a, Power aPower, ArrayList<Double> aCoeff, ArrayList<Double> aExps,
+	protected final double contractedVrr(Vector3D a, Power aPower, ArrayList<Double> aCoeff, ArrayList<Double> aExps,
 			ArrayList<Double> aNorms, Vector3D b, ArrayList<Double> bCoeff, ArrayList<Double> bExps,
 			ArrayList<Double> bNorms, Vector3D c, Power cPower, ArrayList<Double> cCoeff, ArrayList<Double> cExps,
 			ArrayList<Double> cNorms, Vector3D d, ArrayList<Double> dCoeff, ArrayList<Double> dExps,
@@ -302,7 +302,7 @@ public final class HGPTwoElectronTerm implements TwoElectronTerm {
 	 *            auxiliary integral.
 	 * @return Contribution to Vertical Recurrence Relation.
 	 */
-	protected double vrrWrapper(Vector3D a, double aNorm, Power aPower, double aAlpha, Vector3D b, double bNorm,
+	protected final double vrrWrapper(Vector3D a, double aNorm, Power aPower, double aAlpha, Vector3D b, double bNorm,
 			double bAlpha, Vector3D c, double cNorm, Power cPower, double cAlpha, Vector3D d, double dNorm,
 			double dAlpha, int m) {
 
@@ -312,7 +312,7 @@ public final class HGPTwoElectronTerm implements TwoElectronTerm {
 	/**
 	 * VRR (Vertical Recurrence Relation)
 	 */
-	private double vrr(Vector3D a, double aNorm, Power aPower, double aAlpha, Vector3D b, double bNorm, double bAlpha,
+	private final double vrr(Vector3D a, double aNorm, Power aPower, double aAlpha, Vector3D b, double bNorm, double bAlpha,
 			Vector3D c, double cNorm, Power cPower, double cAlpha, Vector3D d, double dNorm, double dAlpha, int m) {
 		double val = 0.0;
 
@@ -466,7 +466,7 @@ public final class HGPTwoElectronTerm implements TwoElectronTerm {
 	/**
 	 * VRR (Vertical Recurrence Relation)
 	 */
-	private double vrrNonRecursive(Vector3D a, double aNorm, Power aPower, double aAlpha, Vector3D b, double bNorm,
+	private final double vrrNonRecursive(Vector3D a, double aNorm, Power aPower, double aAlpha, Vector3D b, double bNorm,
 			double bAlpha, Vector3D c, double cNorm, Power cPower, double cAlpha, Vector3D d, double dNorm,
 			double dAlpha, int m) {
 
@@ -649,7 +649,7 @@ public final class HGPTwoElectronTerm implements TwoElectronTerm {
 	}
 
 	/* Convert the 7-dimensional indices to a 1d iindex */
-	private int iindex(int la, int ma, int na, int lc, int mc, int nc, int m, int maxam) {
+	private final int iindex(int la, int ma, int na, int lc, int mc, int nc, int m, int maxam) {
 		return (la + ma * maxam + na * maxam * maxam + lc * maxam * maxam * maxam + nc * maxam * maxam * maxam * maxam
 				+ mc * maxam * maxam * maxam * maxam * maxam + m * maxam * maxam * maxam * maxam * maxam * maxam);
 	}

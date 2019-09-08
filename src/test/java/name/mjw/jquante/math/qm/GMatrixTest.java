@@ -7,6 +7,7 @@ import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import name.mjw.jquante.math.qm.basis.BasisSetLibrary;
 import name.mjw.jquante.molecule.Atom;
 import name.mjw.jquante.molecule.Molecule;
 import name.mjw.jquante.molecule.impl.MoleculeImpl;
@@ -21,8 +22,8 @@ public class GMatrixTest {
 	@BeforeAll
 	public static void setUp() {
 		// Create molecule
-		Atom H1 = new Atom("H", 1.0, new Vector3D(0.00000000, 0.00000000, 0.00000000));
-		Atom H2 = new Atom("H", 1.0, new Vector3D(0.74000000, 0.00000000, 0.00000000));
+		Atom H1 = new Atom("H", new Vector3D(0.00000000, 0.00000000, 0.00000000));
+		Atom H2 = new Atom("H", new Vector3D(0.74000000, 0.00000000, 0.00000000));
 
 		Molecule hydrogen = new MoleculeImpl("hydrogen");
 		hydrogen.addAtom(H1);

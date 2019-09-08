@@ -8,7 +8,7 @@ import java.util.HashMap;
  * @author V.Ganesh
  * @version 2.0 (Part of MeTA v2.0)
  */
-public class BasisSet {
+public final class BasisSet {
 
 	/**
 	 * Holds value of property name.
@@ -39,16 +39,6 @@ public class BasisSet {
 	 */
 	public String getName() {
 		return this.name;
-	}
-
-	/**
-	 * Setter for property name.
-	 * 
-	 * @param name
-	 *            New value of property name.
-	 */
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	/**

@@ -6,7 +6,7 @@ package name.mjw.jquante.math.qm.basis;
  * @author V.Ganesh
  * @version 2.0 (Part of MeTA v2.0)
  */
-public class BasisNotFoundException extends java.lang.RuntimeException {
+public final class BasisNotFoundException extends java.lang.RuntimeException {
 
 	/**
 	 * 

@@ -1,7 +1,5 @@
 package name.mjw.jquante.common;
 
-import java.awt.Color;
-
 import name.mjw.jquante.common.resource.StringResource;
 import name.mjw.jquante.config.GlobalConfiguration;
 import name.mjw.jquante.config.impl.DefaultConfiguration;

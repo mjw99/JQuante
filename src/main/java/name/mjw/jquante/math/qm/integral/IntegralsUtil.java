@@ -29,7 +29,7 @@ public final class IntegralsUtil {
 	 * 
 	 * @return centre of resulting two-centre product Gaussian
 	 */
-	public static Vector3D gaussianProductCenter(final double alpha1, final Vector3D a, final double alpha2,
+	public static final Vector3D gaussianProductCenter(final double alpha1, final Vector3D a, final double alpha2,
 			final Vector3D b) {
 		final double gamma = alpha1 + alpha2;
 		return new Vector3D((alpha1 * a.getX() + alpha2 * b.getX()) / gamma,
@@ -67,7 +67,7 @@ public final class IntegralsUtil {
 	 *            the index of Gaussian l
 	 * @return the index into the array
 	 */
-	public static int ijkl2intindex(int i, int j, int k, int l) {
+	public static final int ijkl2intindex(int i, int j, int k, int l) {
 		int temp;
 
 		if (i < j) {
@@ -102,7 +102,7 @@ public final class IntegralsUtil {
 	 *            The upper bound for the interval of integration
 	 * @return &Gamma;
 	 */
-	public static double computeFGamma(final int m, double x) {
+	public static final double computeFGamma(final int m, double x) {
 		final double SMALL = 0.00000001;
 
 		x = FastMath.max(FastMath.abs(x), SMALL);
@@ -121,7 +121,7 @@ public final class IntegralsUtil {
 	 *            The upper bound for the interval of integration
 	 * @return the incomplete gamma function P(a,x)
 	 */
-	public static double lowerIncompleteGamma(final double a, final double x) {
+	public static final double lowerIncompleteGamma(final double a, final double x) {
 		final double EPS = 3.0e-7;
 		final double FPMIN = 1.0e-30;
 		final int MAX_ITERATION = 100;
@@ -150,7 +150,7 @@ public final class IntegralsUtil {
 	 * @param gln
 	 * @return
 	 */
-	private static double continuedFractionMethod(final double a, final double x, final double EPS, final double FPMIN,
+	private static final double continuedFractionMethod(final double a, final double x, final double EPS, final double FPMIN,
 			final int MAX_ITERATION, final double gln) {
 
 		double b = (x + 1.0) - a;
@@ -199,7 +199,7 @@ public final class IntegralsUtil {
 	 * @param gln
 	 * @return
 	 */
-	private static double seriesMethod(final double a, final double x, final double EPS, final int MAX_ITERATION,
+	private static final double seriesMethod(final double a, final double x, final double EPS, final int MAX_ITERATION,
 			final double gln) {
 		if (x != 0.0) {
 			double ap = a;
@@ -227,7 +227,7 @@ public final class IntegralsUtil {
 	 *            Value
 	 * @return the complete Gamma(x) function
 	 */
-	public static double logGamma(final double x) {
+	public static final double logGamma(final double x) {
 		double y = x;
 		double tmp = x + 5.5;
 

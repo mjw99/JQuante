@@ -1,24 +1,18 @@
-package name.mjw.jquante.math.qm;
+package name.mjw.jquante.math.qm.basis;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Multimap;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Sets;
 
-import name.mjw.jquante.math.qm.basis.AtomicBasis;
-import name.mjw.jquante.math.qm.basis.BasisReader;
-import name.mjw.jquante.math.qm.basis.BasisSet;
-import name.mjw.jquante.math.qm.basis.ContractedGaussian;
-import name.mjw.jquante.math.qm.basis.Orbital;
-import name.mjw.jquante.math.qm.basis.Power;
-import name.mjw.jquante.math.qm.basis.PowerList;
 import name.mjw.jquante.molecule.Atom;
 import name.mjw.jquante.molecule.Molecule;
 import name.mjw.jquante.molecule.UserDefinedAtomProperty;
@@ -29,9 +23,9 @@ import name.mjw.jquante.molecule.event.MoleculeStateChangeListener;
  * Class to construct basis functions of a given molecule and a basis set
  * 
  * @author V.Ganesh
- * @version 2.0 (Part of MeTA v2.0)
+ * @author mw529
  */
-public class BasisSetLibrary {
+public final class BasisSetLibrary {
 
 	private static final Logger LOG = LogManager.getLogger(BasisSetLibrary.class);
 
@@ -46,9 +40,9 @@ public class BasisSetLibrary {
 	 * A shell is a set of basis functions sharing common orbital exponents and a
 	 * common center, for example, sp shell or a d shell.
 	 */
-	private Multimap<Integer, ContractedGaussian> shells;
+	private ArrayList<Shell> shells;
 
-	private Multimap<ContractedGaussian, ContractedGaussian> shellPairs;
+	private List<List<Shell>> uniqueShellPairs;
 
 	private Molecule molecule;
 
@@ -72,7 +66,8 @@ public class BasisSetLibrary {
 		initShellList();
 
 		// Shell Pair list
-		initShellPairList();
+		initUniqueShellPairList();
+
 
 		molStateChangeListener = new MoleculeStateChangeListener() {
 			@Override
@@ -121,13 +116,12 @@ public class BasisSetLibrary {
 	 *
 	 * @return A shell Multimap for the current molecule and basis.
 	 */
-	public Multimap<Integer, ContractedGaussian> getShells() {
+	public List<Shell> getShells() {
 		return shells;
 	}
 
-
-	public Multimap<ContractedGaussian, ContractedGaussian> getShellPairs() {
-		return shellPairs;
+	public List<List<Shell>> getUniqueShellPairs() {
+		return uniqueShellPairs;
 	}
 
 	/**
@@ -167,10 +161,10 @@ public class BasisSetLibrary {
 
 					while (coeff.hasNext()) { // build the CG from PGs
 						cg.addPrimitive(exp.next().doubleValue(), coeff.next().doubleValue());
-					} // end while
+					}
 
 					cg.normalize();
-					cg.setIndex(basisFunctions.size()); // send an index
+					cg.setBasisFunctionIndex(basisFunctions.size()); // set an index
 					basisFunctions.add(cg); // add this CG to list
 					atomicFunctions.add(cg); // add the reference to atom list
 				}
@@ -186,6 +180,7 @@ public class BasisSetLibrary {
 			}
 		}
 
+		Collections.sort(basisFunctions);
 		return this.basisFunctions;
 	}
 
@@ -193,55 +188,114 @@ public class BasisSetLibrary {
 	 * Initialise the shell list
 	 */
 	private void initShellList() {
-		shells = ArrayListMultimap.create();
+		shells = new ArrayList<>();
 
 		// First entry always goes in.
-		shells.put(0, basisFunctions.get(0));
+		Shell shell = new Shell(basisFunctions.get(0));
+		shell.setFirstBasisFunctionIndex(0);
+		shells.add(shell);
+
 
 		for (int i = 1; i < basisFunctions.size(); i++) {
+			ContractedGaussian contractedGaussian = basisFunctions.get(i);
 
-			Boolean addToExistingShell = false;
-			Integer existingShellIndex = 0;
+			Shell tmpShell = new Shell(contractedGaussian);
+			tmpShell.setFirstBasisFunctionIndex(i);
+			tmpShell.setLastBasisFunctionIndex(i);
 
-			// Look to see if the basisfunction is already present in the known shells
-			Iterator<Integer> keyIterator = shells.keys().iterator();
-
-			while (keyIterator.hasNext()) {
-				Integer key = keyIterator.next();
-				Collection<ContractedGaussian> shellCgs = shells.get(key);
-
-				for (ContractedGaussian shellCg : shellCgs) {
-					if (basisFunctions.get(i).isSameShell(shellCg)) {
-						// Flag this to the existing shell.
-						// This is a workaround for Multimap checkForComodification exceptions.
-						addToExistingShell = true;
-						existingShellIndex = key;
-					}
-				}
-
+			// Increment lastBasisFunctionIndex if we have seen it before
+			if (shells.contains(tmpShell)) {
+				int index = shells.indexOf(tmpShell);
+				shells.get(index).setLastBasisFunctionIndex(i);
 			}
 
-			if (addToExistingShell) {
-				shells.put(existingShellIndex, basisFunctions.get(i));
-			} else {
-				int max = shells.keys().stream().mapToInt(v -> v).max().getAsInt();
-				shells.put(max + 1, basisFunctions.get(i));
+			if (!(shells.contains(tmpShell))) {
+				shells.add(tmpShell);
 			}
 
 		}
 
 	}
 
-	private void initShellPairList() {
+	/**
+	 * This is essentially itertools.combinations_with_replacement(shells, 2)
+	 * <p>
+	 * 
+	 * https://docs.python.org/3/library/itertools.html#itertools.combinations_with_replacement
+	 * 
+	 * <p>
+	 * itertools.combinations_with_replacement does not exist in Guava, but
+	 * Sets.combinations can be augmented slightly to obtain the same result.
+	 * <p>
+	 * Overlall it is 
+	 * {nShells}^C_{2} + nShells
+	 * <p>
+	 * where the {n}^C_{r} notation can be found at https://en.wikipedia.org/wiki/Combination
+	 *
+	 * <p>
+	 * Also see: https://www.baeldung.com/java-combinations-algorithm
+	 * 
+	 */
+	private void initUniqueShellPairList() {
 
-		shellPairs = ArrayListMultimap.create();
+		// Special case if shells only has one element
+		if (shells.size() == 1) {
+			uniqueShellPairs = new ArrayList<>();
 
-		for (int i = 0; i < shells.keySet().size(); i++) {
-			for (int j = 0; j <= i; j++) {
-				shellPairs.put(Iterables.get(shells.get(i), 0), Iterables.get(shells.get(j), 0));
+			for (Shell shell : shells) {
+				ArrayList<Shell> pair = new ArrayList<>();
+				pair.add(shell);
+				pair.add(shell);
+				uniqueShellPairs.add(pair);
 			}
+			return;
 		}
 
+		// First, calculate {nShells}^C_{2} combinations
+		Set<Set<Shell>> tmpShellPairs = Sets.combinations(ImmutableSet.copyOf(shells), 2);
+
+		uniqueShellPairs = new ArrayList<>();
+		for (Set<Shell> item : tmpShellPairs) {
+			ArrayList<Shell> pair = new ArrayList<>(item);
+			uniqueShellPairs.add(pair);
+		}
+
+		// Second, add in missing self pairs
+		for (Shell shell : shells) {
+			ArrayList<Shell> pair = new ArrayList<>();
+			pair.add(shell);
+			pair.add(shell);
+			uniqueShellPairs.add(pair);
+		}
+
+	}
+
+	public void printBasisFunctionList() {
+		System.out.println("");
+		System.out.println("Basis function list");
+		System.out.println("===================");
+		for (ContractedGaussian bfs : this.getBasisFunctions()) {
+			System.out.println(bfs.getBasisFunctionIndex() + " " + bfs.getCenteredAtom() + " " + bfs.getPowers()
+			+ " " + bfs.getExponents() + " " + bfs.getCoefficients() );
+		}
+	}
+
+	public void printUniqueShellPairList() {
+		System.out.println("");
+		System.out.println("Unique shellpair list");
+		System.out.println("=====================");
+		for (List<Shell> uniqueShellPair : this.uniqueShellPairs) {
+			System.out.print(uniqueShellPair);
+		}
+	}
+
+	public void printShellList() {
+		System.out.println("");
+		System.out.println("Shell list");
+		System.out.println("==========");
+		for (Shell shell : this.shells) {
+			System.out.print(shell);
+		}
 	}
 
 }

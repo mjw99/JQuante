@@ -10,7 +10,7 @@ import net.jafama.FastMath;
  * 
  * @author V.Ganesh
  */
-public class Power {
+public final class Power {
 
 	/**
 	 * Orbital power l.

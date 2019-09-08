@@ -7,7 +7,7 @@ package name.mjw.jquante.math.qm.integral;
  * @author V.Ganesh
  * @version 2.0 (Part of MeTA v2.0)
  */
-public class IntegralsPackageFactory {
+public final class IntegralsPackageFactory {
 
 	private static IntegralsPackageFactory theInstance;
 	protected IntegralPackageType defaultTwoElectronIntegralPackage;

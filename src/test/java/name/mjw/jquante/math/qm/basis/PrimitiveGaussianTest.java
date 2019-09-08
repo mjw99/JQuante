@@ -31,4 +31,14 @@ public class PrimitiveGaussianTest {
 		assertEquals(0.0, gto.amplitude(new Vector3D(0, 0, 0)), delta);
 
 	}
+	
+	@Test
+	public void ordering() {
+		PrimitiveGaussian a = new PrimitiveGaussian(new Vector3D(0, 0, 0), new Power(0, 0, 0), 1.0, 1.0);
+		PrimitiveGaussian b = new PrimitiveGaussian(new Vector3D(0, 0, 0), new Power(0, 0, 0), 2.0, 1.0);
+
+		assertEquals(-1, b.compareTo(a));
+		assertEquals(1, a.compareTo(b));
+
+	}
 }

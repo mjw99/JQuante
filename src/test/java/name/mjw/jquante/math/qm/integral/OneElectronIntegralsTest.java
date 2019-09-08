@@ -6,8 +6,8 @@ import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import name.mjw.jquante.math.qm.BasisSetLibrary;
 import name.mjw.jquante.math.qm.OneElectronIntegrals;
+import name.mjw.jquante.math.qm.basis.BasisSetLibrary;
 import name.mjw.jquante.molecule.Atom;
 import name.mjw.jquante.molecule.Molecule;
 import name.mjw.jquante.molecule.impl.MoleculeImpl;
@@ -21,9 +21,9 @@ class OneElectronIntegralsTest {
 	public static void setUp() {
 
 		// Create molecule
-		Atom O = new Atom("O", 6.0, new Vector3D(0.00000000, 0.000000, 0.119748));
-		Atom H1 = new Atom("H", 1.0, new Vector3D(0.00000000, 0.761561, -0.478993));
-		Atom H2 = new Atom("H", 1.0, new Vector3D(0.00000000, -0.761561, -0.478993));
+		Atom O = new Atom("O", new Vector3D(0.00000000, 0.000000, 0.119748));
+		Atom H1 = new Atom("H", new Vector3D(0.00000000, 0.761561, -0.478993));
+		Atom H2 = new Atom("H", new Vector3D(0.00000000, -0.761561, -0.478993));
 
 		Molecule water = new MoleculeImpl("water");
 		water.addAtom(O);

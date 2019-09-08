@@ -21,7 +21,7 @@ import name.mjw.jquante.math.qm.integral.IntegralsUtil;
  * @author V.Ganesh
  * @version 2.0 (Part of MeTA v2.0)
  */
-public class GMatrix extends Array2DRowRealMatrix {
+public final class GMatrix extends Array2DRowRealMatrix {
 
 	private static final Logger LOG = LogManager.getLogger(GMatrix.class);
 

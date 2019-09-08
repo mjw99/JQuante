@@ -18,7 +18,7 @@ import name.mjw.jquante.molecule.Molecule;
  * @author V.Ganesh
  * @version 2.0 (Part of MeTA v2.0)
  */
-public class RestrictedMollerPlessetSCFMethod extends RestrictedHartreeFockMethod {
+public final class RestrictedMollerPlessetSCFMethod extends RestrictedHartreeFockMethod {
 
 	private static final Logger LOG = LogManager.getLogger(RestrictedMollerPlessetSCFMethod.class);
 

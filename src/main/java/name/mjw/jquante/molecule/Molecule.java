@@ -64,19 +64,6 @@ public abstract class Molecule {
 	 */
 	public abstract MolecularFormula getFormula();
 
-	/**
-	 * Adds an atom to this molecule object.
-	 * 
-	 * @param symbol
-	 *            the atom symbol
-	 * @param x
-	 *            X coordinate of the atom
-	 * @param y
-	 *            Y coordinate of the atom
-	 * @param z
-	 *            Z coordinate of the atom
-	 */
-	public abstract void addAtom(String symbol, double x, double y, double z);
 
 	/**
 	 * Adds an atom to this molecule object.
@@ -133,8 +120,6 @@ public abstract class Molecule {
 	 * 
 	 * @param symbol
 	 *            the atom symbol
-	 * @param charge
-	 *            is the charge on the atom (the atomic number in many cases)
 	 * @param x
 	 *            X coordinate of the atom
 	 * @param y
@@ -142,40 +127,8 @@ public abstract class Molecule {
 	 * @param z
 	 *            Z coordinate of the atom
 	 */
-	public abstract void addAtom(String symbol, double charge, double x,
+	public abstract void addAtom(String symbol, double x,
 			double y, double z);
-
-	/**
-	 * Overloaded addAtom() method.
-	 * 
-	 * @param symbol
-	 *            the atom symbol
-	 * @param charge
-	 *            is the charge on the atom (the atomic number in many cases)
-	 * @param x
-	 *            X coordinate of the atom
-	 * @param y
-	 *            Y coordinate of the atom
-	 * @param z
-	 *            Z coordinate of the atom
-	 * @param index
-	 *            the atom index
-	 */
-	public abstract void addAtom(String symbol, double charge, double x,
-			double y, double z, int index);
-
-	/**
-	 * Overloaded addAtom() method.
-	 * 
-	 * @param symbol
-	 *            the atom symbol
-	 * @param charge
-	 *            is the charge on the atom (the atomic number in many cases)
-	 * @param atomCenter
-	 *            the Cartesian coordinates of the atom stored as Point3D object
-	 */
-	public abstract void addAtom(String symbol, double charge,
-			Vector3D atomCenter);
 
 	/**
 	 * Overloaded addAtom() method.

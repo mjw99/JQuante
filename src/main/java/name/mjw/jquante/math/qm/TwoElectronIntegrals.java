@@ -8,6 +8,7 @@ import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import name.mjw.jquante.math.qm.basis.BasisSetLibrary;
 import name.mjw.jquante.math.qm.basis.ContractedGaussian;
 import name.mjw.jquante.math.qm.basis.Power;
 import name.mjw.jquante.math.qm.basis.PrimitiveGaussian;
@@ -23,7 +24,7 @@ import net.jafama.FastMath;
  * @author V.Ganesh
  * @version 2.0 (Part of MeTA v2.0)
  */
-public class TwoElectronIntegrals {
+public final class TwoElectronIntegrals {
 	private static final Logger LOG = LogManager.getLogger(TwoElectronIntegrals.class);
 
 	private BasisSetLibrary basisSetLibrary;
@@ -356,8 +357,8 @@ public class TwoElectronIntegrals {
 									for (int l = 0; l < ndFunc; l++) {
 										ldFunc = dFunc.get(l);
 
-										twoEIndx = IntegralsUtil.ijkl2intindex(iaFunc.getIndex(), jbFunc.getIndex(),
-												kcFunc.getIndex(), ldFunc.getIndex());
+										twoEIndx = IntegralsUtil.ijkl2intindex(iaFunc.getBasisFunctionIndex(), jbFunc.getBasisFunctionIndex(),
+												kcFunc.getBasisFunctionIndex(), ldFunc.getBasisFunctionIndex());
 
 										twoEIntegrals[twoEIndx] = compute2E(iaFunc, jbFunc, kcFunc, ldFunc);
 									} // end for (l)
@@ -500,4 +501,26 @@ public class TwoElectronIntegrals {
 		this.onTheFly = onTheFly;
 	}
 
+	public void printCompleteIntegralList() {
+
+		int noOfBasisFunctions = basisSetLibrary.getBasisFunctions().size();
+
+		System.out.println("");
+		System.out.println("Complete integral list");
+		System.out.println("======================");
+		for (int i = 0; i < noOfBasisFunctions; i++) {
+			for (int j = 0; j < noOfBasisFunctions; j++) {
+				for (int k = 0; k < noOfBasisFunctions; k++) {
+					for (int l = 0; l < noOfBasisFunctions; l++) {
+						int ijkl = IntegralsUtil.ijkl2intindex(i, j, k, l);
+						System.out.println(i + " " + j + " " + k + " " + l + "\t\t" + twoEIntegrals[ijkl]);
+
+					}
+
+				}
+
+			}
+
+		}
+	}
 }

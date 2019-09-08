@@ -12,7 +12,7 @@ import net.jafama.FastMath;
  * @author V.Ganesh
  * @version 2.0 (Part of MeTA v2.0)
  */
-public class NuclearTerm implements IntegralsPackage {
+public final class NuclearTerm implements IntegralsPackage {
 	/**
 	 * The nuclear attraction term.
 	 * 
@@ -38,7 +38,7 @@ public class NuclearTerm implements IntegralsPackage {
 	 *            the location of nuclear centre.
 	 * @return the nuclear attraction integral.
 	 */
-	public double nuclearAttraction(Vector3D a, double norm1, Power power1,
+	public final double nuclearAttraction(Vector3D a, double norm1, Power power1,
 			double alpha1, Vector3D b, double norm2, Power power2,
 			double alpha2, Vector3D c) {
 
@@ -99,7 +99,7 @@ public class NuclearTerm implements IntegralsPackage {
 	 *            the sum of both Gaussians' exponent.
 	 * @return the nuclear attraction integral.
 	 */
-	public double[] constructAArray(int l1, int l2, double pa, double pb,
+	public final double[] constructAArray(int l1, int l2, double pa, double pb,
 			double pc, double gamma) {
 		int iMax = l1 + l2 + 1;
 		double[] a = new double[iMax];
@@ -123,7 +123,7 @@ public class NuclearTerm implements IntegralsPackage {
 		return a;
 	}
 
-	public double[] constructGradAArray(int l1, int l2, double pa, double pb,
+	public final double[] constructGradAArray(int l1, int l2, double pa, double pb,
 			double pc, double gamma) {
 		int iMax = l1 + l2 + 1;
 		double[] a = new double[iMax];
@@ -173,7 +173,7 @@ public class NuclearTerm implements IntegralsPackage {
 	 *            the sum of both Gaussians' exponent.
 	 * @return the A term for index i,r,u.
 	 */
-	public double constructATerm(int i, int r, int u, int l1, int l2,
+	public final double constructATerm(int i, int r, int u, int l1, int l2,
 			double pax, double pbx, double pcx, double gamma) {
 		return (FastMath.pow(-1.0, i)
 				* MathUtil.binomialPrefactor(i, l1, l2, pax, pbx)
@@ -202,7 +202,7 @@ public class NuclearTerm implements IntegralsPackage {
 	 *            the location of nuclear centre.
 	 * @return the nuclear attraction gradient.
 	 */
-	public Vector3D nuclearAttractionGradient(Vector3D a, Power power1,
+	public final Vector3D nuclearAttractionGradient(Vector3D a, Power power1,
 			double alpha1, Vector3D b, Power power2, double alpha2, Vector3D c) {
 		Vector3D product = IntegralsUtil.gaussianProductCenter(alpha1, a,
 				alpha2, b);

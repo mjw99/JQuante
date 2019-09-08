@@ -1,11 +1,15 @@
 package name.mjw.jquante.math.qm.basis;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 import name.mjw.jquante.config.impl.AtomInfo;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
+
+import com.google.common.collect.ComparisonChain;
+
 import name.mjw.jquante.molecule.Atom;
 import name.mjw.jquante.molecule.Molecule;
 import net.jafama.FastMath;
@@ -14,9 +18,10 @@ import net.jafama.FastMath;
  * The class defines a contracted Gaussian and the operations on it.
  * 
  * @author V.Ganesh
+ * @author mw529
  * @version 2.0 (Part of MeTA v2.0)
  */
-public final class ContractedGaussian {
+public final class ContractedGaussian implements Comparable<ContractedGaussian> {
 
 	/**
 	 * Holds value of property origin.
@@ -44,20 +49,18 @@ public final class ContractedGaussian {
 	private final ArrayList<Double> coefficients;
 
 	/**
+	 * Normalization factors for each PG
+	 */
+	private ArrayList<Double> primNorms;
+
+	/**
 	 * Holds value of property normalization.
 	 */
 	private double normalization;
 
-	/**
-	 * Holds value of property primNorms.
-	 * 
-	 * normalization factors for PGs
-	 */
-	private ArrayList<Double> primNorms;
-
 	protected Atom centeredAtom;
 
-	protected int index;
+	protected int basisFunctionIndex;
 
 	/**
 	 * Creates a new instance of ContractedGaussian
@@ -99,7 +102,10 @@ public final class ContractedGaussian {
 	}
 
 	/**
-	 * Adds a primitive gaussian (PG) to this contracted gaussian list
+	 * Adds a primitive gaussian (PG) to this contracted gaussian list. This method
+	 * will re-sort the primitives in this class according to the
+	 * {@link PrimitiveGaussian#compareTo Libint logic}, everytime another primitive
+	 * is added.
 	 * 
 	 * @param exponent    the exponent for this PG
 	 * @param coefficient the coefficient of this PG
@@ -107,8 +113,22 @@ public final class ContractedGaussian {
 	public void addPrimitive(double exponent, double coefficient) {
 		primitives.add(new PrimitiveGaussian(origin, powers, exponent, coefficient));
 
-		exponents.add(exponent);
-		coefficients.add(coefficient);
+		Collections.sort(primitives);
+
+		this.exponents.clear();
+		for (int i = 0; i < this.primitives.size(); i++) {
+			exponents.add(primitives.get(i).getExponent());
+		}
+
+		this.coefficients.clear();
+		for (int i = 0; i < this.primitives.size(); i++) {
+			coefficients.add(primitives.get(i).getCoefficient());
+		}
+
+		this.primNorms.clear();
+		for (int i = 0; i < this.primitives.size(); i++) {
+			primNorms.add(primitives.get(i).getNormalization());
+		}
 	}
 
 	/**
@@ -154,6 +174,15 @@ public final class ContractedGaussian {
 	 */
 	public ArrayList<Double> getCoefficients() {
 		return this.coefficients;
+	}
+
+	/**
+	 * Getter for property primNorms.
+	 *	
+	 * @return Value of property primNorms.
+	 */
+	public ArrayList<Double> getPrimNorms() {
+		return this.primNorms;
 	}
 
 	/**
@@ -574,15 +603,6 @@ public final class ContractedGaussian {
 	}
 
 	/**
-	 * Getter for property primNorms.
-	 * 
-	 * @return Value of property primNorms.
-	 */
-	public ArrayList<Double> getPrimNorms() {
-		return this.primNorms;
-	}
-
-	/**
 	 * Return the maximum angular momentum for this contracted basis function
 	 * 
 	 * @return the maximum angular momentum of this contracted basis function
@@ -614,8 +634,8 @@ public final class ContractedGaussian {
 	 * 
 	 * @return the value of index
 	 */
-	public int getIndex() {
-		return index;
+	public int getBasisFunctionIndex() {
+		return basisFunctionIndex;
 	}
 
 	/**
@@ -623,34 +643,35 @@ public final class ContractedGaussian {
 	 * 
 	 * @param index new value of index
 	 */
-	public void setIndex(int index) {
-		this.index = index;
+	public void setBasisFunctionIndex(int index) {
+		this.basisFunctionIndex = index;
 	}
 
 	/**
-	 * isSameShell determines that two ContractedGaussian belong to the same shell.
+	 * Determines if two ContractedGaussians belong to the same shell.
+	 * 
 	 * A shell is a set of basis function with the same centre and same contracted
-	 * exponent, for example, sp shell, d shell.
+	 * exponents, for example, sp shell, d shell.
 	 *
-	 * @param otherCg The other contracted Gaussian.
+	 * @param that The other contracted Gaussian.
 	 * @return True if otherCg is in the same shell.
 	 */
-	public boolean isSameShell(ContractedGaussian otherCg) {
+	public boolean isSameShell(ContractedGaussian that) {
 
-		if (!this.origin.equals(otherCg.origin)) {
+		if (!this.origin.equals(that.origin)) {
 			return false;
 		}
 
-		if (this.getPrimitives().size() != otherCg.getPrimitives().size()) {
+		if (this.getPrimitives().size() != that.getPrimitives().size()) {
 			return false;
 		}
 
-		if (this.getTotalAngularMomentum() != otherCg.getTotalAngularMomentum()) {
+		if (this.getTotalAngularMomentum() != that.getTotalAngularMomentum()) {
 			return false;
 		}
 
 		for (int i = 0; i < this.getExponents().size(); i++) {
-			if (!this.getExponents().get(i).equals(otherCg.getExponents().get(i))) {
+			if (!this.getExponents().get(i).equals(that.getExponents().get(i))) {
 
 				return false;
 			}
@@ -658,7 +679,7 @@ public final class ContractedGaussian {
 		}
 
 		for (int i = 0; i < this.getCoefficients().size(); i++) {
-			if (!this.getCoefficients().get(i).equals(otherCg.getCoefficients().get(i))) {
+			if (!this.getCoefficients().get(i).equals(that.getCoefficients().get(i))) {
 
 				return false;
 			}
@@ -711,14 +732,25 @@ public final class ContractedGaussian {
 	 */
 	@Override
 	public String toString() {
-		return "Origin : " + origin + " Powers : " + powers + " " + exponents + " " + coefficients + "\n ";
+		return "Origin : " + origin + " Powers : " + powers + " " + exponents + " " + coefficients + "\n";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(centeredAtom, coefficients, exponents, index, normalization, origin, powers, primNorms,
+		return Objects.hash(centeredAtom, coefficients, exponents, basisFunctionIndex, normalization, origin, powers, primNorms,
 				primitives);
 	}
+
+	  @Override
+	  public int compareTo( ContractedGaussian other ) {
+	    return ComparisonChain.start()
+	      .compare( basisFunctionIndex, other.basisFunctionIndex )
+	      .compare( powers.getMaximumAngularMomentum(), other.powers.getMaximumAngularMomentum() )
+	      .compare( this.powers.getL(), other.powers.getL() )
+	      .compare( this.powers.getM(), other.powers.getM() )
+	      .compare( this.powers.getN(), other.powers.getN() )
+	      .result();
+	  }
 
 	@Override
 	public boolean equals(Object obj) {
@@ -730,7 +762,7 @@ public final class ContractedGaussian {
 			return false;
 		ContractedGaussian other = (ContractedGaussian) obj;
 		return Objects.equals(centeredAtom, other.centeredAtom) && Objects.equals(coefficients, other.coefficients)
-				&& Objects.equals(exponents, other.exponents) && index == other.index
+				&& Objects.equals(exponents, other.exponents) && basisFunctionIndex == other.basisFunctionIndex
 				&& Double.doubleToLongBits(normalization) == Double.doubleToLongBits(other.normalization)
 				&& Objects.equals(origin, other.origin) && Objects.equals(powers, other.powers)
 				&& Objects.equals(primNorms, other.primNorms) && Objects.equals(primitives, other.primitives);

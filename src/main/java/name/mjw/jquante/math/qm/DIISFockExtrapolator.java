@@ -23,7 +23,7 @@ import org.apache.logging.log4j.Logger;
  * @author V.Ganesh
  * @version 2.0 (Part of MeTA v2.0)
  */
-public class DIISFockExtrapolator implements FockExtrapolator {
+public final class DIISFockExtrapolator implements FockExtrapolator {
 
 	private static final Logger LOG = LogManager.getLogger(DIISFockExtrapolator.class);
 

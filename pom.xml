@@ -13,20 +13,16 @@
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-		<junit.version>5.5.0-M1</junit.version>
-		<log4j.version>2.11.2</log4j.version>
+		<junit.version>5.5.1</junit.version>
+		<log4j.version>2.12.1</log4j.version>
 		<fortranformat.version>1.1.1</fortranformat.version>
 		<jaxb.version>2.3.0</jaxb.version>
 		<jaxb-api.version>2.4.0-b180830.0359</jaxb-api.version>
 		<commons-math3.version>3.6.1</commons-math3.version>
 		<jafama.version>2.3.1</jafama.version>
-		<guava.version>27.1-jre</guava.version>
-
-
-
+		<guava.version>28.1-jre</guava.version>
 		<nd4j.backend>nd4j-native-platform</nd4j.backend>
 		<!--<nd4j.backend>nd4j-cuda-9.2-platform</nd4j.backend> -->
-
 		<nd4j.version>1.0.0-beta4</nd4j.version>
 	</properties>
 
@@ -110,7 +106,7 @@
 
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.0</version>
+				<version>3.8.1</version>
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
@@ -130,7 +126,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>3.1.1</version>
+				<version>3.1.2</version>
 			</plugin>
 
 			<plugin>
@@ -157,7 +153,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
-				<version>3.7.1</version>
+				<version>3.8.2</version>
 			</plugin>
 			<plugin>
 				<groupId>com.googlecode.maven-java-formatter-plugin</groupId>
@@ -167,7 +163,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.0.1</version>
+				<version>3.1.1</version>
 				<configuration>
 					<source>8</source>
 				</configuration>

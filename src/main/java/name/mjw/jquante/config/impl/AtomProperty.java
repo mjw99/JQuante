@@ -8,7 +8,7 @@ import name.mjw.jquante.config.Parameter;
  * @author V.Ganesh
  * @version 2.0 (Part of MeTA v2.0)
  */
-public class AtomProperty implements Parameter {
+public final class AtomProperty implements Parameter {
 
 	/** Holds value of property name. */
 	private String name;

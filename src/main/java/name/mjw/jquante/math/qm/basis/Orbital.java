@@ -10,7 +10,7 @@ import java.util.List;
  * @author V.Ganesh
  * @version 2.0 (Part of MeTA v2.0)
  */
-public class Orbital {
+public final class Orbital {
 
 	/**
 	 * Holds value of property type.
@@ -50,16 +50,6 @@ public class Orbital {
 	}
 
 	/**
-	 * Setter for property type.
-	 * 
-	 * @param type
-	 *            New value of property type.
-	 */
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	/**
 	 * Getter for property coefficients.
 	 * 
 	 * @return Value of property coefficients.
@@ -69,32 +59,12 @@ public class Orbital {
 	}
 
 	/**
-	 * Setter for property coefficients.
-	 * 
-	 * @param coefficients
-	 *            New value of property coefficients.
-	 */
-	public void setCoefficients(List<Double> coefficients) {
-		this.coefficients = coefficients;
-	}
-
-	/**
 	 * Getter for property exponents.
 	 * 
 	 * @return Value of property exponents.
 	 */
 	public List<Double> getExponents() {
 		return this.exponents;
-	}
-
-	/**
-	 * Setter for property exponents.
-	 * 
-	 * @param exponents
-	 *            New value of property exponents.
-	 */
-	public void setExponents(List<Double> exponents) {
-		this.exponents = exponents;
 	}
 
 	/**

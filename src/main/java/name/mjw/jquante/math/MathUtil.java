@@ -37,7 +37,7 @@ public final class MathUtil {
 	 *            the third point
 	 * @return the angle defined
 	 */
-	public static double findAngle(Vector3D v1, Vector3D v2, Vector3D v3) {
+	public static final double findAngle(Vector3D v1, Vector3D v2, Vector3D v3) {
 		Vector3D v12 = v2.subtract(v1);
 		Vector3D v32 = v2.subtract(v3);
 
@@ -57,7 +57,7 @@ public final class MathUtil {
 	 *            the fourth angle
 	 * @return the dihedral angle defined
 	 */
-	public static double findDihedral(Vector3D v1, Vector3D v2, Vector3D v3, Vector3D v4) {
+	public static final double findDihedral(Vector3D v1, Vector3D v2, Vector3D v3, Vector3D v4) {
 		// normal of plane 1
 		Vector3D v12 = v2.subtract(v1);
 		Vector3D v32 = v2.subtract(v3);
@@ -88,7 +88,7 @@ public final class MathUtil {
 	 *            the n, whose factorial is to be found
 	 * @return the factorial
 	 */
-	public static int factorial2(int n) {
+	public static final int factorial2(int n) {
 		int value = 1;
 
 		while (n > 0) {
@@ -107,7 +107,7 @@ public final class MathUtil {
 	 *            the second term
 	 * @return ( a! / b! / (a-2*b)! )
 	 */
-	public static double factorialRatioSquared(int a, int b) {
+	public static final double factorialRatioSquared(int a, int b) {
 		return CombinatoricsUtils.factorialDouble(a) / CombinatoricsUtils.factorialDouble(b)
 				/ CombinatoricsUtils.factorialDouble(a - 2 * b);
 	}
@@ -130,7 +130,7 @@ public final class MathUtil {
 	 *            xpb
 	 * @return Pre-factor of binomial expansion.
 	 */
-	public static double binomialPrefactor(int s, int ia, int ib, double xpa, double xpb) {
+	public static final double binomialPrefactor(int s, int ia, int ib, double xpa, double xpb) {
 		double sum = 0.0;
 
 		for (int t = 0; t < (s + 1); t++) {
@@ -144,7 +144,7 @@ public final class MathUtil {
 		return sum;
 	}
 
-	public static RealVector realMatrixToRealVector(RealMatrix realMatrix) {
+	public static final RealVector realMatrixToRealVector(RealMatrix realMatrix) {
 		RealVector vec = new ArrayRealVector(realMatrix.getRowDimension() * realMatrix.getColumnDimension());
 		int ii = 0;
 
@@ -157,7 +157,7 @@ public final class MathUtil {
 
 	}
 
-	public static String matrixToString(Array2DRowRealMatrix array2DRowRealMatrix) {
+	public static final String matrixToString(Array2DRowRealMatrix array2DRowRealMatrix) {
 		DecimalFormat df = new DecimalFormat("+#,##0.000;-#");
 		RealMatrixFormat mf = new RealMatrixFormat("\n", "", "", "", "\n", " ", df);
 		return mf.format(array2DRowRealMatrix);

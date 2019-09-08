@@ -6,7 +6,7 @@ package name.mjw.jquante.math.qm.event;
  * @author V.Ganesh
  * @version 2.0 (Part of MeTA v2.0)
  */
-public class SCFEvent extends java.util.EventObject {
+public final class SCFEvent extends java.util.EventObject {
 
 	/**
 	 * Eclipse generated serialVersionUID

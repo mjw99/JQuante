@@ -6,9 +6,9 @@ import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
 
-import name.mjw.jquante.math.qm.BasisSetLibrary;
 import name.mjw.jquante.math.qm.MolecularOrbitals;
 import name.mjw.jquante.math.qm.SCFMethod;
+import name.mjw.jquante.math.qm.basis.BasisSetLibrary;
 import name.mjw.jquante.math.qm.basis.ContractedGaussian;
 import name.mjw.jquante.molecule.Molecule;
 

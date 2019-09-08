@@ -1,6 +1,7 @@
 package name.mjw.jquante.math.qm;
 
 
+import name.mjw.jquante.math.qm.basis.BasisSetLibrary;
 import name.mjw.jquante.molecule.Atom;
 import name.mjw.jquante.molecule.Molecule;
 import name.mjw.jquante.molecule.impl.MoleculeImpl;
@@ -22,8 +23,8 @@ public class SCFMethodFactoryTest {
 	public void SinglePointHFHydrogenSTO3G() {
 
 		// Create molecule
-		Atom H1 = new Atom("H", 1.0, new Vector3D(0.00000000, 0.00000000, 0.00000000));
-		Atom H2 = new Atom("H", 1.0, new Vector3D(0.74000000, 0.00000000, 0.00000000));
+		Atom H1 = new Atom("H", new Vector3D(0.00000000, 0.00000000, 0.00000000));
+		Atom H2 = new Atom("H", new Vector3D(0.74000000, 0.00000000, 0.00000000));
 
 		Molecule hydrogen = new MoleculeImpl("hydrogen");
 		hydrogen.addAtom(H1);
@@ -72,8 +73,8 @@ public class SCFMethodFactoryTest {
 	public void SinglePointHFHydrogenFluorideSTO3G() {
 
 		// Create molecule
-		Atom H = new Atom("H", 1.0, new Vector3D(0.00000000, 0.00000000, 0.00000000));
-		Atom F = new Atom("F", 7.0, new Vector3D(0.91700000, 0.00000000, 0.00000000));
+		Atom H = new Atom("H", new Vector3D(0.00000000, 0.00000000, 0.00000000));
+		Atom F = new Atom("F", new Vector3D(0.91700000, 0.00000000, 0.00000000));
 
 		Molecule hydrogenFluoride = new MoleculeImpl("hydrogenFluoride");
 		hydrogenFluoride.addAtom(H);
@@ -125,9 +126,9 @@ public class SCFMethodFactoryTest {
 	public void SinglePointHFWaterSTO3G() {
 
 		// Create molecule
-		Atom O = new Atom("O", 6.0, new Vector3D(0.00000000, 0.000000, 0.119748));
-		Atom H1 = new Atom("H", 1.0, new Vector3D(0.00000000, 0.761561, -0.478993));
-		Atom H2 = new Atom("H", 1.0, new Vector3D(0.00000000, -0.761561, -0.478993));
+		Atom O = new Atom("O", new Vector3D(0.00000000, 0.000000, 0.119748));
+		Atom H1 = new Atom("H", new Vector3D(0.00000000, 0.761561, -0.478993));
+		Atom H2 = new Atom("H", new Vector3D(0.00000000, -0.761561, -0.478993));
 
 		Molecule water = new MoleculeImpl("water");
 		water.addAtom(O);
@@ -182,9 +183,9 @@ public class SCFMethodFactoryTest {
 	public void SinglePointHFWaterSTO3GDirect() {
 
 		// Create molecule
-		Atom O = new Atom("O", 6.0, new Vector3D(0.00000000, 0.000000, 0.119748));
-		Atom H1 = new Atom("H", 1.0, new Vector3D(0.00000000, 0.761561, -0.478993));
-		Atom H2 = new Atom("H", 1.0, new Vector3D(0.00000000, -0.761561, -0.478993));
+		Atom O = new Atom("O", new Vector3D(0.00000000, 0.000000, 0.119748));
+		Atom H1 = new Atom("H", new Vector3D(0.00000000, 0.761561, -0.478993));
+		Atom H2 = new Atom("H", new Vector3D(0.00000000, -0.761561, -0.478993));
 
 		Molecule water = new MoleculeImpl("water");
 		water.addAtom(O);
@@ -239,9 +240,9 @@ public class SCFMethodFactoryTest {
 	public void SinglePointHFWaterSTO3GShellPair() {
 
 		// Create molecule
-		Atom O = new Atom("O", 6.0, new Vector3D(0.00000000, 0.000000, 0.119748));
-		Atom H1 = new Atom("H", 1.0, new Vector3D(0.00000000, 0.761561, -0.478993));
-		Atom H2 = new Atom("H", 1.0, new Vector3D(0.00000000, -0.761561, -0.478993));
+		Atom O = new Atom("O", new Vector3D(0.00000000, 0.000000, 0.119748));
+		Atom H1 = new Atom("H", new Vector3D(0.00000000, 0.761561, -0.478993));
+		Atom H2 = new Atom("H", new Vector3D(0.00000000, -0.761561, -0.478993));
 
 		Molecule water = new MoleculeImpl("water");
 		water.addAtom(O);
