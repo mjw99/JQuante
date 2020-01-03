@@ -1,6 +1,6 @@
 package name.mjw.jquante.math.qm.integral;
 
-import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
+import org.hipparchus.geometry.euclidean.threed.Vector3D;
 import name.mjw.jquante.math.MathUtil;
 import name.mjw.jquante.math.qm.basis.Power;
 import net.jafama.FastMath;
@@ -22,7 +22,7 @@ public final class OneElectronTerm implements IntegralsPackage {
 	 * @param gamma the sum of both Gaussian's exponent.
 	 * @return the 1D overlap.
 	 */
-	public final double overlap1D(int l1, int l2, double pax, double pbx, double gamma) {
+	public final double overlap1D(final int l1, final int l2, final double pax, final double pbx, final double gamma) {
 		double sum = 0.0;
 		final int k = 1 + (int) FastMath.floor(0.5 * (l1 + l2));
 
@@ -69,7 +69,7 @@ public final class OneElectronTerm implements IntegralsPackage {
 	/**
 	 * The Kinetic Energy (KE) component. <br>
 	 * 
-	 * <i> Taken from THO eq. 2.13 </i>
+	 * <i> Taken from http://dx.doi.org/10.1143/JPSJ.21.2313 eq. 2.13 </i>
 	 *
 	 * @param alpha1 the coefficient of primitive Gaussian a.
 	 * @param power1 the orbital powers of primitive Gaussian a.
@@ -80,14 +80,15 @@ public final class OneElectronTerm implements IntegralsPackage {
 	 * @param b      the location of primitive Gaussian b.
 	 * @return the Kinetic Energy integral
 	 */
-	public final double kinetic(double alpha1, Power power1, Vector3D a, double alpha2, Power power2, Vector3D b) {
+	public final double kinetic(final double alpha1, final Power power1, final Vector3D a, final double alpha2,
+			final Power power2, final Vector3D b) {
 		final int l2 = power2.getL();
 		final int m2 = power2.getM();
 		final int n2 = power2.getN();
 
 		double term = alpha2 * (2 * (l2 + m2 + n2) + 3) * overlap(alpha1, power1, a, alpha2, power2, b);
 
-		term += -2.0 * FastMath.pow(alpha2, 2.0)
+		term += -2.0 * FastMath.pow2(alpha2)
 				* (overlap(alpha1, power1, a, alpha2, new Power(l2 + 2, m2, n2), b)
 						+ overlap(alpha1, power1, a, alpha2, new Power(l2, m2 + 2, n2), b)
 						+ overlap(alpha1, power1, a, alpha2, new Power(l2, m2, n2 + 2), b));

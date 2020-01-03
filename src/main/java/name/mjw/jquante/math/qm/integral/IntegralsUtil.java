@@ -1,6 +1,6 @@
 package name.mjw.jquante.math.qm.integral;
 
-import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
+import org.hipparchus.geometry.euclidean.threed.Vector3D;
 
 import net.jafama.FastMath;
 

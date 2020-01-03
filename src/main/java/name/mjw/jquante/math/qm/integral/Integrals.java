@@ -1,6 +1,6 @@
 package name.mjw.jquante.math.qm.integral;
 
-import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
+import org.hipparchus.geometry.euclidean.threed.Vector3D;
 
 import name.mjw.jquante.math.qm.basis.ContractedGaussian;
 import name.mjw.jquante.math.qm.basis.Power;

@@ -1,8 +1,8 @@
 package name.mjw.jquante.math;
 
-import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
-import org.apache.commons.math3.linear.ArrayRealVector;
-import org.apache.commons.math3.linear.RealVector;
+import org.hipparchus.geometry.euclidean.threed.Vector3D;
+import org.hipparchus.linear.ArrayRealVector;
+import org.hipparchus.linear.RealVector;
 
 import net.jafama.FastMath;
 

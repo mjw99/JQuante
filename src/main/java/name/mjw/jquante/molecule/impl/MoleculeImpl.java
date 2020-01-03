@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 
-import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
+import org.hipparchus.geometry.euclidean.threed.Vector3D;
 
 import name.mjw.jquante.config.impl.AtomInfo;
 import name.mjw.jquante.math.geom.BoundingBox;

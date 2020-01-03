@@ -1,7 +1,7 @@
 package name.mjw.jquante.math.qm;
 
-import org.apache.commons.math3.linear.ArrayRealVector;
-import org.apache.commons.math3.linear.RealVector;
+import org.hipparchus.linear.ArrayRealVector;
+import org.hipparchus.linear.RealVector;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

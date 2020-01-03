@@ -45,7 +45,6 @@ public final class OneElectronIntegrals {
 		this.basisSetLibrary = basisSetLibrary;
 		this.molecule = mol;
 
-		// compute the 1E integrals, form S matrix and hCore
 		compute1E();
 	}
 
@@ -62,23 +61,18 @@ public final class OneElectronIntegrals {
 	 * compute the 1E integrals, form S matrix and hCore
 	 */
 	protected void compute1E() {
+		computeOverlap();
+		computeHcore();
+	}
+
+	private void computeOverlap() {
 		List<ContractedGaussian> bfs = basisSetLibrary.getBasisFunctions();
 		int noOfBasisFunctions = bfs.size();
-		int atomIndex;
 
-		// Create the S matrix and the hCore h
+		// Create the S matrix
 		this.overlap = new Overlap(noOfBasisFunctions);
-		this.hCore = new HCore(noOfBasisFunctions);
 
-		// read in the atomic numbers
-		int[] atomicNumbers = new int[molecule.getNumberOfAtoms()];
-		AtomInfo ai = AtomInfo.getInstance();
-
-		for (atomIndex = 0; atomIndex < atomicNumbers.length; atomIndex++) {
-			atomicNumbers[atomIndex] = ai.getAtomicNumber(molecule.getAtom(atomIndex).getSymbol());
-		}
-
-		// Populate the S matrix and the hCore h
+		// Populate the S matrix
 		for (int i = 0; i < noOfBasisFunctions; i++) {
 			ContractedGaussian bfi = bfs.get(i);
 
@@ -86,7 +80,32 @@ public final class OneElectronIntegrals {
 				ContractedGaussian bfj = bfs.get(j);
 
 				overlap.setEntry(i, j, bfi.overlap(bfj)); // the overlap matrix
-				  hCore.setEntry(i, j, bfi.kinetic(bfj)); // KE matrix elements
+			}
+		}
+	}
+
+	private void computeHcore() {
+		List<ContractedGaussian> bfs = basisSetLibrary.getBasisFunctions();
+		int noOfBasisFunctions = bfs.size();
+
+		this.hCore = new HCore(noOfBasisFunctions);
+
+		// read in the atomic numbers
+		int[] atomicNumbers = new int[molecule.getNumberOfAtoms()];
+		AtomInfo ai = AtomInfo.getInstance();
+
+		for (int atomIndex = 0; atomIndex < atomicNumbers.length; atomIndex++) {
+			atomicNumbers[atomIndex] = ai.getAtomicNumber(molecule.getAtom(atomIndex).getSymbol());
+		}
+
+		// Populate the hCore matrix
+		for (int i = 0; i < noOfBasisFunctions; i++) {
+			ContractedGaussian bfi = bfs.get(i);
+
+			for (int j = 0; j < noOfBasisFunctions; j++) {
+				ContractedGaussian bfj = bfs.get(j);
+
+				hCore.setEntry(i, j, bfi.kinetic(bfj)); // KE matrix elements
 
 				for (int k = 0; k < atomicNumbers.length; k++) {
 					hCore.setEntry(i, j, (hCore.getEntry(i, j)
@@ -95,8 +114,6 @@ public final class OneElectronIntegrals {
 			}
 
 		}
-
-
 	}
 
 	/**

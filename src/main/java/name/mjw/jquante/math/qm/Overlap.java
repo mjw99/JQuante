@@ -3,11 +3,11 @@ package name.mjw.jquante.math.qm;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
-import org.apache.commons.math3.linear.Array2DRowRealMatrix;
-import org.apache.commons.math3.linear.EigenDecomposition;
-import org.apache.commons.math3.linear.MatrixUtils;
-import org.apache.commons.math3.linear.RealMatrix;
+import org.hipparchus.geometry.euclidean.threed.Vector3D;
+import org.hipparchus.linear.Array2DRowRealMatrix;
+import org.hipparchus.linear.EigenDecomposition;
+import org.hipparchus.linear.MatrixUtils;
+import org.hipparchus.linear.RealMatrix;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

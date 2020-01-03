@@ -8,7 +8,7 @@ import name.mjw.jquante.molecule.impl.MoleculeImpl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
+import org.hipparchus.geometry.euclidean.threed.Vector3D;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;

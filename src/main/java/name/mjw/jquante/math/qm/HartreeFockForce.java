@@ -6,9 +6,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import name.mjw.jquante.config.impl.AtomInfo;
-import org.apache.commons.math3.linear.RealMatrix;
-import org.apache.commons.math3.linear.Array2DRowRealMatrix;
-import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
+import org.hipparchus.linear.RealMatrix;
+import org.hipparchus.linear.Array2DRowRealMatrix;
+import org.hipparchus.geometry.euclidean.threed.Vector3D;
 import name.mjw.jquante.molecule.Atom;
 import name.mjw.jquante.molecule.Molecule;
 import net.jafama.FastMath;

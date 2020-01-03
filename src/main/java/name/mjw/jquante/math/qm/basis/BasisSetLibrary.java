@@ -275,8 +275,9 @@ public final class BasisSetLibrary {
 		System.out.println("Basis function list");
 		System.out.println("===================");
 		for (ContractedGaussian bfs : this.getBasisFunctions()) {
-			System.out.println(bfs.getBasisFunctionIndex() + " " + bfs.getCenteredAtom() + " " + bfs.getPowers()
-			+ " " + bfs.getExponents() + " " + bfs.getCoefficients() );
+			System.out.println(String.format("%2d", bfs.getBasisFunctionIndex()) + " " + bfs.getCenteredAtom() + " "
+					+ bfs.getPowers() + " " + bfs.getExponents() + " " + bfs.getCoefficients());
+
 		}
 	}
 

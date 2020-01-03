@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-import org.apache.commons.math3.linear.Array2DRowRealMatrix;
-import org.apache.commons.math3.linear.ArrayRealVector;
-import org.apache.commons.math3.linear.RealVector;
+import org.hipparchus.linear.Array2DRowRealMatrix;
+import org.hipparchus.linear.ArrayRealVector;
+import org.hipparchus.linear.RealVector;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

@@ -2,9 +2,9 @@ package name.mjw.jquante.math.qm.property;
 
 import java.util.List;
 
-import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
-import org.apache.commons.math3.linear.ArrayRealVector;
-import org.apache.commons.math3.linear.RealVector;
+import org.hipparchus.geometry.euclidean.threed.Vector3D;
+import org.hipparchus.linear.ArrayRealVector;
+import org.hipparchus.linear.RealVector;
 
 import name.mjw.jquante.math.qm.Density;
 import name.mjw.jquante.math.qm.SCFMethod;

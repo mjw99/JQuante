@@ -108,7 +108,7 @@ public final class Power {
 	 */
 	@Override
 	public String toString() {
-		return "[" + l + ", " + m + ", " + n + "]";
+		return String.format("%d %d %d", l, m, n);
 	}
 
 	@Override

@@ -3,10 +3,10 @@ package name.mjw.jquante.math.qm.integral;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
-import org.apache.commons.math3.linear.RealMatrix;
-import org.apache.commons.math3.special.Erf;
-import org.apache.commons.math3.util.CombinatoricsUtils;
+import org.hipparchus.geometry.euclidean.threed.Vector3D;
+import org.hipparchus.linear.RealMatrix;
+import org.hipparchus.special.Erf;
+import org.hipparchus.util.CombinatoricsUtils;
 
 import name.mjw.jquante.math.qm.Density;
 import name.mjw.jquante.math.qm.basis.ContractedGaussian;
@@ -1349,7 +1349,7 @@ public final class RysTwoElectronTerm implements TwoElectronTerm {
 			ww1 = ww1 - 0.01962E+00 * e - ww2 - ww3 - ww4 - ww5;
 		} else if (x < 59.0) {
 			ww1 = FastMath.sqrt(PI_OVER_FOUR / x);
-			xxx = FastMath.pow(x, 3);
+			xxx = FastMath.pow3(x);
 			e = xxx * FastMath.exp(-x);
 			rt1 = (((-2.43758528330205E-02 * x + 2.07301567989771E+00) * x - 6.45964225381113E+01) * x
 					+ 7.14160088655470E+02) * e + R15 / (x - R15);
@@ -1724,8 +1724,8 @@ public final class RysTwoElectronTerm implements TwoElectronTerm {
 		double[][] g = new double[n + 1][m + 1];
 
 		// [ABD] eq 11.
-		g[0][0] = FastMath.PI * FastMath.exp(-aAlpha * bAlpha * FastMath.pow(xa - xb, 2) / (aAlpha + bAlpha)
-				- cAlpha * dAlpha * FastMath.pow(xc - xd, 2) / (cAlpha + dAlpha)) / FastMath.sqrt(a * b);
+		g[0][0] = FastMath.PI * FastMath.exp(-aAlpha * bAlpha * FastMath.pow2(xa - xb) / (aAlpha + bAlpha)
+				- cAlpha * dAlpha * FastMath.pow2(xc - xd) / (cAlpha + dAlpha)) / FastMath.sqrt(a * b);
 		return g;
 	}
 
@@ -1778,10 +1778,10 @@ public final class RysTwoElectronTerm implements TwoElectronTerm {
 			ijm0 = 0;
 			/* I(i,j,m,0)<-I(n,0,m,0) */
 			for (n = 0; n < j + 1; n++) {
-				ijm0 += CombinatoricsUtils.binomialCoefficient(j, n) * FastMath.pow(xij, (j - n)) * g[n + i][m + k];
+				ijm0 += CombinatoricsUtils.binomialCoefficientDouble(j, n) * FastMath.pow(xij, (j - n)) * g[n + i][m + k];
 			}
 			/* I(i,j,k,l)<-I(i,j,m,0) */
-			ijkl += CombinatoricsUtils.binomialCoefficient(l, m) * FastMath.pow(xkl, (l - m)) * ijm0;
+			ijkl += CombinatoricsUtils.binomialCoefficientDouble(l, m) * FastMath.pow(xkl, (l - m)) * ijm0;
 		}
 		return ijkl;
 	}

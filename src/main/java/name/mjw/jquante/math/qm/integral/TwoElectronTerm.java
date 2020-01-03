@@ -1,7 +1,7 @@
 package name.mjw.jquante.math.qm.integral;
 
-import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
-import org.apache.commons.math3.linear.RealMatrix;
+import org.hipparchus.geometry.euclidean.threed.Vector3D;
+import org.hipparchus.linear.RealMatrix;
 
 import name.mjw.jquante.math.qm.Density;
 import name.mjw.jquante.math.qm.basis.ContractedGaussian;

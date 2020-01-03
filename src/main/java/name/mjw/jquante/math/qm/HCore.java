@@ -3,8 +3,8 @@ package name.mjw.jquante.math.qm;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
-import org.apache.commons.math3.linear.Array2DRowRealMatrix;
+import org.hipparchus.geometry.euclidean.threed.Vector3D;
+import org.hipparchus.linear.Array2DRowRealMatrix;
 
 import name.mjw.jquante.math.MathUtil;
 import name.mjw.jquante.math.qm.basis.BasisSetLibrary;

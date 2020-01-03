@@ -3,7 +3,7 @@ package name.mjw.jquante.molecule;
 import java.io.Serializable;
 import java.util.Iterator;
 
-import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
+import org.hipparchus.geometry.euclidean.threed.Vector3D;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

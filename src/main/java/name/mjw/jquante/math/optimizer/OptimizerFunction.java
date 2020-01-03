@@ -1,6 +1,6 @@
 package name.mjw.jquante.math.optimizer;
 
-import org.apache.commons.math3.linear.RealMatrix;
+import org.hipparchus.linear.RealMatrix;
 
 /**
  * The interface for defining a function to be optimized.

@@ -4,15 +4,15 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import name.mjw.jquante.math.MathUtil;
-import org.apache.commons.math3.linear.Array2DRowRealMatrix;
-import org.apache.commons.math3.linear.ArrayRealVector;
-import org.apache.commons.math3.linear.DecompositionSolver;
-import org.apache.commons.math3.linear.LUDecomposition;
-import org.apache.commons.math3.linear.RealMatrix;
-import org.apache.commons.math3.linear.RealMatrixFormat;
-import org.apache.commons.math3.linear.RealVector;
-import org.apache.commons.math3.linear.RealVectorFormat;
-import org.apache.commons.math3.linear.SingularMatrixException;
+import org.hipparchus.linear.Array2DRowRealMatrix;
+import org.hipparchus.linear.ArrayRealVector;
+import org.hipparchus.linear.DecompositionSolver;
+import org.hipparchus.linear.LUDecomposition;
+import org.hipparchus.linear.RealMatrix;
+import org.hipparchus.linear.RealMatrixFormat;
+import org.hipparchus.linear.RealVector;
+import org.hipparchus.linear.RealVectorFormat;
+import org.hipparchus.exception.MathRuntimeException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -133,7 +133,7 @@ public final class DIISFockExtrapolator implements FockExtrapolator {
 			}
 			oldFock = currentFock;
 
-		} catch (SingularMatrixException ignored) {
+		} catch (MathRuntimeException ignored) {
 			LOG.debug("No solution: " + diisStep);
 
 			diisStep++;

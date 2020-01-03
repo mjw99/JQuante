@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import name.mjw.jquante.config.impl.AtomInfo;
-import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
+import org.hipparchus.geometry.euclidean.threed.Vector3D;
 
 import com.google.common.collect.ComparisonChain;
 

@@ -2,7 +2,7 @@ package name.mjw.jquante.molecule.property.electronic;
 
 import java.util.ArrayList;
 
-import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
+import org.hipparchus.geometry.euclidean.threed.Vector3D;
 
 import name.mjw.jquante.math.geom.BoundingBox;
 import name.mjw.jquante.math.interpolater.Interpolater;

@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Objects;
 
-import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
+import org.hipparchus.geometry.euclidean.threed.Vector3D;
 
 import name.mjw.jquante.common.Units;
 import name.mjw.jquante.common.Utility;
@@ -213,7 +213,8 @@ public class Atom implements Cloneable {
 	 */
 	@Override
 	public String toString() {
-		return symbol + index + " " + atomCenter.toString();
+		return String.format("%s%2d % f % f % f", symbol, index, atomCenter.getX(), atomCenter.getY(),
+				atomCenter.getZ());
 	}
 
 	/**

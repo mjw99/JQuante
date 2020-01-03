@@ -1,7 +1,7 @@
 package name.mjw.jquante.math.qm;
 
 
-import org.apache.commons.math3.linear.Array2DRowRealMatrix;
+import org.hipparchus.linear.Array2DRowRealMatrix;
 
 import name.mjw.jquante.math.MathUtil;
 

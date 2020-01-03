@@ -2,7 +2,7 @@ package name.mjw.jquante.math;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
+import org.hipparchus.geometry.euclidean.threed.Vector3D;
 import org.junit.jupiter.api.Test;
 
 public class MathUtilTest {

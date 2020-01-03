@@ -1,9 +1,10 @@
 package name.mjw.jquante.math.qm.integral;
 
-import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
-import org.apache.commons.math3.linear.RealMatrix;
+import org.hipparchus.geometry.euclidean.threed.Vector3D;
+import org.hipparchus.linear.RealMatrix;
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.factory.Nd4j;
+import java.util.ArrayList;
 
 import name.mjw.jquante.math.MathUtil;
 import name.mjw.jquante.math.qm.Density;
@@ -34,10 +35,6 @@ public final class HuzinagaTwoElectronTerm implements TwoElectronTerm {
 
 		double jij = 0.0;
 
-		int i;
-		int j;
-		int k;
-		int l;
 		double iaExp;
 		double iaCoef;
 		double iaNorm;
@@ -73,22 +70,22 @@ public final class HuzinagaTwoElectronTerm implements TwoElectronTerm {
 		INDArray dOrigin = Nd4j.create(d.getOrigin().toArray());
 		INDArray dPower = Nd4j.create(d.getPowers().toArray());
 
-		for (i = 0; i < aExps.size(0); i++) {
+		for (int i = 0; i < aExps.size(0); i++) {
 			iaCoef = aCoefs.getDouble(i);
 			iaExp = aExps.getDouble(i);
 			iaNorm = aNorms.getDouble(i);
 
-			for (j = 0; j < bExps.size(0); j++) {
+			for (int j = 0; j < bExps.size(0); j++) {
 				jbCoef = bCoefs.getDouble(j);
 				jbExp = bExps.getDouble(j);
 				jbNorm = bNorms.getDouble(j);
 
-				for (k = 0; k < cExps.size(0); k++) {
+				for (int k = 0; k < cExps.size(0); k++) {
 					kcCoef = cCoefs.getDouble(k);
 					kcExp = cExps.getDouble(k);
 					kcNorm = cNorms.getDouble(k);
 
-					for (l = 0; l < dExps.size(0); l++) {
+					for (int l = 0; l < dExps.size(0); l++) {
 						repulsionTerm = coulombRepulsion(aOrigin.getDouble(0), aOrigin.getDouble(1),
 								aOrigin.getDouble(2), iaNorm, aPower.getDouble(0), aPower.getDouble(1),
 								aPower.getDouble(2), iaExp, bOrigin.getDouble(0), bOrigin.getDouble(1),
@@ -115,37 +112,34 @@ public final class HuzinagaTwoElectronTerm implements TwoElectronTerm {
 			double dAlpha) {
 
 		double sum = 0.0;
-		int i;
-		int j;
-		int k;
 
-		double radiusABSquared = ((ax - bx) * (ax - bx) + (ay - by) * (ay - by) + (az - bz) * (az - bz));
-		double radiusCDSquared = ((cx - dx) * (cx - dx) + (cy - dy) * (cy - dy) + (cz - dz) * (cz - dz));
+		final double radiusABSquared = ((ax - bx) * (ax - bx) + (ay - by) * (ay - by) + (az - bz) * (az - bz));
+		final double radiusCDSquared = ((cx - dx) * (cx - dx) + (cy - dy) * (cy - dy) + (cz - dz) * (cz - dz));
 
-		double[] p = IntegralsUtil.gaussianProductCenter(aAlpha, ax, ay, az, bAlpha, bx, by, bz);
-		double[] q = IntegralsUtil.gaussianProductCenter(cAlpha, cx, cy, cz, dAlpha, dx, dy, dz);
+		final double[] p = IntegralsUtil.gaussianProductCenter(aAlpha, ax, ay, az, bAlpha, bx, by, bz);
+		final double[] q = IntegralsUtil.gaussianProductCenter(cAlpha, cx, cy, cz, dAlpha, dx, dy, dz);
 
-		double radiusPQSquared = (p[0] - q[0]) * (p[0] - q[0]) + (p[1] - q[1]) * (p[1] - q[1])
+		final double radiusPQSquared = (p[0] - q[0]) * (p[0] - q[0]) + (p[1] - q[1]) * (p[1] - q[1])
 				+ (p[2] - q[2]) * (p[2] - q[2]);
 
-		double gamma1 = aAlpha + bAlpha;
-		double gamma2 = cAlpha + dAlpha;
-		double delta = 0.25 * (1 / gamma1 + 1 / gamma2);
+		final double gamma1 = aAlpha + bAlpha;
+		final double gamma2 = cAlpha + dAlpha;
+		final double delta = 0.25 * (1 / gamma1 + 1 / gamma2);
 
-		double quartRadiusPQSquaredOverDelta = 0.25 * radiusPQSquared / delta;
+		final double quartRadiusPQSquaredOverDelta = 0.25 * radiusPQSquared / delta;
 
-		INDArray bxx = constructBArray((int) al, (int) bl, (int) cl, (int) dl, p[0], ax, bx, q[0], cx, dx, gamma1,
+		final INDArray bxx = constructBArray((int) al, (int) bl, (int) cl, (int) dl, p[0], ax, bx, q[0], cx, dx, gamma1,
 				gamma2, delta);
 
-		INDArray byy = constructBArray((int) am, (int) bm, (int) cm, (int) dm, p[1], ay, by, q[1], cy, dy, gamma1,
+		final INDArray byy = constructBArray((int) am, (int) bm, (int) cm, (int) dm, p[1], ay, by, q[1], cy, dy, gamma1,
 				gamma2, delta);
 
-		INDArray bzz = constructBArray((int) an, (int) bn, (int) cn, (int) dn, p[2], az, bz, q[2], cz, dz, gamma1,
+		final INDArray bzz = constructBArray((int) an, (int) bn, (int) cn, (int) dn, p[2], az, bz, q[2], cz, dz, gamma1,
 				gamma2, delta);
 
-		for (i = 0; i < bxx.size(0); i++) {
-			for (j = 0; j < byy.size(0); j++) {
-				for (k = 0; k < bzz.size(0); k++) {
+		for (int i = 0; i < bxx.size(0); i++) {
+			for (int j = 0; j < byy.size(0); j++) {
+				for (int k = 0; k < bzz.size(0); k++) {
 					sum += bxx.getDouble(i) * byy.getDouble(j) * bzz.getDouble(k)
 							* IntegralsUtil.computeFGamma(i + j + k, quartRadiusPQSquaredOverDelta);
 				}
@@ -162,41 +156,39 @@ public final class HuzinagaTwoElectronTerm implements TwoElectronTerm {
 	 * coulomb repulsion term
 	 */
 	@Override
-	public final double coulombRepulsion(Vector3D a, double aNorm, Power aPower, double aAlpha, Vector3D b,
-			double bNorm, Power bPower, double bAlpha, Vector3D c, double cNorm, Power cPower, double cAlpha,
-			Vector3D d, double dNorm, Power dPower, double dAlpha) {
+	public final double coulombRepulsion(final Vector3D a, final double aNorm, final Power aPower, final double aAlpha,
+			final Vector3D b, final double bNorm, final Power bPower, final double bAlpha, final Vector3D c,
+			final double cNorm, final Power cPower, final double cAlpha, final Vector3D d, final double dNorm,
+			final Power dPower, final double dAlpha) {
 
 		double sum = 0.0;
-		int i;
-		int j;
-		int k;
 
-		double radiusABSquared = a.distanceSq(b);
-		double radiusCDSquared = c.distanceSq(d);
+		final double radiusABSquared = a.distanceSq(b);
+		final double radiusCDSquared = c.distanceSq(d);
 
-		Vector3D p = IntegralsUtil.gaussianProductCenter(aAlpha, a, bAlpha, b);
-		Vector3D q = IntegralsUtil.gaussianProductCenter(cAlpha, c, dAlpha, d);
+		final Vector3D p = IntegralsUtil.gaussianProductCenter(aAlpha, a, bAlpha, b);
+		final Vector3D q = IntegralsUtil.gaussianProductCenter(cAlpha, c, dAlpha, d);
 
-		double radiusPQSquared = p.distanceSq(q);
+		final double radiusPQSquared = p.distanceSq(q);
 
-		double gamma1 = aAlpha + bAlpha;
-		double gamma2 = cAlpha + dAlpha;
-		double delta = 0.25 * (1 / gamma1 + 1 / gamma2);
+		final double gamma1 = aAlpha + bAlpha;
+		final double gamma2 = cAlpha + dAlpha;
+		final double delta = 0.25 * (1 / gamma1 + 1 / gamma2);
 
-		double quartRadiusPQSquaredOverDelta = 0.25 * radiusPQSquared / delta;
+		final double quartRadiusPQSquaredOverDelta = 0.25 * radiusPQSquared / delta;
 
-		INDArray bx = constructBArray(aPower.getL(), bPower.getL(), cPower.getL(), dPower.getL(), p.getX(), a.getX(),
+		final INDArray bx = constructBArray(aPower.getL(), bPower.getL(), cPower.getL(), dPower.getL(), p.getX(), a.getX(),
 				b.getX(), q.getX(), c.getX(), d.getX(), gamma1, gamma2, delta);
 
-		INDArray by = constructBArray(aPower.getM(), bPower.getM(), cPower.getM(), dPower.getM(), p.getY(), a.getY(),
+		final INDArray by = constructBArray(aPower.getM(), bPower.getM(), cPower.getM(), dPower.getM(), p.getY(), a.getY(),
 				b.getY(), q.getY(), c.getY(), d.getY(), gamma1, gamma2, delta);
 
-		INDArray bz = constructBArray(aPower.getN(), bPower.getN(), cPower.getN(), dPower.getN(), p.getZ(), a.getZ(),
+		final INDArray bz = constructBArray(aPower.getN(), bPower.getN(), cPower.getN(), dPower.getN(), p.getZ(), a.getZ(),
 				b.getZ(), q.getZ(), c.getZ(), d.getZ(), gamma1, gamma2, delta);
 
-		for (i = 0; i < bx.size(0); i++) {
-			for (j = 0; j < by.size(0); j++) {
-				for (k = 0; k < bz.size(0); k++) {
+		for (int i = 0; i < bx.size(0); i++) {
+			for (int j = 0; j < by.size(0); j++) {
+				for (int k = 0; k < bz.size(0); k++) {
 					sum += bx.getDouble(i) * by.getDouble(j) * bz.getDouble(k)
 							* IntegralsUtil.computeFGamma(i + j + k, quartRadiusPQSquaredOverDelta);
 				}
@@ -213,8 +205,9 @@ public final class HuzinagaTwoElectronTerm implements TwoElectronTerm {
 	 * 
 	 * <i> http://dx.doi.org/10.1143/JPSJ.21.2313 eq. 2.22 </i>
 	 */
-	private INDArray constructBArray(int l1, int l2, int l3, int l4, double p, double a, double b, double q, double c,
-			double d, double g1, double g2, double delta) {
+	private final INDArray constructBArray(final int l1, final int l2, final int l3, final int l4, final double p,
+			final double a, final double b, final double q, final double c, final double d, final double g1,
+			final double g2, final double delta) {
 
 		int i1;
 		int i2;
@@ -223,7 +216,7 @@ public final class HuzinagaTwoElectronTerm implements TwoElectronTerm {
 		int u;
 		int index;
 
-		int iMax = l1 + l2 + l3 + l4 + 1;
+		final int iMax = l1 + l2 + l3 + l4 + 1;
 		INDArray bArr = Nd4j.zeros(iMax);
 
 		for (i1 = 0; i1 < (l1 + l2 + 1); i1++) {
@@ -250,8 +243,10 @@ public final class HuzinagaTwoElectronTerm implements TwoElectronTerm {
 	 * 
 	 * <i> http://dx.doi.org/10.1143/JPSJ.21.2313 eq. 2.22 </i>
 	 */
-	private double constructBTerm(int i1, int i2, int r1, int r2, int u, int l1, int l2, int l3, int l4, double px,
-			double ax, double bx, double qx, double cx, double dx, double gamma1, double gamma2, double delta) {
+	private final double constructBTerm(final int i1, final int i2, final int r1, final int r2, final int u,
+			final int l1, final int l2, final int l3, final int l4, final double px, final double ax, final double bx,
+			final double qx, final double cx, final double dx, final double gamma1, final double gamma2,
+			final double delta) {
 
 		return (functionB(i1, l1, l2, px, ax, bx, r1, gamma1) * FastMath.pow(-1, i2)
 				* functionB(i2, l3, l4, qx, cx, dx, r2, gamma2) * FastMath.pow(-1, u)
@@ -263,14 +258,15 @@ public final class HuzinagaTwoElectronTerm implements TwoElectronTerm {
 	/**
 	 * the function B, taken from PyQuante
 	 */
-	private double functionB(int i, int l1, int l2, double p, double a, double b, int r, double g) {
+	private final double functionB(final int i, final int l1, final int l2, final double p, final double a, final double b,
+			final int r, final double g) {
 		return (MathUtil.binomialPrefactor(i, l1, l2, p - a, p - b) * functionB0(i, r, g));
 	}
 
 	/**
 	 * the function B0, taken from PyQuante
 	 */
-	private double functionB0(int i, int r, double g) {
+	private final double functionB0(final int i, final int r, final double g) {
 		return (MathUtil.factorialRatioSquared(i, r) * FastMath.pow(4 * g, r - i));
 	}
 

@@ -7,8 +7,8 @@ import name.mjw.jquante.math.qm.basis.ContractedGaussian;
 import name.mjw.jquante.math.qm.basis.Power;
 import net.jafama.FastMath;
 
-import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
-import org.apache.commons.math3.linear.RealMatrix;
+import org.hipparchus.geometry.euclidean.threed.Vector3D;
+import org.hipparchus.linear.RealMatrix;
 
 /**
  * Head-Gordon/Pople scheme of evaluating two-electron integrals.
@@ -105,21 +105,21 @@ public final class HGPTwoElectronTerm implements TwoElectronTerm {
 			ArrayList<Double> cNorms, Vector3D d, Power dPower, ArrayList<Double> dCoeff, ArrayList<Double> dExps,
 			ArrayList<Double> dNorms) {
 
-		int la = aPower.getL();
-		int ma = aPower.getM();
-		int na = aPower.getN();
+		final int la = aPower.getL();
+		final int ma = aPower.getM();
+		final int na = aPower.getN();
 
-		int lb = bPower.getL();
-		int mb = bPower.getM();
-		int nb = bPower.getN();
+		final int lb = bPower.getL();
+		final int mb = bPower.getM();
+		final int nb = bPower.getN();
 
-		int lc = cPower.getL();
-		int mc = cPower.getM();
-		int nc = cPower.getN();
+		final int lc = cPower.getL();
+		final int mc = cPower.getM();
+		final int nc = cPower.getN();
 
-		int ld = dPower.getL();
-		int md = dPower.getM();
-		int nd = dPower.getN();
+		final int ld = dPower.getL();
+		final int md = dPower.getM();
+		final int nd = dPower.getN();
 
 		if (lb > 0) {
 			Power newBPower = new Power(lb - 1, mb, nb);
@@ -314,23 +314,23 @@ public final class HGPTwoElectronTerm implements TwoElectronTerm {
 	 */
 	private final double vrr(Vector3D a, double aNorm, Power aPower, double aAlpha, Vector3D b, double bNorm, double bAlpha,
 			Vector3D c, double cNorm, Power cPower, double cAlpha, Vector3D d, double dNorm, double dAlpha, int m) {
-		double val = 0.0;
+		double val;
 
-		Vector3D p = IntegralsUtil.gaussianProductCenter(aAlpha, a, bAlpha, b);
-		Vector3D q = IntegralsUtil.gaussianProductCenter(cAlpha, c, dAlpha, d);
-		double zeta = aAlpha + bAlpha;
-		double eta = cAlpha + dAlpha;
-		double zetaPlusEta = zeta + eta;
-		double zetaByZetaPlusEta = zeta / zetaPlusEta;
-		double etaByZetaPlusEta = eta / zetaPlusEta;
-		Vector3D w = IntegralsUtil.gaussianProductCenter(zeta, p, eta, q);
+		final Vector3D p = IntegralsUtil.gaussianProductCenter(aAlpha, a, bAlpha, b);
+		final Vector3D q = IntegralsUtil.gaussianProductCenter(cAlpha, c, dAlpha, d);
+		final double zeta = aAlpha + bAlpha;
+		final double eta = cAlpha + dAlpha;
+		final double zetaPlusEta = zeta + eta;
+		final double zetaByZetaPlusEta = zeta / zetaPlusEta;
+		final double etaByZetaPlusEta = eta / zetaPlusEta;
+		final Vector3D w = IntegralsUtil.gaussianProductCenter(zeta, p, eta, q);
 
-		int la = aPower.getL();
-		int ma = aPower.getM();
-		int na = aPower.getN();
-		int lc = cPower.getL();
-		int mc = cPower.getM();
-		int nc = cPower.getN();
+		final int la = aPower.getL();
+		final int ma = aPower.getM();
+		final int na = aPower.getN();
+		final int lc = cPower.getL();
+		final int mc = cPower.getM();
+		final int nc = cPower.getN();
 
 		if (nc > 0) {
 			Power newCPower = new Power(lc, mc, nc - 1);
@@ -352,7 +352,6 @@ public final class HGPTwoElectronTerm implements TwoElectronTerm {
 				val += 0.5 * na / zetaPlusEta * vrr(a, aNorm, new Power(la, ma, na - 1), aAlpha, b, bNorm, bAlpha, c,
 						cNorm, newCPower, cAlpha, d, dNorm, dAlpha, m + 1);
 			}
-
 			return val;
 		} else if (mc > 0) {
 			Power newCPower = new Power(lc, mc - 1, nc);
@@ -374,7 +373,6 @@ public final class HGPTwoElectronTerm implements TwoElectronTerm {
 				val += 0.5 * ma / zetaPlusEta * vrr(a, aNorm, new Power(la, ma - 1, na), aAlpha, b, bNorm, bAlpha, c,
 						cNorm, newCPower, cAlpha, d, dNorm, dAlpha, m + 1);
 			}
-
 			return val;
 		} else if (lc > 0) {
 			Power newCPower = new Power(lc - 1, mc, nc);
@@ -396,7 +394,6 @@ public final class HGPTwoElectronTerm implements TwoElectronTerm {
 				val += 0.5 * la / zetaPlusEta * vrr(a, aNorm, new Power(la - 1, ma, na), aAlpha, b, bNorm, bAlpha, c,
 						cNorm, newCPower, cAlpha, d, dNorm, dAlpha, m + 1);
 			}
-
 			return val;
 		} else if (na > 0) {
 			Power newAPower = new Power(la, ma, na - 1);
@@ -451,16 +448,15 @@ public final class HGPTwoElectronTerm implements TwoElectronTerm {
 			return val;
 		}
 
-		double rab2 = a.distanceSq(b);
-		double Kab = sqrt2PI / zeta * FastMath.exp(-aAlpha * bAlpha / zeta * rab2);
-		double rcd2 = c.distanceSq(d);
-		double Kcd = sqrt2PI / eta * FastMath.exp(-cAlpha * dAlpha / eta * rcd2);
-		double rpq2 = p.distanceSq(q);
-		double T = zeta * eta / zetaPlusEta * rpq2;
+		final double rab2 = a.distanceSq(b);
+		final double Kab = sqrt2PI / zeta * FastMath.exp(-aAlpha * bAlpha / zeta * rab2);
+		final double rcd2 = c.distanceSq(d);
+		final double Kcd = sqrt2PI / eta * FastMath.exp(-cAlpha * dAlpha / eta * rcd2);
+		final double rpq2 = p.distanceSq(q);
+		final double T = zeta * eta / zetaPlusEta * rpq2;
 
-		val = aNorm * bNorm * cNorm * dNorm * Kab * Kcd / FastMath.sqrt(zetaPlusEta)
+		return aNorm * bNorm * cNorm * dNorm * Kab * Kcd / FastMath.sqrt(zetaPlusEta)
 				* IntegralsUtil.computeFGamma(m, T);
-		return val;
 	}
 
 	/**

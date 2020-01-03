@@ -1,6 +1,6 @@
 package name.mjw.jquante.molecule.property.electronic;
 
-import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
+import org.hipparchus.geometry.euclidean.threed.Vector3D;
 
 /**
  * Represents a property value at a point. This is just a wrapper and is not
