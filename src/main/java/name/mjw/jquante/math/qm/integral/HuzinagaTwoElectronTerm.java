@@ -4,7 +4,6 @@ import org.hipparchus.geometry.euclidean.threed.Vector3D;
 import org.hipparchus.linear.RealMatrix;
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.factory.Nd4j;
-import java.util.ArrayList;
 
 import name.mjw.jquante.math.MathUtil;
 import name.mjw.jquante.math.qm.Density;
@@ -46,29 +45,29 @@ public final class HuzinagaTwoElectronTerm implements TwoElectronTerm {
 		double kcNorm;
 		double repulsionTerm;
 
-		INDArray aExps = Nd4j.create(a.getExponents());
-		INDArray aCoefs = Nd4j.create(a.getCoefficients());
-		INDArray aNorms = Nd4j.create(a.getPrimNorms());
-		INDArray aOrigin = Nd4j.create(a.getOrigin().toArray());
-		INDArray aPower = Nd4j.create(a.getPowers().toArray());
+		final INDArray aExps = Nd4j.create(a.getExponents());
+		final INDArray aCoefs = Nd4j.create(a.getCoefficients());
+		final INDArray aNorms = Nd4j.create(a.getPrimNorms());
+		final INDArray aOrigin = Nd4j.create(a.getOrigin().toArray());
+		final INDArray aPower = Nd4j.create(a.getPowers().toArray());
 
-		INDArray bExps = Nd4j.create(b.getExponents());
-		INDArray bCoefs = Nd4j.create(b.getCoefficients());
-		INDArray bNorms = Nd4j.create(b.getPrimNorms());
-		INDArray bOrigin = Nd4j.create(b.getOrigin().toArray());
-		INDArray bPower = Nd4j.create(b.getPowers().toArray());
+		final INDArray bExps = Nd4j.create(b.getExponents());
+		final INDArray bCoefs = Nd4j.create(b.getCoefficients());
+		final INDArray bNorms = Nd4j.create(b.getPrimNorms());
+		final INDArray bOrigin = Nd4j.create(b.getOrigin().toArray());
+		final INDArray bPower = Nd4j.create(b.getPowers().toArray());
 
-		INDArray cExps = Nd4j.create(c.getExponents());
-		INDArray cCoefs = Nd4j.create(c.getCoefficients());
-		INDArray cNorms = Nd4j.create(c.getPrimNorms());
-		INDArray cOrigin = Nd4j.create(c.getOrigin().toArray());
-		INDArray cPower = Nd4j.create(c.getPowers().toArray());
+		final INDArray cExps = Nd4j.create(c.getExponents());
+		final INDArray cCoefs = Nd4j.create(c.getCoefficients());
+		final INDArray cNorms = Nd4j.create(c.getPrimNorms());
+		final INDArray cOrigin = Nd4j.create(c.getOrigin().toArray());
+		final INDArray cPower = Nd4j.create(c.getPowers().toArray());
 
-		INDArray dExps = Nd4j.create(d.getExponents());
-		INDArray dCoefs = Nd4j.create(d.getCoefficients());
-		INDArray dNorms = Nd4j.create(d.getPrimNorms());
-		INDArray dOrigin = Nd4j.create(d.getOrigin().toArray());
-		INDArray dPower = Nd4j.create(d.getPowers().toArray());
+		final INDArray dExps = Nd4j.create(d.getExponents());
+		final INDArray dCoefs = Nd4j.create(d.getCoefficients());
+		final INDArray dNorms = Nd4j.create(d.getPrimNorms());
+		final INDArray dOrigin = Nd4j.create(d.getOrigin().toArray());
+		final INDArray dPower = Nd4j.create(d.getPowers().toArray());
 
 		for (int i = 0; i < aExps.size(0); i++) {
 			iaCoef = aCoefs.getDouble(i);
