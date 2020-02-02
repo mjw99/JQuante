@@ -89,7 +89,7 @@ public class HGPTwoElectronTermTest {
 	@Test
 	public void vrrS0000() {
 		assertEquals(4.37335456733,
-				e2.vrrWrapper(new Vector3D(0, 0, 0), 1.0, new Power(0, 0, 0), 1.0, new Vector3D(0, 0, 0), 1.0, 1.0,
+				e2.vrr(new Vector3D(0, 0, 0), 1.0, new Power(0, 0, 0), 1.0, new Vector3D(0, 0, 0), 1.0, 1.0,
 						new Vector3D(0, 0, 0), 1.0, new Power(0, 0, 0), 1.0, new Vector3D(0, 0, 0), 1.0, 1.0, 0),
 				delta);
 	}
@@ -97,7 +97,7 @@ public class HGPTwoElectronTermTest {
 	@Test
 	public void vrrP0000() {
 		assertEquals(0.182223107579,
-				e2.vrrWrapper(new Vector3D(0, 0, 0), 1.0, new Power(1, 0, 0), 1.0, new Vector3D(0, 0, 0), 1.0, 1.0,
+				e2.vrr(new Vector3D(0, 0, 0), 1.0, new Power(1, 0, 0), 1.0, new Vector3D(0, 0, 0), 1.0, 1.0,
 						new Vector3D(0, 0, 0), 1.0, new Power(1, 0, 0), 1.0, new Vector3D(0, 0, 0), 1.0, 1.0, 0),
 				delta);
 	}
@@ -105,7 +105,7 @@ public class HGPTwoElectronTermTest {
 	@Test
 	public void vrrD0000() {
 		assertEquals(0.223223306785,
-				e2.vrrWrapper(new Vector3D(0, 0, 0), 1.0, new Power(2, 0, 0), 1.0, new Vector3D(0, 0, 0), 1.0, 1.0,
+				e2.vrr(new Vector3D(0, 0, 0), 1.0, new Power(2, 0, 0), 1.0, new Vector3D(0, 0, 0), 1.0, 1.0,
 						new Vector3D(0, 0, 0), 1.0, new Power(2, 0, 0), 1.0, new Vector3D(0, 0, 0), 1.0, 1.0, 0),
 				delta);
 	}
@@ -113,7 +113,7 @@ public class HGPTwoElectronTermTest {
 	@Test
 	public void vrrP1000() {
 		assertEquals(-5.63387712455e-06,
-				e2.vrrWrapper(new Vector3D(1, 2, 3), 1.0, new Power(1, 0, 0), 1.0, new Vector3D(0, 0, 0), 1.0, 1.0,
+				e2.vrr(new Vector3D(1, 2, 3), 1.0, new Power(1, 0, 0), 1.0, new Vector3D(0, 0, 0), 1.0, 1.0,
 						new Vector3D(0, 0, 0), 1.0, new Power(1, 0, 0), 1.0, new Vector3D(0, 0, 0), 1.0, 1.0, 0),
 				delta);
 	}
@@ -121,7 +121,7 @@ public class HGPTwoElectronTermTest {
 	@Test
 	public void vrrD1000() {
 		assertEquals(0.00022503308545040895,
-				e2.vrrWrapper(new Vector3D(1, 2, 3), 1.0, new Power(2, 0, 0), 1.0, new Vector3D(0, 0, 0), 1.0, 1.0,
+				e2.vrr(new Vector3D(1, 2, 3), 1.0, new Power(2, 0, 0), 1.0, new Vector3D(0, 0, 0), 1.0, 1.0,
 						new Vector3D(0, 0, 0), 1.0, new Power(2, 0, 0), 1.0, new Vector3D(0, 0, 0), 1.0, 1.0, 0),
 				delta);
 	}
