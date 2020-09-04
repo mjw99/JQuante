@@ -37,9 +37,9 @@ public final class MathUtil {
 	 *            the third point
 	 * @return the angle defined
 	 */
-	public static final double findAngle(Vector3D v1, Vector3D v2, Vector3D v3) {
-		Vector3D v12 = v2.subtract(v1);
-		Vector3D v32 = v2.subtract(v3);
+	public static final double findAngle(final Vector3D v1, final Vector3D v2, final Vector3D v3) {
+		final Vector3D v12 = v2.subtract(v1);
+		final Vector3D v32 = v2.subtract(v3);
 
 		return Vector3D.angle(v12, v32);
 	}
@@ -47,26 +47,23 @@ public final class MathUtil {
 	/**
 	 * Method to find the dihedral angle defined by planes v1-v2-v3 and v2-v3-v4.
 	 * 
-	 * @param v1
-	 *            first point
-	 * @param v2
-	 *            second point
-	 * @param v3
-	 *            third point (2nd and 3rd point define the angle)
-	 * @param v4
-	 *            the fourth angle
+	 * @param v1 first point
+	 * @param v2 second point
+	 * @param v3 third point (2nd and 3rd point define the angle)
+	 * @param v4 the fourth angle
 	 * @return the dihedral angle defined
 	 */
-	public static final double findDihedral(Vector3D v1, Vector3D v2, Vector3D v3, Vector3D v4) {
+	public static final double findDihedral(final Vector3D v1, final Vector3D v2, final Vector3D v3,
+			final Vector3D v4) {
 		// normal of plane 1
-		Vector3D v12 = v2.subtract(v1);
-		Vector3D v32 = v2.subtract(v3);
-		Vector3D n123 = v12.crossProduct(v32).normalize();
+		final Vector3D v12 = v2.subtract(v1);
+		final Vector3D v32 = v2.subtract(v3);
+		final Vector3D n123 = v12.crossProduct(v32).normalize();
 
 		// normal of plane 2
-		Vector3D v23 = v3.subtract(v2);
-		Vector3D v43 = v3.subtract(v4);
-		Vector3D n234 = v23.crossProduct(v43).normalize();
+		final Vector3D v23 = v3.subtract(v2);
+		final Vector3D v43 = v3.subtract(v4);
+		final Vector3D n234 = v23.crossProduct(v43).normalize();
 
 		// sign of the dihedral
 		double sign = v32.dotProduct(n123.crossProduct(n234));
@@ -84,8 +81,7 @@ public final class MathUtil {
 	/**
 	 * compute double N! ... (1*3*5*...*n)
 	 * 
-	 * @param n
-	 *            the n, whose factorial is to be found
+	 * @param n the n, whose factorial is to be found
 	 * @return the factorial
 	 */
 	public static final int factorial2(int n) {
@@ -101,10 +97,8 @@ public final class MathUtil {
 	/**
 	 * Does ( a! / b! / (a-2*b)! )
 	 * 
-	 * @param a
-	 *            the first term
-	 * @param b
-	 *            the second term
+	 * @param a the first term
+	 * @param b the second term
 	 * @return ( a! / b! / (a-2*b)! )
 	 */
 	public static final double factorialRatioSquared(final int a, final int b) {
@@ -118,16 +112,11 @@ public final class MathUtil {
 	 * From Augspurger and Dykstra:
 	 * <a href="http://dx.doi.org/10.1021/j100176a037">10.1021/j100176a037</a>
 	 * 
-	 * @param s
-	 *            s
-	 * @param ia
-	 *            ia
-	 * @param ib
-	 *            ib
-	 * @param xpa
-	 *            xpa
-	 * @param xpb
-	 *            xpb
+	 * @param s   s
+	 * @param ia  ia
+	 * @param ib  ib
+	 * @param xpa xpa
+	 * @param xpb xpb
 	 * @return Pre-factor of binomial expansion.
 	 */
 	public static final double binomialPrefactor(final int s, final int ia, final int ib, final double xpa,
@@ -145,8 +134,8 @@ public final class MathUtil {
 		return sum;
 	}
 
-	public static final RealVector realMatrixToRealVector(RealMatrix realMatrix) {
-		RealVector vec = new ArrayRealVector(realMatrix.getRowDimension() * realMatrix.getColumnDimension());
+	public static final RealVector realMatrixToRealVector(final RealMatrix realMatrix) {
+		final RealVector vec = new ArrayRealVector(realMatrix.getRowDimension() * realMatrix.getColumnDimension());
 		int ii = 0;
 
 		for (int i = 0; i < realMatrix.getRowDimension(); i++) {
@@ -158,9 +147,9 @@ public final class MathUtil {
 
 	}
 
-	public static final String matrixToString(Array2DRowRealMatrix array2DRowRealMatrix) {
-		DecimalFormat df = new DecimalFormat("+#,##0.000;-#");
-		RealMatrixFormat mf = new RealMatrixFormat("\n", "", "", "", "\n", " ", df);
+	public static final String matrixToString(final Array2DRowRealMatrix array2DRowRealMatrix) {
+		final DecimalFormat df = new DecimalFormat("+#,##0.000;-#");
+		final RealMatrixFormat mf = new RealMatrixFormat("\n", "", "", "", "\n", " ", df);
 		return mf.format(array2DRowRealMatrix);
 	}
 }

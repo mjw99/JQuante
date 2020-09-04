@@ -29,8 +29,8 @@ public final class HuzinagaTwoElectronTerm implements TwoElectronTerm {
 	 * 2E coulomb interactions between four contracted Gaussians
 	 */
 	@Override
-	public final double coulomb(ContractedGaussian a, ContractedGaussian b, ContractedGaussian c,
-			ContractedGaussian d) {
+	public final double coulomb(final ContractedGaussian a, final ContractedGaussian b, final ContractedGaussian c,
+			final ContractedGaussian d) {
 
 		double jij = 0.0;
 
@@ -116,8 +116,8 @@ public final class HuzinagaTwoElectronTerm implements TwoElectronTerm {
 		final double radiusABSquared = a.distanceSq(b);
 		final double radiusCDSquared = c.distanceSq(d);
 
-		Vector3D p = IntegralsUtil.gaussianProductCenter(aAlpha, a, bAlpha, b);
-		Vector3D q = IntegralsUtil.gaussianProductCenter(cAlpha, c, dAlpha, d);
+		final Vector3D p = IntegralsUtil.gaussianProductCenter(aAlpha, a, bAlpha, b);
+		final Vector3D q = IntegralsUtil.gaussianProductCenter(cAlpha, c, dAlpha, d);
 
 		final double radiusPQSquared = p.distanceSq(q);
 
@@ -207,8 +207,8 @@ public final class HuzinagaTwoElectronTerm implements TwoElectronTerm {
 	/**
 	 * the function B, taken from PyQuante
 	 */
-	private final double functionB(final int i, final int l1, final int l2, final double p, final double a, final double b,
-			final int r, final double g) {
+	private final double functionB(final int i, final int l1, final int l2, final double p, final double a,
+			final double b, final int r, final double g) {
 		return (MathUtil.binomialPrefactor(i, l1, l2, p - a, p - b) * functionB0(i, r, g));
 	}
 
@@ -220,8 +220,8 @@ public final class HuzinagaTwoElectronTerm implements TwoElectronTerm {
 	}
 
 	@Override
-	public final double coulomb(ContractedGaussian a, ContractedGaussian b, ContractedGaussian c, ContractedGaussian d,
-			Density density, RealMatrix jMat, RealMatrix kMat) {
+	public final double coulomb(final ContractedGaussian a, final ContractedGaussian b, final ContractedGaussian c,
+			final ContractedGaussian d, final Density density, final RealMatrix jMat, final RealMatrix kMat) {
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 }

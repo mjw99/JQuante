@@ -30,8 +30,8 @@ public final class HGPTwoElectronTerm implements TwoElectronTerm {
 	 * 2E coulomb interactions between four contracted Gaussians.
 	 */
 	@Override
-	public final double coulomb(ContractedGaussian a, ContractedGaussian b, ContractedGaussian c,
-			ContractedGaussian d) {
+	public final double coulomb(final ContractedGaussian a, final ContractedGaussian b, final ContractedGaussian c,
+			final ContractedGaussian d) {
 		return (a.getNormalization() * b.getNormalization() * c.getNormalization() * d.getNormalization()
 				* contractedHrr(a.getOrigin(), a.getPowers(), a.getCoefficients(), a.getExponents(), a.getPrimNorms(),
 						b.getOrigin(), b.getPowers(), b.getCoefficients(), b.getExponents(), b.getPrimNorms(),
@@ -43,9 +43,10 @@ public final class HGPTwoElectronTerm implements TwoElectronTerm {
 	 * Coulomb repulsion term
 	 */
 	@Override
-	public final double coulombRepulsion(Vector3D a, double aNorm, Power aPower, double aAlpha, Vector3D b,
-			double bNorm, Power bPower, double bAlpha, Vector3D c, double cNorm, Power cPower, double cAlpha,
-			Vector3D d, double dNorm, Power dPower, double dAlpha) {
+	public final double coulombRepulsion(final Vector3D a, final double aNorm, final Power aPower, final double aAlpha,
+			final Vector3D b, final double bNorm, final Power bPower, final double bAlpha, final Vector3D c,
+			final double cNorm, final Power cPower, final double cAlpha, final Vector3D d, final double dNorm,
+			final Power dPower, final double dAlpha) {
 		return vrr(a, aNorm, aPower, aAlpha, b, bNorm, bAlpha, c, cNorm, cPower, cAlpha, d, dNorm, dAlpha, 0);
 	}
 
@@ -84,11 +85,12 @@ public final class HGPTwoElectronTerm implements TwoElectronTerm {
 	 * 
 	 * @return Contribution to Horizontal Recurrence Relation.
 	 */
-	protected final double contractedHrr(Vector3D a, Power aPower, ArrayList<Double> aCoeff, ArrayList<Double> aExps,
-			ArrayList<Double> aNorms, Vector3D b, Power bPower, ArrayList<Double> bCoeff, ArrayList<Double> bExps,
-			ArrayList<Double> bNorms, Vector3D c, Power cPower, ArrayList<Double> cCoeff, ArrayList<Double> cExps,
-			ArrayList<Double> cNorms, Vector3D d, Power dPower, ArrayList<Double> dCoeff, ArrayList<Double> dExps,
-			ArrayList<Double> dNorms) {
+	protected final double contractedHrr(final Vector3D a, final Power aPower, final ArrayList<Double> aCoeff,
+			final ArrayList<Double> aExps, final ArrayList<Double> aNorms, final Vector3D b, final Power bPower,
+			final ArrayList<Double> bCoeff, final ArrayList<Double> bExps, final ArrayList<Double> bNorms,
+			final Vector3D c, final Power cPower, final ArrayList<Double> cCoeff, final ArrayList<Double> cExps,
+			final ArrayList<Double> cNorms, final Vector3D d, final Power dPower, final ArrayList<Double> dCoeff,
+			final ArrayList<Double> dExps, final ArrayList<Double> dNorms) {
 
 		final int la = aPower.getL();
 		final int ma = aPower.getM();
@@ -107,37 +109,37 @@ public final class HGPTwoElectronTerm implements TwoElectronTerm {
 		final int nd = dPower.getN();
 
 		if (lb > 0) {
-			Power newBPower = new Power(lb - 1, mb, nb);
+			final Power newBPower = new Power(lb - 1, mb, nb);
 			return (contractedHrr(a, new Power(la + 1, ma, na), aCoeff, aExps, aNorms, b, newBPower, bCoeff, bExps,
 					bNorms, c, cPower, cCoeff, cExps, cNorms, d, dPower, dCoeff, dExps, dNorms)
 					+ (a.getX() - b.getX()) * contractedHrr(a, aPower, aCoeff, aExps, aNorms, b, newBPower, bCoeff,
 							bExps, bNorms, c, cPower, cCoeff, cExps, cNorms, d, dPower, dCoeff, dExps, dNorms));
 		} else if (mb > 0) {
-			Power newBPower = new Power(lb, mb - 1, nb);
+			final Power newBPower = new Power(lb, mb - 1, nb);
 			return (contractedHrr(a, new Power(la, ma + 1, na), aCoeff, aExps, aNorms, b, newBPower, bCoeff, bExps,
 					bNorms, c, cPower, cCoeff, cExps, cNorms, d, dPower, dCoeff, dExps, dNorms)
 					+ (a.getY() - b.getY()) * contractedHrr(a, aPower, aCoeff, aExps, aNorms, b, newBPower, bCoeff,
 							bExps, bNorms, c, cPower, cCoeff, cExps, cNorms, d, dPower, dCoeff, dExps, dNorms));
 		} else if (nb > 0) {
-			Power newBPower = new Power(lb, mb, nb - 1);
+			final Power newBPower = new Power(lb, mb, nb - 1);
 			return (contractedHrr(a, new Power(la, ma, na + 1), aCoeff, aExps, aNorms, b, newBPower, bCoeff, bExps,
 					bNorms, c, cPower, cCoeff, cExps, cNorms, d, dPower, dCoeff, dExps, dNorms)
 					+ (a.getZ() - b.getZ()) * contractedHrr(a, aPower, aCoeff, aExps, aNorms, b, newBPower, bCoeff,
 							bExps, bNorms, c, cPower, cCoeff, cExps, cNorms, d, dPower, dCoeff, dExps, dNorms));
 		} else if (ld > 0) {
-			Power newDPower = new Power(ld - 1, md, nd);
+			final Power newDPower = new Power(ld - 1, md, nd);
 			return (contractedHrr(a, aPower, aCoeff, aExps, aNorms, b, bPower, bCoeff, bExps, bNorms, c,
 					new Power(lc + 1, mc, nc), cCoeff, cExps, cNorms, d, newDPower, dCoeff, dExps, dNorms)
 					+ (c.getX() - d.getX()) * contractedHrr(a, aPower, aCoeff, aExps, aNorms, b, bPower, bCoeff, bExps,
 							bNorms, c, cPower, cCoeff, cExps, cNorms, d, newDPower, dCoeff, dExps, dNorms));
 		} else if (md > 0) {
-			Power newDPower = new Power(ld, md - 1, nd);
+			final Power newDPower = new Power(ld, md - 1, nd);
 			return (contractedHrr(a, aPower, aCoeff, aExps, aNorms, b, bPower, bCoeff, bExps, bNorms, c,
 					new Power(lc, mc + 1, nc), cCoeff, cExps, cNorms, d, newDPower, dCoeff, dExps, dNorms)
 					+ (c.getY() - d.getY()) * contractedHrr(a, aPower, aCoeff, aExps, aNorms, b, bPower, bCoeff, bExps,
 							bNorms, c, cPower, cCoeff, cExps, cNorms, d, newDPower, dCoeff, dExps, dNorms));
 		} else if (nd > 0) {
-			Power newDPower = new Power(ld, md, nd - 1);
+			final Power newDPower = new Power(ld, md, nd - 1);
 			return (contractedHrr(a, aPower, aCoeff, aExps, aNorms, b, bPower, bCoeff, bExps, bNorms, c,
 					new Power(lc, mc, nc + 1), cCoeff, cExps, cNorms, d, newDPower, dCoeff, dExps, dNorms)
 					+ (c.getZ() - d.getZ()) * contractedHrr(a, aPower, aCoeff, aExps, aNorms, b, bPower, bCoeff, bExps,
@@ -183,11 +185,12 @@ public final class HGPTwoElectronTerm implements TwoElectronTerm {
 	 * 
 	 * @return Contribution to Vertical Recurrence Relation.
 	 */
-	protected final double contractedVrr(Vector3D a, Power aPower, ArrayList<Double> aCoeff, ArrayList<Double> aExps,
-			ArrayList<Double> aNorms, Vector3D b, ArrayList<Double> bCoeff, ArrayList<Double> bExps,
-			ArrayList<Double> bNorms, Vector3D c, Power cPower, ArrayList<Double> cCoeff, ArrayList<Double> cExps,
-			ArrayList<Double> cNorms, Vector3D d, ArrayList<Double> dCoeff, ArrayList<Double> dExps,
-			ArrayList<Double> dNorms) {
+	protected final double contractedVrr(final Vector3D a, final Power aPower, final ArrayList<Double> aCoeff,
+			final ArrayList<Double> aExps, final ArrayList<Double> aNorms, final Vector3D b,
+			final ArrayList<Double> bCoeff, final ArrayList<Double> bExps, final ArrayList<Double> bNorms,
+			final Vector3D c, final Power cPower, final ArrayList<Double> cCoeff, final ArrayList<Double> cExps,
+			final ArrayList<Double> cNorms, final Vector3D d, final ArrayList<Double> dCoeff,
+			final ArrayList<Double> dExps, final ArrayList<Double> dNorms) {
 
 		double value = 0.0;
 
@@ -219,8 +222,8 @@ public final class HGPTwoElectronTerm implements TwoElectronTerm {
 					kcNorm = cNorms.get(k);
 
 					for (int l = 0; l < dExps.size(); l++) {
-						value += iaCoef * jbCoef * kcCoef * dCoeff.get(l) * vrr(a, iaNorm, aPower, iaExp, b,
-								jbNorm, jbExp, c, kcNorm, cPower, kcExp, d, dNorms.get(l), dExps.get(l), 0);
+						value += iaCoef * jbCoef * kcCoef * dCoeff.get(l) * vrr(a, iaNorm, aPower, iaExp, b, jbNorm,
+								jbExp, c, kcNorm, cPower, kcExp, d, dNorms.get(l), dExps.get(l), 0);
 					}
 				}
 			}
@@ -253,9 +256,9 @@ public final class HGPTwoElectronTerm implements TwoElectronTerm {
 	 *               auxiliary integral.
 	 * @return Contribution to Vertical Recurrence Relation.
 	 */
-	final double vrr(Vector3D a, double aNorm, Power aPower, double aAlpha, Vector3D b, double bNorm,
-			double bAlpha, Vector3D c, double cNorm, Power cPower, double cAlpha, Vector3D d, double dNorm,
-			double dAlpha, int m) {
+	final double vrr(final Vector3D a, final double aNorm, final Power aPower, final double aAlpha, final Vector3D b,
+			final double bNorm, final double bAlpha, final Vector3D c, final double cNorm, final Power cPower,
+			final double cAlpha, final Vector3D d, final double dNorm, final double dAlpha, final int m) {
 		double val;
 
 		final Vector3D p = IntegralsUtil.gaussianProductCenter(aAlpha, a, bAlpha, b);
@@ -275,14 +278,14 @@ public final class HGPTwoElectronTerm implements TwoElectronTerm {
 		final int nc = cPower.getN();
 
 		if (nc > 0) {
-			Power newCPower = new Power(lc, mc, nc - 1);
+			final Power newCPower = new Power(lc, mc, nc - 1);
 			val = (q.getZ() - c.getZ())
 					* vrr(a, aNorm, aPower, aAlpha, b, bNorm, bAlpha, c, cNorm, newCPower, cAlpha, d, dNorm, dAlpha, m)
 					+ (w.getZ() - q.getZ()) * vrr(a, aNorm, aPower, aAlpha, b, bNorm, bAlpha, c, cNorm, newCPower,
 							cAlpha, d, dNorm, dAlpha, m + 1);
 
 			if (nc > 1) {
-				Power newCPower1 = new Power(lc, mc, nc - 2);
+				final Power newCPower1 = new Power(lc, mc, nc - 2);
 				val += 0.5 * (nc - 1) / eta
 						* (vrr(a, aNorm, aPower, aAlpha, b, bNorm, bAlpha, c, cNorm, newCPower1, cAlpha, d, dNorm,
 								dAlpha, m)
@@ -296,14 +299,14 @@ public final class HGPTwoElectronTerm implements TwoElectronTerm {
 			}
 			return val;
 		} else if (mc > 0) {
-			Power newCPower = new Power(lc, mc - 1, nc);
+			final Power newCPower = new Power(lc, mc - 1, nc);
 			val = (q.getY() - c.getY())
 					* vrr(a, aNorm, aPower, aAlpha, b, bNorm, bAlpha, c, cNorm, newCPower, cAlpha, d, dNorm, dAlpha, m)
 					+ (w.getY() - q.getY()) * vrr(a, aNorm, aPower, aAlpha, b, bNorm, bAlpha, c, cNorm, newCPower,
 							cAlpha, d, dNorm, dAlpha, m + 1);
 
 			if (mc > 1) {
-				Power newCPower1 = new Power(lc, mc - 2, nc);
+				final Power newCPower1 = new Power(lc, mc - 2, nc);
 				val += 0.5 * (mc - 1) / eta
 						* (vrr(a, aNorm, aPower, aAlpha, b, bNorm, bAlpha, c, cNorm, newCPower1, cAlpha, d, dNorm,
 								dAlpha, m)
@@ -317,14 +320,14 @@ public final class HGPTwoElectronTerm implements TwoElectronTerm {
 			}
 			return val;
 		} else if (lc > 0) {
-			Power newCPower = new Power(lc - 1, mc, nc);
+			final Power newCPower = new Power(lc - 1, mc, nc);
 			val = (q.getX() - c.getX())
 					* vrr(a, aNorm, aPower, aAlpha, b, bNorm, bAlpha, c, cNorm, newCPower, cAlpha, d, dNorm, dAlpha, m)
 					+ (w.getX() - q.getX()) * vrr(a, aNorm, aPower, aAlpha, b, bNorm, bAlpha, c, cNorm, newCPower,
 							cAlpha, d, dNorm, dAlpha, m + 1);
 
 			if (lc > 1) {
-				Power newCPower1 = new Power(lc - 2, mc, nc);
+				final Power newCPower1 = new Power(lc - 2, mc, nc);
 				val += 0.5 * (lc - 1) / eta
 						* (vrr(a, aNorm, aPower, aAlpha, b, bNorm, bAlpha, c, cNorm, newCPower1, cAlpha, d, dNorm,
 								dAlpha, m)
@@ -338,14 +341,14 @@ public final class HGPTwoElectronTerm implements TwoElectronTerm {
 			}
 			return val;
 		} else if (na > 0) {
-			Power newAPower = new Power(la, ma, na - 1);
+			final Power newAPower = new Power(la, ma, na - 1);
 			val = (p.getZ() - a.getZ())
 					* vrr(a, aNorm, newAPower, aAlpha, b, bNorm, bAlpha, c, cNorm, cPower, cAlpha, d, dNorm, dAlpha, m)
 					+ (w.getZ() - p.getZ()) * vrr(a, aNorm, newAPower, aAlpha, b, bNorm, bAlpha, c, cNorm, cPower,
 							cAlpha, d, dNorm, dAlpha, m + 1);
 
 			if (na > 1) {
-				Power newAPower1 = new Power(la, ma, na - 2);
+				final Power newAPower1 = new Power(la, ma, na - 2);
 				val += 0.5 * (na - 1) / zeta
 						* (vrr(a, aNorm, newAPower1, aAlpha, b, bNorm, bAlpha, c, cNorm, cPower, cAlpha, d, dNorm,
 								dAlpha, m)
@@ -355,14 +358,14 @@ public final class HGPTwoElectronTerm implements TwoElectronTerm {
 
 			return val;
 		} else if (ma > 0) {
-			Power newAPower = new Power(la, ma - 1, na);
+			final Power newAPower = new Power(la, ma - 1, na);
 			val = (p.getY() - a.getY())
 					* vrr(a, aNorm, newAPower, aAlpha, b, bNorm, bAlpha, c, cNorm, cPower, cAlpha, d, dNorm, dAlpha, m)
 					+ (w.getY() - p.getY()) * vrr(a, aNorm, newAPower, aAlpha, b, bNorm, bAlpha, c, cNorm, cPower,
 							cAlpha, d, dNorm, dAlpha, m + 1);
 
 			if (ma > 1) {
-				Power newAPower1 = new Power(la, ma - 2, na);
+				final Power newAPower1 = new Power(la, ma - 2, na);
 				val += 0.5 * (ma - 1) / zeta
 						* (vrr(a, aNorm, newAPower1, aAlpha, b, bNorm, bAlpha, c, cNorm, cPower, cAlpha, d, dNorm,
 								dAlpha, m)
@@ -372,14 +375,14 @@ public final class HGPTwoElectronTerm implements TwoElectronTerm {
 
 			return val;
 		} else if (la > 0) {
-			Power newAPower = new Power(la - 1, ma, na);
+			final Power newAPower = new Power(la - 1, ma, na);
 			val = (p.getX() - a.getX())
 					* vrr(a, aNorm, newAPower, aAlpha, b, bNorm, bAlpha, c, cNorm, cPower, cAlpha, d, dNorm, dAlpha, m)
 					+ (w.getX() - p.getX()) * vrr(a, aNorm, newAPower, aAlpha, b, bNorm, bAlpha, c, cNorm, cPower,
 							cAlpha, d, dNorm, dAlpha, m + 1);
 
 			if (la > 1) {
-				Power newAPower1 = new Power(la - 2, ma, na);
+				final Power newAPower1 = new Power(la - 2, ma, na);
 				val += 0.5 * (la - 1) / zeta
 						* (vrr(a, aNorm, newAPower1, aAlpha, b, bNorm, bAlpha, c, cNorm, cPower, cAlpha, d, dNorm,
 								dAlpha, m)
@@ -402,8 +405,8 @@ public final class HGPTwoElectronTerm implements TwoElectronTerm {
 	}
 
 	@Override
-	public final double coulomb(ContractedGaussian a, ContractedGaussian b, ContractedGaussian c, ContractedGaussian d,
-			Density density, RealMatrix jMat, RealMatrix kMat) {
+	public final double coulomb(final ContractedGaussian a, final ContractedGaussian b, final ContractedGaussian c,
+			final ContractedGaussian d, final Density density, final RealMatrix jMat, final RealMatrix kMat) {
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 }
