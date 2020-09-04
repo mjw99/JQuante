@@ -61,15 +61,16 @@ public final class PrimitiveGaussian implements Comparable<PrimitiveGaussian>{
 	 * @param exponent    - the exponent for this PG
 	 * @param coefficient - the coefficient for this PG
 	 */
-	public PrimitiveGaussian(Vector3D origin, Power powers, double exponent, double coefficient) {
+	public PrimitiveGaussian(final Vector3D origin, final Power powers, final double exponent,
+			final double coefficient) {
 		this.origin = origin;
 		this.powers = powers;
 		this.exponent = exponent;
 		this.coefficient = coefficient;
 
-		int l = powers.getL();
-		int m = powers.getM();
-		int n = powers.getN();
+		final int l = powers.getL();
+		final int m = powers.getM();
+		final int n = powers.getN();
 
 		/**
 		 * Normalize this primitive Gaussian.
@@ -124,9 +125,9 @@ public final class PrimitiveGaussian implements Comparable<PrimitiveGaussian>{
 	 * @param pg the PG with which to multiply
 	 * @return the product of the PG
 	 */
-	public PrimitiveGaussian mul(PrimitiveGaussian pg) {
-		double gamma = exponent + pg.exponent;
-		Vector3D newOrigin = new Vector3D((exponent * origin.getX() + pg.exponent * pg.origin.getX()) / gamma,
+	public PrimitiveGaussian mul(final PrimitiveGaussian pg) {
+		final double gamma = exponent + pg.exponent;
+		final Vector3D newOrigin = new Vector3D((exponent * origin.getX() + pg.exponent * pg.origin.getX()) / gamma,
 				(exponent * origin.getY() + pg.exponent * pg.origin.getY()) / gamma,
 				(exponent * origin.getZ() + pg.exponent * pg.origin.getZ()) / gamma);
 
@@ -140,7 +141,7 @@ public final class PrimitiveGaussian implements Comparable<PrimitiveGaussian>{
 	 *           determined.
 	 * @return the overlap value
 	 */
-	public double overlap(PrimitiveGaussian pg) {
+	public double overlap(final PrimitiveGaussian pg) {
 		return (normalization * pg.normalization
 				* Integrals.overlap(exponent, powers, origin, pg.exponent, pg.powers, pg.origin));
 	}
@@ -151,7 +152,7 @@ public final class PrimitiveGaussian implements Comparable<PrimitiveGaussian>{
 	 * @param pg the PrimitiveGaussian with which KE is to be determined.
 	 * @return the KE value
 	 */
-	public double kinetic(PrimitiveGaussian pg) {
+	public double kinetic(final PrimitiveGaussian pg) {
 		return (normalization * pg.normalization
 				* Integrals.kinetic(exponent, powers, origin, pg.exponent, pg.powers, pg.origin));
 	}
@@ -164,7 +165,7 @@ public final class PrimitiveGaussian implements Comparable<PrimitiveGaussian>{
 	 * @param center the center at which nuclear energy is to be computed
 	 * @return the nuclear value
 	 */
-	public double nuclear(PrimitiveGaussian pg, Vector3D center) {
+	public double nuclear(final PrimitiveGaussian pg, final Vector3D center) {
 		return (Integrals.nuclearAttraction(origin, normalization, powers, exponent, pg.origin, pg.normalization,
 				pg.powers, pg.exponent, center));
 	}
@@ -176,8 +177,8 @@ public final class PrimitiveGaussian implements Comparable<PrimitiveGaussian>{
 	 * @param center the reference center
 	 * @return partial derivatives w.r.t the center
 	 */
-	public Vector3D nuclearAttractionGradient(PrimitiveGaussian pg, Vector3D center) {
-		Vector3D nder = new Vector3D(0, 0, 0);
+	public Vector3D nuclearAttractionGradient(final PrimitiveGaussian pg, final Vector3D center) {
+		final Vector3D nder = new Vector3D(0, 0, 0);
 
 		// TODO:
 
@@ -190,7 +191,7 @@ public final class PrimitiveGaussian implements Comparable<PrimitiveGaussian>{
 	 * @param point the reference point
 	 * @return the amplitude of this PG at the specified point
 	 */
-	public double amplitude(Vector3D point) {
+	public double amplitude(final Vector3D point) {
 		final int l = powers.getL();
 		final int m = powers.getM();
 		final int n = powers.getN();
@@ -210,15 +211,16 @@ public final class PrimitiveGaussian implements Comparable<PrimitiveGaussian>{
 	 * @param point the point where Laplacian is to be computed
 	 * @return the Laplacian at this point
 	 */
-	public double laplacian(Vector3D point) {
+	public double laplacian(final Vector3D point) {
 		double value = 0.0;
-		double x = point.getX() - origin.getX(), y = point.getY() - origin.getY(), z = point.getZ() - origin.getZ();
-		double x2 = x * x;
-		double y2 = y * y;
-		double z2 = z * z;
-		int l = powers.getL();
-		int m = powers.getM();
-		int n = powers.getN();
+		final double x = point.getX() - origin.getX(), y = point.getY() - origin.getY(),
+				z = point.getZ() - origin.getZ();
+		final double x2 = x * x;
+		final double y2 = y * y;
+		final double z2 = z * z;
+		final int l = powers.getL();
+		final int m = powers.getM();
+		final int n = powers.getN();
 
 		value = (l * (l - 1) / x2 + m * (m - 1) / y2 + n * (n - 1) / z2) + 4 * exponent * exponent * (x2 + y2 + z2)
 				- 2 * exponent * (2 * (l + m + n) + 3);
@@ -232,18 +234,18 @@ public final class PrimitiveGaussian implements Comparable<PrimitiveGaussian>{
 	 * @param point the point where gradient is to be evaluated
 	 * @return partial derivatives with respect to x, y, z
 	 */
-	public Vector3D gradient(Vector3D point) {
-		int l = powers.getL();
-		int m = powers.getM();
-		int n = powers.getN();
+	public Vector3D gradient(final Vector3D point) {
+		final int l = powers.getL();
+		final int m = powers.getM();
+		final int n = powers.getN();
 
-		double x = point.getX() - origin.getX();
-		double y = point.getY() - origin.getY();
-		double z = point.getZ() - origin.getZ();
+		final double x = point.getX() - origin.getX();
+		final double y = point.getY() - origin.getY();
+		final double z = point.getZ() - origin.getZ();
 
-		double fx = FastMath.pow(x, l) * FastMath.exp(-exponent * FastMath.pow(x, 2));
-		double fy = FastMath.pow(y, m) * FastMath.exp(-exponent * FastMath.pow(y, 2));
-		double fz = FastMath.pow(z, n) * FastMath.exp(-exponent * FastMath.pow(z, 2));
+		final double fx = FastMath.pow(x, l) * FastMath.exp(-exponent * FastMath.pow(x, 2));
+		final double fy = FastMath.pow(y, m) * FastMath.exp(-exponent * FastMath.pow(y, 2));
+		final double fz = FastMath.pow(z, n) * FastMath.exp(-exponent * FastMath.pow(z, 2));
 		double gx = -2.0 * exponent * x * fx;
 		double gy = -2.0 * exponent * y * fy;
 		double gz = -2.0 * exponent * z * fz;
@@ -255,7 +257,7 @@ public final class PrimitiveGaussian implements Comparable<PrimitiveGaussian>{
 		if (n > 0)
 			gz += FastMath.pow(z, n - 1) * FastMath.exp(-exponent * FastMath.pow(z, 2));
 
-		double nc = normalization * coefficient;
+		final double nc = normalization * coefficient;
 		return new Vector3D(gx * fy * fz * nc, fx * gy * fz * nc, fx * fy * gz * nc);
 
 	}
@@ -311,14 +313,14 @@ public final class PrimitiveGaussian implements Comparable<PrimitiveGaussian>{
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PrimitiveGaussian other = (PrimitiveGaussian) obj;
+		final PrimitiveGaussian other = (PrimitiveGaussian) obj;
 		return Double.doubleToLongBits(coefficient) == Double.doubleToLongBits(other.coefficient)
 				&& Double.doubleToLongBits(exponent) == Double.doubleToLongBits(other.exponent)
 				&& Double.doubleToLongBits(normalization) == Double.doubleToLongBits(other.normalization)
@@ -329,7 +331,7 @@ public final class PrimitiveGaussian implements Comparable<PrimitiveGaussian>{
 	 * Sort exponents in decending order.
 	 */
 	@Override
-	public int compareTo(PrimitiveGaussian other) {
+	public int compareTo(final PrimitiveGaussian other) {
 		if (this.exponent > other.exponent) {
 			return -1;
 		} else {
