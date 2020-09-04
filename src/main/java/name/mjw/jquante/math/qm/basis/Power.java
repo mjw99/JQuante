@@ -117,14 +117,14 @@ public final class Power {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Power other = (Power) obj;
+		final Power other = (Power) obj;
 		return l == other.l && m == other.m && n == other.n;
 	}
 }

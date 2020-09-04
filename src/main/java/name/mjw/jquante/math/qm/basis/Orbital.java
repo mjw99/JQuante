@@ -15,25 +15,24 @@ public final class Orbital {
 	/**
 	 * Holds value of property type.
 	 */
-	private String type;
+	private final String type;
 
 	/**
 	 * Holds value of property coefficients.
 	 */
-	private List<Double> coefficients;
+	private final List<Double> coefficients;
 
 	/**
 	 * Holds value of property exponents.
 	 */
-	private List<Double> exponents;
+	private final List<Double> exponents;
 
 	/**
 	 * Creates a new instance of Orbital
 	 * 
-	 * @param type
-	 *            the type of this orbital (e.g. 'S', 'P', 'D' etc...)
+	 * @param type the type of this orbital (e.g. 'S', 'P', 'D' etc...)
 	 */
-	public Orbital(String type) {
+	public Orbital(final String type) {
 		this.type = type;
 
 		coefficients = new ArrayList<>(10);
@@ -70,32 +69,28 @@ public final class Orbital {
 	/**
 	 * adds a coefficient to this Orbital entry
 	 * 
-	 * @param coeff
-	 *            the coefficient to be added
+	 * @param coeff the coefficient to be added
 	 */
-	public void addCoefficient(double coeff) {
+	public void addCoefficient(final double coeff) {
 		coefficients.add(Double.valueOf(coeff));
 	}
 
 	/**
 	 * adds a exponent to this Orbital entry
 	 * 
-	 * @param exp
-	 *            the exponent to be added
+	 * @param exp the exponent to be added
 	 */
-	public void addExponent(double exp) {
+	public void addExponent(final double exp) {
 		exponents.add(Double.valueOf(exp));
 	}
 
 	/**
 	 * adds a (coefficient, exponent) pair to this Orbital entry
 	 * 
-	 * @param coeff
-	 *            the coefficient to be added
-	 * @param exp
-	 *            the exponent to be added
+	 * @param coeff the coefficient to be added
+	 * @param exp   the exponent to be added
 	 */
-	public void addEntry(double coeff, double exp) {
+	public void addEntry(final double coeff, final double exp) {
 		addCoefficient(coeff);
 		addExponent(exp);
 	}

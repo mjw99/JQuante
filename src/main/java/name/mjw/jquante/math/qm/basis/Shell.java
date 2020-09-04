@@ -10,7 +10,7 @@ package name.mjw.jquante.math.qm.basis;
  */
 public final class Shell extends ContractedGaussian {
 
-	public Shell(ContractedGaussian cg) {
+	public Shell(final ContractedGaussian cg) {
 		super(cg);
 	}
 
@@ -21,7 +21,7 @@ public final class Shell extends ContractedGaussian {
 		return firstBasisFunctionIndex;
 	}
 
-	public void setFirstBasisFunctionIndex(int firstBasisFunctionIndex) {
+	public void setFirstBasisFunctionIndex(final int firstBasisFunctionIndex) {
 		this.firstBasisFunctionIndex = firstBasisFunctionIndex;
 	}
 
@@ -29,7 +29,7 @@ public final class Shell extends ContractedGaussian {
 		return lastBasisFunctionIndex;
 	}
 
-	public void setLastBasisFunctionIndex(int lastBasisFunctionIndex) {
+	public void setLastBasisFunctionIndex(final int lastBasisFunctionIndex) {
 		this.lastBasisFunctionIndex = lastBasisFunctionIndex;
 	}
 
@@ -39,14 +39,14 @@ public final class Shell extends ContractedGaussian {
 	}
 
 	@Override
-	public boolean equals(Object that) {
+	public boolean equals(final Object that) {
 		if (this == that)
 			return true;
 		if (that == null)
 			return false;
 		if (getClass() != that.getClass())
 			return false;
-		Shell other = (Shell) that;
+		final Shell other = (Shell) that;
 		return this.isSameShell(other);
 	}
 
