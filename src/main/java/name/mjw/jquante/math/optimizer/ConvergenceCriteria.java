@@ -39,7 +39,7 @@ public abstract class ConvergenceCriteria {
 	 * @param oldValue
 	 *            new value of oldValue
 	 */
-	public void setOldValue(double oldValue) {
+	public void setOldValue(final double oldValue) {
 		this.oldValue = oldValue;
 	}
 
@@ -57,10 +57,9 @@ public abstract class ConvergenceCriteria {
 	/**
 	 * Set the value of newValue
 	 * 
-	 * @param newValue
-	 *            new value of newValue
+	 * @param newValue new value of newValue
 	 */
-	public void setNewValue(double newValue) {
+	public void setNewValue(final double newValue) {
 		this.newValue = newValue;
 	}
 
@@ -80,11 +79,10 @@ public abstract class ConvergenceCriteria {
 	/**
 	 * Add a sub-criteria
 	 * 
-	 * @param cc
-	 *            instance of ConvergenceCriteria working in conjucation with
-	 *            the parent criteria
+	 * @param cc instance of ConvergenceCriteria working in conjucation with the
+	 *           parent criteria
 	 */
-	public void addSubCriteria(ConvergenceCriteria cc) {
+	public void addSubCriteria(final ConvergenceCriteria cc) {
 		if (subCriteria == null)
 			subCriteria = new ArrayList<>();
 
@@ -95,10 +93,9 @@ public abstract class ConvergenceCriteria {
 	/**
 	 * Remove a sub-criteria
 	 * 
-	 * @param cc
-	 *            instance of ConvergenceCriteria to be detached from parent
+	 * @param cc instance of ConvergenceCriteria to be detached from parent
 	 */
-	public void removeSubCriteria(ConvergenceCriteria cc) {
+	public void removeSubCriteria(final ConvergenceCriteria cc) {
 		if (subCriteria == null)
 			return;
 
@@ -139,11 +136,9 @@ public abstract class ConvergenceCriteria {
 	/**
 	 * Set the value of criteriaCombinationType
 	 * 
-	 * @param criteriaCombinationType
-	 *            new value of criteriaCombinationType
+	 * @param criteriaCombinationType new value of criteriaCombinationType
 	 */
-	public void setCriteriaCombinationType(
-			CriteriaCombinationType criteriaCombinationType) {
+	public void setCriteriaCombinationType(final CriteriaCombinationType criteriaCombinationType) {
 		this.criteriaCombinationType = criteriaCombinationType;
 	}
 
@@ -161,10 +156,9 @@ public abstract class ConvergenceCriteria {
 	/**
 	 * Set the value of tolerance
 	 * 
-	 * @param tolerance
-	 *            new value of tolerance
+	 * @param tolerance new value of tolerance
 	 */
-	public void setTolerance(double tolerance) {
+	public void setTolerance(final double tolerance) {
 		this.tolerance = tolerance;
 	}
 
@@ -182,10 +176,9 @@ public abstract class ConvergenceCriteria {
 	/**
 	 * Set the value of name
 	 * 
-	 * @param name
-	 *            new value of name
+	 * @param name new value of name
 	 */
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 

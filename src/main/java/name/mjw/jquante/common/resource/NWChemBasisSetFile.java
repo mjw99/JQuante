@@ -45,16 +45,15 @@ public class NWChemBasisSetFile {
 	private String md5sumOfInputBasisFile;
 
 	@XmlElement(name = "atom")
-	private List<Library> atoms;
+	private final List<Library> atoms;
 
 	/**
 	 * A representation of a NWChem basis file.
 	 * 
 	 * 
-	 * @see <a
-	 *      href="https://github.com/jeffhammond/nwchem/blob/HEAD/src/basis/basis_dox.c">src/basis/basis_dox.c</a>
-	 * @see <a
-	 *      href="http://www.ccl.net/cca/documents/basis-sets/basis.html">General
+	 * @see <a href=
+	 *      "https://github.com/jeffhammond/nwchem/blob/HEAD/src/basis/basis_dox.c">src/basis/basis_dox.c</a>
+	 * @see <a href="http://www.ccl.net/cca/documents/basis-sets/basis.html">General
 	 *      basis set naming information</a>
 	 * 
 	 */
@@ -65,31 +64,29 @@ public class NWChemBasisSetFile {
 	/**
 	 * Reads a NWChem basis file.
 	 * 
-	 * @param fileName
-	 *            Filename of NWChem basis file.
+	 * @param fileName Filename of NWChem basis file.
 	 * 
-	 * @see <a
-	 *      href="https://github.com/jeffhammond/nwchem/blob/HEAD/src/basis/bas_input.F">src/basis/bas_input.F</a>
+	 * @see <a href=
+	 *      "https://github.com/jeffhammond/nwchem/blob/HEAD/src/basis/bas_input.F">src/basis/bas_input.F</a>
 	 * 
 	 * 
 	 */
-	public void read(String fileName) {
+	public void read(final String fileName) {
 
-		File f = new File(fileName);
+		final File f = new File(fileName);
 		basisSetName = f.getName();
 		MessageDigest md = null;
 
 		try {
 			md = MessageDigest.getInstance("MD5");
-		} catch (NoSuchAlgorithmException e) {
+		} catch (final NoSuchAlgorithmException e) {
 			LOG.warn(e);
 		}
 
 		// https://stackoverflow.com/questions/304268/getting-a-files-md5-checksum-in-java
 		try (InputStream is = Files.newInputStream(Paths.get(fileName));
 				DigestInputStream dis = new DigestInputStream(is, md);
-				BufferedReader in = new BufferedReader(new InputStreamReader(
-						dis, StandardCharsets.UTF_8))) {
+				BufferedReader in = new BufferedReader(new InputStreamReader(dis, StandardCharsets.UTF_8))) {
 
 			String line;
 
@@ -103,9 +100,8 @@ public class NWChemBasisSetFile {
 
 			}
 
-			byte[] digest = md.digest();
-			md5sumOfInputBasisFile = DatatypeConverter.printHexBinary(digest)
-					.toLowerCase();
+			final byte[] digest = md.digest();
+			md5sumOfInputBasisFile = DatatypeConverter.printHexBinary(digest).toLowerCase();
 
 		} catch (IOException | ParseException e) {
 			LOG.warn(e);
@@ -128,11 +124,10 @@ public class NWChemBasisSetFile {
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	void parseBasisSection(String inputLine, BufferedReader br)
-			throws ParseException, IOException {
+	void parseBasisSection(String inputLine, final BufferedReader br) throws ParseException, IOException {
 
 		String elementName;
-		String []words;
+		String[] words;
 
 		words = inputLine.split("\\s+");
 
@@ -145,9 +140,9 @@ public class NWChemBasisSetFile {
 
 		elementName = words[1].replace("\"", "").split("_")[0];
 
-		Library atom = new Library(elementName);
+		final Library atom = new Library(elementName);
 
-		List<Shell> shells = new ArrayList<>();
+		final List<Shell> shells = new ArrayList<>();
 
 		br.mark(MARK_LENGTH);
 		while ((inputLine = br.readLine()) != null) {
@@ -191,7 +186,7 @@ public class NWChemBasisSetFile {
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	static List<Shell> parseShellSection(BufferedReader br, String elementName)
+	static List<Shell> parseShellSection(final BufferedReader br, final String elementName)
 			throws ParseException, IOException {
 
 		int numberOfContractedShellsToParse = 1;
@@ -202,8 +197,7 @@ public class NWChemBasisSetFile {
 		ArrayList<Object> lineObjects;
 		final String shellFormat = "(1X, E18.7, 9X, 6(E15.7, 8X))";
 
-		DecimalFormat df = new DecimalFormat("0",
-				DecimalFormatSymbols.getInstance(Locale.ENGLISH));
+		final DecimalFormat df = new DecimalFormat("0", DecimalFormatSymbols.getInstance(Locale.ENGLISH));
 		df.setMaximumFractionDigits(340); // 340 =
 		// DecimalFormat.DOUBLE_FRACTION_DIGITS
 
@@ -214,7 +208,7 @@ public class NWChemBasisSetFile {
 
 		lineObjects = FortranFormat.read(line, "(2A5)");
 
-		String shellType = (String) lineObjects.get(1);
+		final String shellType = (String) lineObjects.get(1);
 
 		// Peek ahead here to work out how many contractedShells to return
 		br.mark(MARK_LENGTH);
@@ -271,8 +265,7 @@ public class NWChemBasisSetFile {
 
 				coeff = (Double) lineObjects.get(i + 1);
 
-				shells.get(i).addExponentCoefficientPair(df.format(exp),
-						df.format(coeff));
+				shells.get(i).addExponentCoefficientPair(df.format(exp), df.format(coeff));
 			}
 
 			br.mark(MARK_LENGTH);
@@ -290,13 +283,13 @@ public class NWChemBasisSetFile {
 		@XmlElement(name = "orbital")
 		List<Shell> shells;
 
-		Library(String element) {
+		Library(final String element) {
 			this.element = element;
 			atomicNumber = AtomInfo.getInstance().getAtomicNumber(element);
 			shells = new ArrayList<>();
 		}
 
-		void addShell(List<Shell> orbitals) {
+		void addShell(final List<Shell> orbitals) {
 			this.shells.addAll(orbitals);
 		}
 
@@ -310,15 +303,14 @@ public class NWChemBasisSetFile {
 		@XmlElement(name = "entry")
 		List<ExponentCoefficientPair> exponentCoefficientPairs = null;
 
-		Shell(String type) {
+		Shell(final String type) {
 			this.type = type;
 			exponentCoefficientPairs = new ArrayList<>();
 		}
 
-		void addExponentCoefficientPair(String exponent, String coefficient) {
+		void addExponentCoefficientPair(final String exponent, final String coefficient) {
 
-			ExponentCoefficientPair pair = new ExponentCoefficientPair(
-					exponent, coefficient);
+			final ExponentCoefficientPair pair = new ExponentCoefficientPair(exponent, coefficient);
 
 			exponentCoefficientPairs.add(pair);
 
@@ -334,7 +326,7 @@ public class NWChemBasisSetFile {
 		@XmlAttribute(name = "coeff")
 		String coefficient;
 
-		ExponentCoefficientPair(String exponent, String coefficient) {
+		ExponentCoefficientPair(final String exponent, final String coefficient) {
 			this.exponent = exponent;
 			this.coefficient = coefficient;
 		}
@@ -347,9 +339,9 @@ public class NWChemBasisSetFile {
 	 * @param lineObjects
 	 * @return number of non-null elements
 	 */
-	private static int getNonNullLength(ArrayList<Object> lineObjects) {
+	private static int getNonNullLength(final ArrayList<Object> lineObjects) {
 		int count = 0;
-		for (Object el : lineObjects)
+		for (final Object el : lineObjects)
 			if (el != null)
 				++count;
 		return count;
@@ -360,7 +352,7 @@ public class NWChemBasisSetFile {
 
 		private final int value;
 
-		private ShellType(int value) {
+		private ShellType(final int value) {
 			this.value = value;
 		}
 	}

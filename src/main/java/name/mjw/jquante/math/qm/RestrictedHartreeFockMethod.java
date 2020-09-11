@@ -48,40 +48,32 @@ public class RestrictedHartreeFockMethod extends SCFMethod implements
 	/**
 	 * SCF Type enumeration.
 	 */
-	private SCFType scfType;
+	private final SCFType scfType;
 
 	private boolean isDerivativeComputed = false;
 
 	/**
 	 * Creates a new instance of HartreeFockSCFMethod
 	 * 
-	 * @param molecule
-	 *            The molecule under consideration.
-	 * @param oneEI
-	 *            The one electron integrals of the system
-	 * @param twoEI
-	 *            The two electron integrals of the system
+	 * @param molecule The molecule under consideration.
+	 * @param oneEI    The one electron integrals of the system
+	 * @param twoEI    The two electron integrals of the system
 	 */
-	public RestrictedHartreeFockMethod(Molecule molecule,
-			OneElectronIntegrals oneEI, TwoElectronIntegrals twoEI) {
+	public RestrictedHartreeFockMethod(final Molecule molecule, final OneElectronIntegrals oneEI,
+			final TwoElectronIntegrals twoEI) {
 		this(molecule, oneEI, twoEI, SCFType.HARTREE_FOCK);
 	}
 
 	/**
 	 * Creates a new instance of HartreeFockSCFMethod
 	 * 
-	 * @param molecule
-	 *            The molecule under consideration.
-	 * @param oneEI
-	 *            The one electron integrals of the system
-	 * @param twoEI
-	 *            The two electron integrals of the system
-	 * @param scfType
-	 *            Type of SCF Calculation.
+	 * @param molecule The molecule under consideration.
+	 * @param oneEI    The one electron integrals of the system
+	 * @param twoEI    The two electron integrals of the system
+	 * @param scfType  Type of SCF Calculation.
 	 */
-	public RestrictedHartreeFockMethod(Molecule molecule,
-			OneElectronIntegrals oneEI, TwoElectronIntegrals twoEI,
-			SCFType scfType) {
+	public RestrictedHartreeFockMethod(final Molecule molecule, final OneElectronIntegrals oneEI,
+			final TwoElectronIntegrals twoEI, final SCFType scfType) {
 		super(molecule, oneEI, twoEI);
 
 		scfEvent = new SCFEvent(this);
@@ -89,31 +81,30 @@ public class RestrictedHartreeFockMethod extends SCFMethod implements
 	}
 
 	/**
-	 * Perform the SCF optimization of the molecular wave function until the
-	 * energy converges.
+	 * Perform the SCF optimization of the molecular wave function until the energy
+	 * converges.
 	 */
 	@Override
 	public void scf() {
 		// check first if closed shell run?
-		int noOfElectrons = molecule.getNumberOfElectrons();
-		int noOfOccupancies = noOfElectrons / 2;
+		final int noOfElectrons = molecule.getNumberOfElectrons();
+		final int noOfOccupancies = noOfElectrons / 2;
 
 		if (noOfElectrons % 2 != 0) {
-			throw new UnsupportedOperationException("Open shell systems are"
-					+ " not currently supported.");
+			throw new UnsupportedOperationException("Open shell systems are" + " not currently supported.");
 		}
 
-		Overlap overlap = oneEI.getOverlap();
+		final Overlap overlap = oneEI.getOverlap();
 		LOG.debug("Initial S matrix\n" + overlap);
 
 		LOG.debug("S^-1/2 matrix\n" + overlap.getSHalf());
 
-		HCore hCore = oneEI.getHCore();
+		final HCore hCore = oneEI.getHCore();
 		LOG.debug("Initial hCore\n" + hCore);
 
 		boolean converged = false;
 		double oldEnergy = 0.0;
-		double nuclearEnergy = nuclearEnergy();
+		final double nuclearEnergy = nuclearEnergy();
 		double eOne;
 		double eTwo;
 
@@ -127,7 +118,7 @@ public class RestrictedHartreeFockMethod extends SCFMethod implements
 		mos.compute(hCore, overlap);
 		LOG.debug("Initial computed MO coefficient matrix as: \n" + mos);
 
-		FockExtrapolator diis = new DIISFockExtrapolator();
+		final FockExtrapolator diis = new DIISFockExtrapolator();
 
 		LOG.debug("Initial density matrix \n" + density);
 
@@ -135,8 +126,7 @@ public class RestrictedHartreeFockMethod extends SCFMethod implements
 		for (scfIteration = 0; scfIteration < maxIteration; scfIteration++) {
 
 			// make or guess density
-			density.compute(this, guessInitialDM && (scfIteration == 0),
-					densityGuesser, noOfOccupancies, mos);
+			density.compute(this, guessInitialDM && (scfIteration == 0), densityGuesser, noOfOccupancies, mos);
 
 			// make the G matrix
 			gMatrix.compute(scfType, twoEI, density);
@@ -188,19 +178,18 @@ public class RestrictedHartreeFockMethod extends SCFMethod implements
 	}
 
 	/**
-	 * This gradient (or Force) calculation is based on Appendix C of Modern
-	 * Quantum Chemistry by Szabo and Ostland, which describes computing
-	 * analytic gradients and geometry optimization.
+	 * This gradient (or Force) calculation is based on Appendix C of Modern Quantum
+	 * Chemistry by Szabo and Ostland, which describes computing analytic gradients
+	 * and geometry optimization.
 	 */
 	private void computeForce() {
-		Force hfForce = new HartreeFockForce();
+		final Force hfForce = new HartreeFockForce();
 
 		for (int i = 0; i < molecule.getNumberOfAtoms(); i++) {
-			Atom atom = molecule.getAtom(i);
-			Vector3D force = hfForce.computeForce(atom.getIndex(), this);
+			final Atom atom = molecule.getAtom(i);
+			final Vector3D force = hfForce.computeForce(atom.getIndex(), this);
 
-			UserDefinedAtomProperty atmForce = atom
-					.getUserDefinedAtomProperty("force");
+			UserDefinedAtomProperty atmForce = atom.getUserDefinedAtomProperty("force");
 			if (atmForce == null) {
 				atmForce = new UserDefinedAtomProperty("force", force);
 				atom.addUserDefinedAtomProperty(atmForce);
@@ -215,12 +204,11 @@ public class RestrictedHartreeFockMethod extends SCFMethod implements
 	/**
 	 * Evaluate the function with 'n' variables
 	 * 
-	 * @param variables
-	 *            an array of variables
+	 * @param variables an array of variables
 	 * @return a double value evaluating F(x1, x2, ...)
 	 */
 	@Override
-	public double evaluate(double[] variables) {
+	public double evaluate(final double[] variables) {
 		molecule.resetAtomCoordinates(variables, false);
 
 		// perform scf, and return energy
@@ -235,11 +223,10 @@ public class RestrictedHartreeFockMethod extends SCFMethod implements
 	 * For a method that encapsulates its own set of "base" variables (e.g. an
 	 * initial set of atom positions), resets the base variables to new values.
 	 * 
-	 * @param variables
-	 *            the new set of base variables
+	 * @param variables the new set of base variables
 	 */
 	@Override
-	public void resetVariables(double[] variables) {
+	public void resetVariables(final double[] variables) {
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
@@ -275,13 +262,12 @@ public class RestrictedHartreeFockMethod extends SCFMethod implements
 		}
 
 		// unpack and return the forces
-		double[] forces = new double[molecule.getNumberOfAtoms() * 3];
+		final double[] forces = new double[molecule.getNumberOfAtoms() * 3];
 		int ii = 0;
 		for (int i = 0; i < molecule.getNumberOfAtoms(); i++) {
-			UserDefinedAtomProperty atmForce = molecule.getAtom(i)
-					.getUserDefinedAtomProperty("force");
+			final UserDefinedAtomProperty atmForce = molecule.getAtom(i).getUserDefinedAtomProperty("force");
 
-			Vector3D force = (Vector3D) atmForce.getValue();
+			final Vector3D force = (Vector3D) atmForce.getValue();
 			forces[ii] = force.getX();
 			forces[ii + 1] = force.getY();
 			forces[ii + 2] = force.getZ();

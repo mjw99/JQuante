@@ -53,8 +53,8 @@ public final class SCFMethodFactory {
 	 * 
 	 * @return the the Self Consistent Field (SCF) method.
 	 */
-	public SCFMethod getSCFMethod(Molecule molecule, OneElectronIntegrals oneEI, TwoElectronIntegrals twoEI,
-			SCFType type) {
+	public SCFMethod getSCFMethod(final Molecule molecule, final OneElectronIntegrals oneEI,
+			final TwoElectronIntegrals twoEI, final SCFType type) {
 		if (type.equals(SCFType.HARTREE_FOCK)) {
 			return new RestrictedHartreeFockMethod(molecule, oneEI, twoEI);
 		} else if (type.equals(SCFType.HARTREE_FOCK_DIRECT)) {

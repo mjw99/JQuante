@@ -29,7 +29,7 @@ public enum BondType implements Serializable {
 	 * 
 	 * @return a string indicating bond type
 	 */
-	private BondType(String description, double bondOrder) {
+	private BondType(final String description, final double bondOrder) {
 		this.description = description;
 		this.bondOrder = bondOrder;
 	}
@@ -40,23 +40,23 @@ public enum BondType implements Serializable {
 	}
 
 	/**
-	 * @return the bond order, which in a covalent bond is typically the number
-	 *         of valence electrons this atom contributes to the bond.
+	 * @return the bond order, which in a covalent bond is typically the number of
+	 *         valence electrons this atom contributes to the bond.
 	 */
 	public double getBondOrder() {
 		return bondOrder;
 	}
+
 	/**
 	 * complimentary to toString()
 	 * 
-	 * @param description
-	 *            a string indicating bond type
+	 * @param description a string indicating bond type
 	 * @return the equivalent BondType object
 	 */
-	public static BondType getBondTypeFor(String description) {
-		Iterator<BondType> iter = vals.iterator();
+	public static BondType getBondTypeFor(final String description) {
+		final Iterator<BondType> iter = vals.iterator();
 		while (iter.hasNext()) {
-			BondType bondType = iter.next();
+			final BondType bondType = iter.next();
 			if (bondType.description.equals(description)) {
 				return bondType;
 			}

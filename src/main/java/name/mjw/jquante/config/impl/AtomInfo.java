@@ -40,15 +40,15 @@ public final class AtomInfo implements Configuration {
 
 	/** Holds value of property nameTable. */
 	private HashMap<String, String> nameTable;
-	private HashMap<String, String> originalNameTable;
+	private final HashMap<String, String> originalNameTable;
 
 	/** Holds value of property atomicNumberTable. */
 	private HashMap<String, Integer> atomicNumberTable;
-	private HashMap<String, Integer> originalAtomicNumberTable;
+	private final HashMap<String, Integer> originalAtomicNumberTable;
 
 	/** Holds value of property atomicWeightTable. */
 	private HashMap<String, Double> atomicWeightTable;
-	private HashMap<String, Double> originalAtomicWeightTable;
+	private final HashMap<String, Double> originalAtomicWeightTable;
 
 	/** Utility field used by event firing mechanism. */
 	private EventListenerList<AtomInfoChangeListener> listenerList = null;
@@ -59,16 +59,14 @@ public final class AtomInfo implements Configuration {
 		atomicNumberTable = new HashMap<>(DEFAULT_TABLE_SIZE);
 		atomicWeightTable = new HashMap<>(DEFAULT_TABLE_SIZE);
 
-
 		originalNameTable = new HashMap<>(DEFAULT_TABLE_SIZE);
 		originalAtomicNumberTable = new HashMap<>(DEFAULT_TABLE_SIZE);
 		originalAtomicWeightTable = new HashMap<>(DEFAULT_TABLE_SIZE);
 
-
 		// the initial parameters
 		try {
 			setDefaultParams();
-		} catch (PropertyVetoException ignored) {
+		} catch (final PropertyVetoException ignored) {
 			// because it never should happen in this context
 			System.err.println(ignored.toString());
 		}
@@ -100,12 +98,12 @@ public final class AtomInfo implements Configuration {
 		try {
 			atomInfo.setDefaultParams();
 
-			AtomInfoChangeEvent changeEvent = new AtomInfoChangeEvent(atomInfo);
+			final AtomInfoChangeEvent changeEvent = new AtomInfoChangeEvent(atomInfo);
 
 			changeEvent.setChangeType(AtomInfoChangeEvent.ALL_CANGED);
 			// fire the event!
 			atomInfo.fireAtomInfoChangeListenerAtomInfoChanged(changeEvent);
-		} catch (PropertyVetoException ignored) {
+		} catch (final PropertyVetoException ignored) {
 			// because it never should happen in this context
 			System.err.println(ignored.toString());
 		} // end of try catch
@@ -118,12 +116,12 @@ public final class AtomInfo implements Configuration {
 	 * 
 	 * @param symbol Atomic symbol
 	 */
-	public void resetValues(String symbol) {
+	public void resetValues(final String symbol) {
 		nameTable.put(symbol, originalNameTable.get(symbol));
 		atomicNumberTable.put(symbol, originalAtomicNumberTable.get(symbol));
 		atomicWeightTable.put(symbol, originalAtomicWeightTable.get(symbol));
 
-		AtomInfoChangeEvent changeEvent = new AtomInfoChangeEvent(this);
+		final AtomInfoChangeEvent changeEvent = new AtomInfoChangeEvent(this);
 
 		changeEvent.setChangeType(AtomInfoChangeEvent.ALL_CANGED);
 		// fire the event!
@@ -138,17 +136,17 @@ public final class AtomInfo implements Configuration {
 	public void saveUserConfigFile() throws IOException {
 		// TODO: we are being a bit paranoid by replicating every thing, though
 		// that is not really necessary
-		StringResource strings = StringResource.getInstance();
-		FileOutputStream fos = new FileOutputStream(strings.getUserAtomInfo());
+		final StringResource strings = StringResource.getInstance();
+		final FileOutputStream fos = new FileOutputStream(strings.getUserAtomInfo());
 
 		fos.write(strings.getXmlHeader().getBytes());
 
 		fos.write("<atominfo> \n".getBytes());
-		for (String key : nameTable.keySet()) {
+		for (final String key : nameTable.keySet()) {
 			fos.write("\t<atom> \n".getBytes());
 			fos.write(("\t\t<physical symbol=\"" + key + "\" name=\"" + nameTable.get(key) + "\" atomicNumber=\""
-					+ atomicNumberTable.get(key) + "\" atomicWeight=\"" + atomicWeightTable.get(key)
-					+ "\"/> \n").getBytes());
+					+ atomicNumberTable.get(key) + "\" atomicWeight=\"" + atomicWeightTable.get(key) + "\"/> \n")
+							.getBytes());
 			fos.write("\t\t<display> \n".getBytes());
 			fos.write("\t\t</display>\n".getBytes());
 			fos.write("\t</atom> \n".getBytes());
@@ -162,10 +160,10 @@ public final class AtomInfo implements Configuration {
 	 * private method to set the default parameters
 	 */
 	private void setDefaultParams() throws PropertyVetoException {
-		StringResource strings = StringResource.getInstance();
+		final StringResource strings = StringResource.getInstance();
 		try {
 			// read the internal XML config file
-			Document configDoc = Utility.parseXML(getClass().getResourceAsStream(strings.getDefaultAtomInfo()));
+			final Document configDoc = Utility.parseXML(getClass().getResourceAsStream(strings.getDefaultAtomInfo()));
 
 			// and save the info. properly
 			saveOriginal(configDoc);
@@ -173,7 +171,7 @@ public final class AtomInfo implements Configuration {
 			// read in user XML config file
 			// and override the settings
 			saveUser();
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			throw new PropertyVetoException("Exception in " + "AtomInfo.setParameter()" + e.toString(), null);
 		} // end of try .. catch block
 	}
@@ -181,46 +179,46 @@ public final class AtomInfo implements Configuration {
 	/**
 	 * Recursive routine save DOM tree nodes
 	 */
-	private void saveOriginal(Node n) {
-		int type = n.getNodeType(); // get node type
+	private void saveOriginal(final Node n) {
+		final int type = n.getNodeType(); // get node type
 
 		switch (type) {
-		case Node.ATTRIBUTE_NODE:
-			String nodeName = n.getNodeName();
+			case Node.ATTRIBUTE_NODE:
+				final String nodeName = n.getNodeName();
 
-			if (nodeName.equals("name")) {
-				originalNameTable.put(symbol, n.getNodeValue());
-			} else if (nodeName.equals("atomicNumber")) {
-				originalAtomicNumberTable.put(symbol, Integer.valueOf(n.getNodeValue()));
-			} else if (nodeName.equals("atomicWeight")) {
-				originalAtomicWeightTable.put(symbol, Double.valueOf(n.getNodeValue()));
-			}
-			break;
-		case Node.ELEMENT_NODE:
-			element = n.getNodeName();
-
-			NamedNodeMap atts = n.getAttributes();
-			if (element.equals("physical")) {
-				symbol = atts.getNamedItem("symbol").getNodeValue();
-
-				// save the others
-				for (int i = 0; i < atts.getLength(); i++) {
-					Node att = atts.item(i);
-					saveOriginal(att);
-				} // end for
-			} else {
-				if (atts == null)
-					return;
-
-				for (int i = 0; i < atts.getLength(); i++) {
-					Node att = atts.item(i);
-					saveOriginal(att);
+				if (nodeName.equals("name")) {
+					originalNameTable.put(symbol, n.getNodeValue());
+				} else if (nodeName.equals("atomicNumber")) {
+					originalAtomicNumberTable.put(symbol, Integer.valueOf(n.getNodeValue()));
+				} else if (nodeName.equals("atomicWeight")) {
+					originalAtomicWeightTable.put(symbol, Double.valueOf(n.getNodeValue()));
 				}
-			}
+				break;
+			case Node.ELEMENT_NODE:
+				element = n.getNodeName();
 
-			break;
-		default:
-			break;
+				final NamedNodeMap atts = n.getAttributes();
+				if (element.equals("physical")) {
+					symbol = atts.getNamedItem("symbol").getNodeValue();
+
+					// save the others
+					for (int i = 0; i < atts.getLength(); i++) {
+						final Node att = atts.item(i);
+						saveOriginal(att);
+					} // end for
+				} else {
+					if (atts == null)
+						return;
+
+					for (int i = 0; i < atts.getLength(); i++) {
+						final Node att = atts.item(i);
+						saveOriginal(att);
+					}
+				}
+
+				break;
+			default:
+				break;
 		}
 
 		// save children if any
@@ -232,48 +230,48 @@ public final class AtomInfo implements Configuration {
 	/**
 	 * Recursive routine save DOM tree nodes
 	 */
-	private void saveUserNode(Node n) {
-		int type = n.getNodeType(); // get node type
+	private void saveUserNode(final Node n) {
+		final int type = n.getNodeType(); // get node type
 
 		switch (type) {
-		case Node.ATTRIBUTE_NODE:
-			String nodeName = n.getNodeName();
+			case Node.ATTRIBUTE_NODE:
+				final String nodeName = n.getNodeName();
 
-			if (nodeName.equals("name")) {
-				nameTable.put(symbol, n.getNodeValue());
-			} else if (nodeName.equals("atomicNumber")) {
-				atomicNumberTable.put(symbol, Integer.valueOf(n.getNodeValue()));
-			} else if (nodeName.equals("atomicWeight")) {
-				atomicWeightTable.put(symbol, Double.valueOf(n.getNodeValue()));
+				if (nodeName.equals("name")) {
+					nameTable.put(symbol, n.getNodeValue());
+				} else if (nodeName.equals("atomicNumber")) {
+					atomicNumberTable.put(symbol, Integer.valueOf(n.getNodeValue()));
+				} else if (nodeName.equals("atomicWeight")) {
+					atomicWeightTable.put(symbol, Double.valueOf(n.getNodeValue()));
 
-			}
-			break;
-		case Node.ELEMENT_NODE:
-			element = n.getNodeName();
+				}
+				break;
+			case Node.ELEMENT_NODE:
+				element = n.getNodeName();
 
-			NamedNodeMap atts = n.getAttributes();
-			if (element.equals("physical")) {
-				symbol = atts.getNamedItem("symbol").getNodeValue();
+				final NamedNodeMap atts = n.getAttributes();
+				if (element.equals("physical")) {
+					symbol = atts.getNamedItem("symbol").getNodeValue();
 
-				// save the others
-				for (int i = 0; i < atts.getLength(); i++) {
-					Node att = atts.item(i);
-					saveUserNode(att);
+					// save the others
+					for (int i = 0; i < atts.getLength(); i++) {
+						final Node att = atts.item(i);
+						saveUserNode(att);
+					}
+
+				} else {
+					if (atts == null)
+						return;
+
+					for (int i = 0; i < atts.getLength(); i++) {
+						final Node att = atts.item(i);
+						saveUserNode(att);
+					}
 				}
 
-			} else {
-				if (atts == null)
-					return;
-
-				for (int i = 0; i < atts.getLength(); i++) {
-					Node att = atts.item(i);
-					saveUserNode(att);
-				}
-			}
-
-			break;
-		default:
-			break;
+				break;
+			default:
+				break;
 		}
 
 		// save children if any
@@ -294,19 +292,19 @@ public final class AtomInfo implements Configuration {
 	 * Routine save DOM tree nodes
 	 */
 	private void saveUser() throws Exception {
-		StringResource strings = StringResource.getInstance();
+		final StringResource strings = StringResource.getInstance();
 
 		try {
 			if ((new File(strings.getUserAtomInfo())).exists()) {
 				// if a user configuration file exists, then we copy
 				// its contents
-				Document configDoc = Utility.parseXML(strings.getUserAtomInfo());
+				final Document configDoc = Utility.parseXML(strings.getUserAtomInfo());
 
 				saveUserNode(configDoc);
 			} else {
 				copyOriginals();
 			}
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			System.err.println("Restricted mode copying.");
 			copyOriginals();
 		}
@@ -315,8 +313,8 @@ public final class AtomInfo implements Configuration {
 	/**
 	 * Copy one table to another (of strings)
 	 */
-	private void copyTableS(HashMap<String, String> src, HashMap<String, String> dest) {
-		for (Entry<String, String> entry : src.entrySet()) {
+	private void copyTableS(final HashMap<String, String> src, final HashMap<String, String> dest) {
+		for (final Entry<String, String> entry : src.entrySet()) {
 			dest.put(entry.getKey(), entry.getValue());
 		}
 	}
@@ -324,8 +322,8 @@ public final class AtomInfo implements Configuration {
 	/**
 	 * Copy one table to another (of ints)
 	 */
-	private void copyTableI(HashMap<String, Integer> src, HashMap<String, Integer> dest) {
-		for (Entry<String, Integer> entry : src.entrySet()) {
+	private void copyTableI(final HashMap<String, Integer> src, final HashMap<String, Integer> dest) {
+		for (final Entry<String, Integer> entry : src.entrySet()) {
 			dest.put(entry.getKey(), entry.getValue());
 		}
 	}
@@ -333,12 +331,11 @@ public final class AtomInfo implements Configuration {
 	/**
 	 * Copy one table to another (of doubles)
 	 */
-	private void copyTableD(HashMap<String, Double> src, HashMap<String, Double> dest) {
-		for (Entry<String, Double> entry : src.entrySet()) {
+	private void copyTableD(final HashMap<String, Double> src, final HashMap<String, Double> dest) {
+		for (final Entry<String, Double> entry : src.entrySet()) {
 			dest.put(entry.getKey(), entry.getValue());
 		}
 	}
-
 
 	/**
 	 * Method returns the value of parameter pertaining to the key.
@@ -347,7 +344,7 @@ public final class AtomInfo implements Configuration {
 	 * @throws NullPointerException if the key is not found
 	 */
 	@Override
-	public Parameter getParameter(String key) {
+	public Parameter getParameter(final String key) {
 		return new AtomProperty((String) nameTable.get(key), (atomicNumberTable.get(key)).intValue(),
 				(atomicWeightTable.get(key)).doubleValue());
 	}
@@ -361,10 +358,10 @@ public final class AtomInfo implements Configuration {
 	 *                               supported
 	 */
 	@Override
-	public void setParameter(String key, Parameter parameter) throws PropertyVetoException {
-		AtomProperty ap = (AtomProperty) parameter;
+	public void setParameter(final String key, final Parameter parameter) throws PropertyVetoException {
+		final AtomProperty ap = (AtomProperty) parameter;
 
-		AtomInfoChangeEvent changeEvent = new AtomInfoChangeEvent(this);
+		final AtomInfoChangeEvent changeEvent = new AtomInfoChangeEvent(this);
 
 		changeEvent.setChangeType(AtomInfoChangeEvent.ALL_CANGED);
 
@@ -376,7 +373,7 @@ public final class AtomInfo implements Configuration {
 		// change to new value
 		nameTable.put(key, ap.getName());
 		atomicNumberTable.put(key, Integer.valueOf(ap.getAtomicNumber()));
-		atomicWeightTable.put(key, Double.valueOf(ap.getAtomicWeight()));		
+		atomicWeightTable.put(key, Double.valueOf(ap.getAtomicWeight()));
 		// fire the event!
 		fireAtomInfoChangeListenerAtomInfoChanged(changeEvent);
 	}
@@ -408,7 +405,7 @@ public final class AtomInfo implements Configuration {
 	 * @param storedAsFile new value of this storage
 	 */
 	@Override
-	public void setStoredAsFile(boolean storedAsFile) {
+	public void setStoredAsFile(final boolean storedAsFile) {
 		// igonored! ... we don't want to listen here
 	}
 
@@ -419,7 +416,7 @@ public final class AtomInfo implements Configuration {
 	 * @throws PropertyVetoException some problem can't change the stuff!
 	 */
 	@Override
-	public void setConfigFile(String configFile) throws PropertyVetoException {
+	public void setConfigFile(final String configFile) throws PropertyVetoException {
 		throw new PropertyVetoException("Cannot change this property!", null);
 	}
 
@@ -439,7 +436,7 @@ public final class AtomInfo implements Configuration {
 	 * @param nameTable New value of property nameTable.
 	 * 
 	 */
-	public void setNameTable(HashMap<String, String> nameTable) {
+	public void setNameTable(final HashMap<String, String> nameTable) {
 		this.nameTable = nameTable;
 	}
 
@@ -459,7 +456,7 @@ public final class AtomInfo implements Configuration {
 	 * @param atomicNumberTable New value of property atomicNumberTable.
 	 * 
 	 */
-	public void setAtomicNumberTable(HashMap<String, Integer> atomicNumberTable) {
+	public void setAtomicNumberTable(final HashMap<String, Integer> atomicNumberTable) {
 		this.atomicNumberTable = atomicNumberTable;
 	}
 
@@ -479,13 +476,9 @@ public final class AtomInfo implements Configuration {
 	 * @param atomicWeightTable New value of property atomicWeightTable.
 	 * 
 	 */
-	public void setAtomicWeightTable(HashMap<String, Double> atomicWeightTable) {
+	public void setAtomicWeightTable(final HashMap<String, Double> atomicWeightTable) {
 		this.atomicWeightTable = atomicWeightTable;
 	}
-
-
-
-
 
 	/**
 	 * Registers AtomInfoChangeListener to receive events.
@@ -493,7 +486,7 @@ public final class AtomInfo implements Configuration {
 	 * @param listener The listener to register.
 	 * 
 	 */
-	public synchronized void addAtomInfoChangeListener(AtomInfoChangeListener listener) {
+	public synchronized void addAtomInfoChangeListener(final AtomInfoChangeListener listener) {
 		if (listenerList == null) {
 			listenerList = new EventListenerList<>();
 		}
@@ -506,7 +499,7 @@ public final class AtomInfo implements Configuration {
 	 * @param listener The listener to remove.
 	 * 
 	 */
-	public synchronized void removeAtomInfoChangeListener(AtomInfoChangeListener listener) {
+	public synchronized void removeAtomInfoChangeListener(final AtomInfoChangeListener listener) {
 		listenerList.remove(AtomInfoChangeListener.class, listener);
 	}
 
@@ -516,7 +509,7 @@ public final class AtomInfo implements Configuration {
 	 * @param event The event to be fired
 	 * 
 	 */
-	private void fireAtomInfoChangeListenerAtomInfoChanged(AtomInfoChangeEvent event) {
+	private void fireAtomInfoChangeListenerAtomInfoChanged(final AtomInfoChangeEvent event) {
 		if (listenerList == null)
 			return;
 
@@ -527,7 +520,7 @@ public final class AtomInfo implements Configuration {
 				return;
 		}
 
-		for (Object listener : listenerList.getListenerList()) {
+		for (final Object listener : listenerList.getListenerList()) {
 			((AtomInfoChangeListener) listener).atomInfoChanged(event);
 		}
 
@@ -539,10 +532,10 @@ public final class AtomInfo implements Configuration {
 	 * @param symbol - the atom symbol, IUPAC name.
 	 * @return Value of property atomicNumber for the specified symbol
 	 */
-	public int getAtomicNumber(String symbol) {
+	public int getAtomicNumber(final String symbol) {
 		try {
 			return atomicNumberTable.get(symbol);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return atomicNumberTable.get("X");
 		}
 	}
@@ -554,9 +547,9 @@ public final class AtomInfo implements Configuration {
 	 * @return symbol - the atom symbol, IUPAC name. If no such atomic number is
 	 *         found then "X" is returned.
 	 */
-	public String getSymbol(int atomicNumber) {
-		Enumeration<Integer> eles = (Enumeration<Integer>) atomicNumberTable.values();
-		Enumeration<String> keys = (Enumeration<String>) atomicNumberTable.keySet();
+	public String getSymbol(final int atomicNumber) {
+		final Enumeration<Integer> eles = (Enumeration<Integer>) atomicNumberTable.values();
+		final Enumeration<String> keys = (Enumeration<String>) atomicNumberTable.keySet();
 
 		while (eles.hasMoreElements()) {
 			if (eles.nextElement() == atomicNumber)
@@ -573,8 +566,8 @@ public final class AtomInfo implements Configuration {
 	 * @param symbol       - the atom symbol, IUPAC name!
 	 * @param atomicNumber New value of property atomicNumber.
 	 */
-	public void setAtomicNumber(String symbol, int atomicNumber) {
-		AtomInfoChangeEvent changeEvent = new AtomInfoChangeEvent(this);
+	public void setAtomicNumber(final String symbol, final int atomicNumber) {
+		final AtomInfoChangeEvent changeEvent = new AtomInfoChangeEvent(this);
 
 		changeEvent.setChangeType(AtomInfoChangeEvent.ATOMIC_NUMBER);
 		changeEvent.setAtomSymbol(symbol);
@@ -593,10 +586,10 @@ public final class AtomInfo implements Configuration {
 	 * @param symbol - the atom symbol, IUPAC name!
 	 * @return Value of property atomicWeight for the specified symbol
 	 */
-	public double getAtomicWeight(String symbol) {
+	public double getAtomicWeight(final String symbol) {
 		try {
 			return atomicWeightTable.get(symbol);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return atomicWeightTable.get("X");
 		}
 	}
@@ -607,8 +600,8 @@ public final class AtomInfo implements Configuration {
 	 * @param symbol       - the atom symbol, IUPAC name!
 	 * @param atomicWeight New value of property atomicWeight.
 	 */
-	public void setAtomicWeight(String symbol, double atomicWeight) {
-		AtomInfoChangeEvent changeEvent = new AtomInfoChangeEvent(this);
+	public void setAtomicWeight(final String symbol, final double atomicWeight) {
+		final AtomInfoChangeEvent changeEvent = new AtomInfoChangeEvent(this);
 
 		changeEvent.setChangeType(AtomInfoChangeEvent.ATOMIC_WEIGHT);
 		changeEvent.setAtomSymbol(symbol);
@@ -621,20 +614,16 @@ public final class AtomInfo implements Configuration {
 		fireAtomInfoChangeListenerAtomInfoChanged(changeEvent);
 	}
 
-
-
-
-
 	/**
 	 * Getter for property name.
 	 * 
 	 * @param symbol - the atom symbol, IUPAC name!
 	 * @return Value of property name for the specified symbol
 	 */
-	public String getName(String symbol) {
+	public String getName(final String symbol) {
 		try {
 			return nameTable.get(symbol);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return nameTable.get("X");
 		}
 	}

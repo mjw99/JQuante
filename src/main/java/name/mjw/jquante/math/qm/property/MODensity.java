@@ -22,18 +22,17 @@ public class MODensity extends OneElectronProperty {
 
 	private int monumber;
 
-	private int nbf;
-	private double[][] mos;
+	private final int nbf;
+	private final double[][] mos;
 
-	private List<ContractedGaussian> bfs;
+	private final List<ContractedGaussian> bfs;
 
 	/**
 	 * Creates a new instance of MODensity.
 	 *
-	 * @param scfMethod
-	 *            the Self Consistent Field (SCF) method.
+	 * @param scfMethod the Self Consistent Field (SCF) method.
 	 */
-	public MODensity(SCFMethod scfMethod) {
+	public MODensity(final SCFMethod scfMethod) {
 		super(scfMethod);
 
 		bfs = scfMethod.getOneEI().getBasisSetLibrary().getBasisFunctions();
@@ -47,12 +46,10 @@ public class MODensity extends OneElectronProperty {
 	/**
 	 * Creates a new instance of MODensity.
 	 *
-	 * @param scfMethod
-	 *            the Self Consistent Field (SCF) method.
-	 * @param monumber
-	 *            the number of molecular orbitals.
+	 * @param scfMethod the Self Consistent Field (SCF) method.
+	 * @param monumber  the number of molecular orbitals.
 	 */
-	public MODensity(SCFMethod scfMethod, int monumber) {
+	public MODensity(final SCFMethod scfMethod, final int monumber) {
 		this(scfMethod);
 
 		this.monumber = monumber;
@@ -61,14 +58,11 @@ public class MODensity extends OneElectronProperty {
 	/**
 	 * Creates a new instance of MODensity.
 	 *
-	 * @param molecule
-	 *            the molecule object.
-	 * @param bsl
-	 *            the basis functions of a given molecule and a basis set.
-	 * @param mos
-	 *            the molecular orbitals as a coefficient matrix.
+	 * @param molecule the molecule object.
+	 * @param bsl      the basis functions of a given molecule and a basis set.
+	 * @param mos      the molecular orbitals as a coefficient matrix.
 	 */
-	public MODensity(Molecule molecule, BasisSetLibrary bsl, MolecularOrbitals mos) {
+	public MODensity(final Molecule molecule, final BasisSetLibrary bsl, final MolecularOrbitals mos) {
 
 		this.bfs = bsl.getBasisFunctions();
 		this.nbf = this.bfs.size();
@@ -79,17 +73,14 @@ public class MODensity extends OneElectronProperty {
 	/**
 	 * Creates a new instance of MODensity.
 	 *
-	 * @param molecule
-	 *            the molecule.
-	 * @param bsl
-	 *            the basis functions of a given molecule and a basis set.
-	 * @param mos
-	 *            the molecular orbitals as a coefficient matrix.
-	 * @param monumber
-	 *            the number of molecular orbitals.
+	 * @param molecule the molecule.
+	 * @param bsl      the basis functions of a given molecule and a basis set.
+	 * @param mos      the molecular orbitals as a coefficient matrix.
+	 * @param monumber the number of molecular orbitals.
 	 *
 	 */
-	public MODensity(Molecule molecule, BasisSetLibrary bsl, MolecularOrbitals mos, int monumber) {
+	public MODensity(final Molecule molecule, final BasisSetLibrary bsl, final MolecularOrbitals mos,
+			final int monumber) {
 
 		this.bfs = bsl.getBasisFunctions();
 		this.nbf = this.bfs.size();
@@ -103,14 +94,13 @@ public class MODensity extends OneElectronProperty {
 	 * Note that the unit of Point3D object must be a.u. No attempt is made to
 	 * verify this.
 	 *
-	 * @param point
-	 *            the point of interest
+	 * @param point the point of interest
 	 * @return the value of this property at this point
 	 */
 	@Override
-	public double compute(Vector3D point) {
-		RealVector amplitudes = new ArrayRealVector(nbf);
-		double[] amp = amplitudes.toArray();
+	public double compute(final Vector3D point) {
+		final RealVector amplitudes = new ArrayRealVector(nbf);
+		final double[] amp = amplitudes.toArray();
 		double moden = 0.0;
 		double amp_m;
 		double mos_m;

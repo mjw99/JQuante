@@ -15,7 +15,7 @@ public final class PowerList {
 
 	private static WeakReference<PowerList> _powerList = null;
 
-	private HashMap<String, ArrayList<Power>> thePowerList;
+	private final HashMap<String, ArrayList<Power>> thePowerList;
 
 	/** Creates a new instance of PowerList */
 	private PowerList() {
@@ -34,12 +34,11 @@ public final class PowerList {
 	/**
 	 * Generate a power list for the given maximum angular momentum value
 	 * 
-	 * @param maxAngularMomentum
-	 *            the maximum angular momentum
+	 * @param maxAngularMomentum the maximum angular momentum
 	 * @return the Power list in order for this maximum angular momentum
 	 */
-	public ArrayList<Power> generatePowerList(int maxAngularMomentum) {
-		ArrayList<Power> pList = new ArrayList<>();
+	public ArrayList<Power> generatePowerList(final int maxAngularMomentum) {
+		final ArrayList<Power> pList = new ArrayList<>();
 
 		for (int i = maxAngularMomentum; i >= 0; i--)
 			for (int j = maxAngularMomentum - i; j >= 0; j--)
@@ -69,15 +68,14 @@ public final class PowerList {
 	}
 
 	/**
-	 * get the power list for the specified orbital symbol ('S', 'P', 'D' or 'F'
-	 * .. no explicit error checking done, but will throw a RuntimeException if
-	 * the arguments are incorrect)
+	 * get the power list for the specified orbital symbol ('S', 'P', 'D' or 'F' ..
+	 * no explicit error checking done, but will throw a RuntimeException if the
+	 * arguments are incorrect)
 	 * 
-	 * @param orbital
-	 *            - 'S', 'P', 'D' or 'F'
+	 * @param orbital - 'S', 'P', 'D' or 'F'
 	 * @return Iterator of Power object representing the powers
 	 */
-	public Iterator<Power> getPowerList(String orbital) {
+	public Iterator<Power> getPowerList(final String orbital) {
 		return thePowerList.get(orbital).iterator();
 	}
 }

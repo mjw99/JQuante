@@ -27,7 +27,7 @@ import net.jafama.FastMath;
 public final class TwoElectronIntegrals {
 	private static final Logger LOG = LogManager.getLogger(TwoElectronIntegrals.class);
 
-	private BasisSetLibrary basisSetLibrary;
+	private final BasisSetLibrary basisSetLibrary;
 
 	private Molecule molecule;
 
@@ -49,7 +49,7 @@ public final class TwoElectronIntegrals {
 	 * 
 	 * @param basisSetLibrary the basis functions to be used
 	 */
-	public TwoElectronIntegrals(BasisSetLibrary basisSetLibrary) {
+	public TwoElectronIntegrals(final BasisSetLibrary basisSetLibrary) {
 		this(basisSetLibrary, false);
 	}
 
@@ -61,7 +61,7 @@ public final class TwoElectronIntegrals {
 	 *                        stored, they must be calculated individually by
 	 *                        calling compute2E(i,j,k,l)
 	 */
-	public TwoElectronIntegrals(BasisSetLibrary basisSetLibrary, boolean onTheFly) {
+	public TwoElectronIntegrals(final BasisSetLibrary basisSetLibrary, final boolean onTheFly) {
 		this.basisSetLibrary = basisSetLibrary;
 
 		this.onTheFly = onTheFly;
@@ -70,7 +70,7 @@ public final class TwoElectronIntegrals {
 		if (!onTheFly) {
 			try {
 				compute2E(); // try to do compute 2E incore
-			} catch (OutOfMemoryError e) {
+			} catch (final OutOfMemoryError e) {
 				// if no memory, resort to direct SCF
 				LOG.error("No memory for in-core integral evaluation" + ". Switching to direct integral evaluation.");
 				this.onTheFly = true;
@@ -95,7 +95,8 @@ public final class TwoElectronIntegrals {
 	 *                        stored, they must be calculated individually by
 	 *                        calling compute2EShellPair(i,j,k,l)
 	 */
-	public TwoElectronIntegrals(BasisSetLibrary basisSetLibrary, Molecule molecule, boolean onTheFly) {
+	public TwoElectronIntegrals(final BasisSetLibrary basisSetLibrary, final Molecule molecule,
+			final boolean onTheFly) {
 		this.basisSetLibrary = basisSetLibrary;
 		this.molecule = molecule;
 
@@ -107,7 +108,7 @@ public final class TwoElectronIntegrals {
 				// first try in - core method
 				try {
 					compute2EShellPair(); // try to use shell pair algorithm
-				} catch (Exception ignored) {
+				} catch (final Exception ignored) {
 					LOG.error("WARNING: Using a slower algorithm" + " to compute two electron integrals. Error is: "
 							+ ignored.toString());
 					LOG.error(ignored);
@@ -115,7 +116,7 @@ public final class TwoElectronIntegrals {
 					compute2E(); // if it doesn't succeed then fall back to
 									// normal
 				}
-			} catch (OutOfMemoryError e) {
+			} catch (final OutOfMemoryError e) {
 				// if no memory, resort to direct SCF
 				LOG.error("No memory for in-core integral evaluation" + ". Switching to direct integral evaluation.");
 				this.onTheFly = true;
@@ -146,13 +147,13 @@ public final class TwoElectronIntegrals {
 		// we only need i <= j, k <= l, and ij >= kl
 		IntStream.range(0, noOfBasisFunctions).parallel().forEach(i -> {
 			IntStream.range(0, i + 1).parallel().forEach(j -> {
-				int ij = i * (i + 1) / 2 + j;
+				final int ij = i * (i + 1) / 2 + j;
 				IntStream.range(0, noOfBasisFunctions).parallel().forEach(k -> {
 					IntStream.range(0, k + 1).parallel().forEach(l -> {
-						int kl = k * (k + 1) / 2 + l;
+						final int kl = k * (k + 1) / 2 + l;
 
 						if (ij >= kl) {
-							int ijkl = IntegralsUtil.ijkl2intindex(i, j, k, l);
+							final int ijkl = IntegralsUtil.ijkl2intindex(i, j, k, l);
 							// record the 2E integrals
 							twoEIntegrals[ijkl] = Integrals.coulomb(bfs.get(i), bfs.get(j), bfs.get(k), bfs.get(l));
 						}
@@ -164,10 +165,10 @@ public final class TwoElectronIntegrals {
 	}
 
 	/** Compute a single 2E derivative element */
-	private Vector3D compute2EDerivativeElement(ContractedGaussian bfi, ContractedGaussian bfj, ContractedGaussian bfk,
-			ContractedGaussian bfl) {
+	private Vector3D compute2EDerivativeElement(final ContractedGaussian bfi, final ContractedGaussian bfj,
+			final ContractedGaussian bfk, final ContractedGaussian bfl) {
 
-		Vector3D twoEDerEle = new Vector3D(0, 0, 0);
+		final Vector3D twoEDerEle = new Vector3D(0, 0, 0);
 		int[] paramIdx;
 		Power currentPower;
 		Vector3D currentOrigin;
@@ -175,13 +176,13 @@ public final class TwoElectronIntegrals {
 
 		if (bfi.getCenteredAtom().getIndex() == atomIndex) {
 			paramIdx = new int[] { 4, 1, 2, 3 };
-			for (PrimitiveGaussian iPG : bfi.getPrimitives()) {
+			for (final PrimitiveGaussian iPG : bfi.getPrimitives()) {
 				currentOrigin = iPG.getOrigin();
 				currentPower = iPG.getPowers();
 				currentAlpha = iPG.getExponent();
-				for (PrimitiveGaussian jPG : bfj.getPrimitives()) {
-					for (PrimitiveGaussian kPG : bfk.getPrimitives()) {
-						for (PrimitiveGaussian lPG : bfl.getPrimitives()) {
+				for (final PrimitiveGaussian jPG : bfj.getPrimitives()) {
+					for (final PrimitiveGaussian kPG : bfk.getPrimitives()) {
+						for (final PrimitiveGaussian lPG : bfl.getPrimitives()) {
 							compute2EDerivativeElementHelper(iPG, jPG, kPG, lPG, currentOrigin, currentPower,
 									currentAlpha, paramIdx, twoEDerEle);
 						}
@@ -192,13 +193,13 @@ public final class TwoElectronIntegrals {
 
 		if (bfj.getCenteredAtom().getIndex() == atomIndex) {
 			paramIdx = new int[] { 0, 4, 2, 3 };
-			for (PrimitiveGaussian iPG : bfi.getPrimitives()) {
-				for (PrimitiveGaussian jPG : bfj.getPrimitives()) {
+			for (final PrimitiveGaussian iPG : bfi.getPrimitives()) {
+				for (final PrimitiveGaussian jPG : bfj.getPrimitives()) {
 					currentOrigin = jPG.getOrigin();
 					currentPower = jPG.getPowers();
 					currentAlpha = jPG.getExponent();
-					for (PrimitiveGaussian kPG : bfk.getPrimitives()) {
-						for (PrimitiveGaussian lPG : bfl.getPrimitives()) {
+					for (final PrimitiveGaussian kPG : bfk.getPrimitives()) {
+						for (final PrimitiveGaussian lPG : bfl.getPrimitives()) {
 							compute2EDerivativeElementHelper(iPG, jPG, kPG, lPG, currentOrigin, currentPower,
 									currentAlpha, paramIdx, twoEDerEle);
 						} // end for
@@ -209,13 +210,13 @@ public final class TwoElectronIntegrals {
 
 		if (bfk.getCenteredAtom().getIndex() == atomIndex) {
 			paramIdx = new int[] { 0, 1, 4, 3 };
-			for (PrimitiveGaussian iPG : bfi.getPrimitives()) {
-				for (PrimitiveGaussian jPG : bfj.getPrimitives()) {
-					for (PrimitiveGaussian kPG : bfk.getPrimitives()) {
+			for (final PrimitiveGaussian iPG : bfi.getPrimitives()) {
+				for (final PrimitiveGaussian jPG : bfj.getPrimitives()) {
+					for (final PrimitiveGaussian kPG : bfk.getPrimitives()) {
 						currentOrigin = kPG.getOrigin();
 						currentPower = kPG.getPowers();
 						currentAlpha = kPG.getExponent();
-						for (PrimitiveGaussian lPG : bfl.getPrimitives()) {
+						for (final PrimitiveGaussian lPG : bfl.getPrimitives()) {
 							compute2EDerivativeElementHelper(iPG, jPG, kPG, lPG, currentOrigin, currentPower,
 									currentAlpha, paramIdx, twoEDerEle);
 						} // end for
@@ -226,10 +227,10 @@ public final class TwoElectronIntegrals {
 
 		if (bfl.getCenteredAtom().getIndex() == atomIndex) {
 			paramIdx = new int[] { 0, 1, 2, 4 };
-			for (PrimitiveGaussian iPG : bfi.getPrimitives()) {
-				for (PrimitiveGaussian jPG : bfj.getPrimitives()) {
-					for (PrimitiveGaussian kPG : bfk.getPrimitives()) {
-						for (PrimitiveGaussian lPG : bfl.getPrimitives()) {
+			for (final PrimitiveGaussian iPG : bfi.getPrimitives()) {
+				for (final PrimitiveGaussian jPG : bfj.getPrimitives()) {
+					for (final PrimitiveGaussian kPG : bfk.getPrimitives()) {
+						for (final PrimitiveGaussian lPG : bfl.getPrimitives()) {
 							currentOrigin = lPG.getOrigin();
 							currentPower = lPG.getPowers();
 							currentAlpha = lPG.getExponent();
@@ -246,40 +247,46 @@ public final class TwoElectronIntegrals {
 	}
 
 	/** helper for computing 2E derivative */
-	private void compute2EDerivativeElementHelper(PrimitiveGaussian iPG, PrimitiveGaussian jPG, PrimitiveGaussian kPG,
-			PrimitiveGaussian lPG, Vector3D currentOrigin, Power currentPower, double currentAlpha, int[] paramIdx,
-			Vector3D derEle) {
+	private void compute2EDerivativeElementHelper(final PrimitiveGaussian iPG, final PrimitiveGaussian jPG,
+			final PrimitiveGaussian kPG, final PrimitiveGaussian lPG, final Vector3D currentOrigin,
+			final Power currentPower, final double currentAlpha, final int[] paramIdx, Vector3D derEle) {
 
-		int l = currentPower.getL();
-		int m = currentPower.getM();
-		int n = currentPower.getN();
+		final int l = currentPower.getL();
+		final int m = currentPower.getM();
+		final int n = currentPower.getN();
 
-		double coeff = iPG.getCoefficient() * jPG.getCoefficient() * kPG.getCoefficient() * lPG.getCoefficient();
+		final double coeff = iPG.getCoefficient() * jPG.getCoefficient() * kPG.getCoefficient() * lPG.getCoefficient();
 
 		PrimitiveGaussian xPG = new PrimitiveGaussian(currentOrigin, new Power(l + 1, m, n), currentAlpha, coeff);
 
-		PrimitiveGaussian[] pgs = new PrimitiveGaussian[] { iPG, jPG, kPG, lPG, xPG };
+		final PrimitiveGaussian[] pgs = new PrimitiveGaussian[] { iPG, jPG, kPG, lPG, xPG };
 
-		double terma = FastMath.sqrt(currentAlpha * (2.0 * l + 1.0)) * coeff
+		final double terma = FastMath.sqrt(currentAlpha * (2.0 * l + 1.0)) * coeff
 				* Integrals.coulomb(pgs[paramIdx[0]], pgs[paramIdx[1]], pgs[paramIdx[2]], pgs[paramIdx[3]]);
 		double termbx = 0.0;
 		double termby = 0.0;
 		double termbz = 0.0;
 
 		if (l > 0) {
-			xPG = new PrimitiveGaussian(currentOrigin, new Power(xPG.getPowers().getL() - 1, xPG.getPowers().getM(), xPG.getPowers().getN()), coeff, currentAlpha);
+			xPG = new PrimitiveGaussian(currentOrigin,
+					new Power(xPG.getPowers().getL() - 1, xPG.getPowers().getM(), xPG.getPowers().getN()), coeff,
+					currentAlpha);
 			termbx = -2.0 * l * FastMath.sqrt(currentAlpha / (2. * l - 1)) * coeff
 					* Integrals.coulomb(pgs[paramIdx[0]], pgs[paramIdx[1]], pgs[paramIdx[2]], pgs[paramIdx[3]]);
 		}
 
 		if (m > 0) {
-			xPG = new PrimitiveGaussian(currentOrigin, new Power(xPG.getPowers().getL(), xPG.getPowers().getM() - 1, xPG.getPowers().getN()), coeff, currentAlpha);
+			xPG = new PrimitiveGaussian(currentOrigin,
+					new Power(xPG.getPowers().getL(), xPG.getPowers().getM() - 1, xPG.getPowers().getN()), coeff,
+					currentAlpha);
 			termby = -2.0 * m * FastMath.sqrt(currentAlpha / (2. * m - 1)) * coeff
 					* Integrals.coulomb(pgs[paramIdx[0]], pgs[paramIdx[1]], pgs[paramIdx[2]], pgs[paramIdx[3]]);
 		}
 
 		if (n > 0) {
-			xPG = new PrimitiveGaussian(currentOrigin, new Power(xPG.getPowers().getL(), xPG.getPowers().getM(), xPG.getPowers().getN() - 1), coeff, currentAlpha);
+			xPG = new PrimitiveGaussian(currentOrigin,
+					new Power(xPG.getPowers().getL(), xPG.getPowers().getM(), xPG.getPowers().getN() - 1), coeff,
+					currentAlpha);
 			termbz = -2.0 * n * FastMath.sqrt(currentAlpha / (2. * n - 1)) * coeff
 					* Integrals.coulomb(pgs[paramIdx[0]], pgs[paramIdx[1]], pgs[paramIdx[2]], pgs[paramIdx[3]]);
 		}
@@ -292,22 +299,21 @@ public final class TwoElectronIntegrals {
 	 * Compute the 2E integrals using shell pair based method, and store it in a
 	 * single 1D array, in the form [ijkl].
 	 * 
-	 * TODO
-	 * 1) This does not appear to be the shell pair method (mjw).
-	 * 2) Add parallel support.
+	 * TODO 1) This does not appear to be the shell pair method (mjw). 2) Add
+	 * parallel support.
 	 *
 	 */
 	protected void compute2EShellPair() {
-		List<ContractedGaussian> bfs = basisSetLibrary.getBasisFunctions();
+		final List<ContractedGaussian> bfs = basisSetLibrary.getBasisFunctions();
 
 		// allocate required memory
-		int noOfBasisFunctions = bfs.size();
-		int noOfIntegrals = noOfBasisFunctions * (noOfBasisFunctions + 1)
+		final int noOfBasisFunctions = bfs.size();
+		final int noOfIntegrals = noOfBasisFunctions * (noOfBasisFunctions + 1)
 				* (noOfBasisFunctions * noOfBasisFunctions + noOfBasisFunctions + 2) / 8;
 
 		twoEIntegrals = new double[noOfIntegrals];
 
-		int noOfAtoms = molecule.getNumberOfAtoms();
+		final int noOfAtoms = molecule.getNumberOfAtoms();
 		int naFunc;
 		int nbFunc;
 		int ncFunc;
@@ -358,8 +364,9 @@ public final class TwoElectronIntegrals {
 									for (int l = 0; l < ndFunc; l++) {
 										ldFunc = dFunc.get(l);
 
-										twoEIndx = IntegralsUtil.ijkl2intindex(iaFunc.getBasisFunctionIndex(), jbFunc.getBasisFunctionIndex(),
-												kcFunc.getBasisFunctionIndex(), ldFunc.getBasisFunctionIndex());
+										twoEIndx = IntegralsUtil.ijkl2intindex(iaFunc.getBasisFunctionIndex(),
+												jbFunc.getBasisFunctionIndex(), kcFunc.getBasisFunctionIndex(),
+												ldFunc.getBasisFunctionIndex());
 
 										twoEIntegrals[twoEIndx] = compute2E(iaFunc, jbFunc, kcFunc, ldFunc);
 									} // end for (l)
@@ -382,9 +389,9 @@ public final class TwoElectronIntegrals {
 	 * @param l Index of contracted Gaussian function l.
 	 * @return the value of two integral electron
 	 */
-	public double compute2E(int i, int j, int k, int l) {
+	public double compute2E(final int i, final int j, final int k, final int l) {
 		// if we really need to compute, go ahead!
-		List<ContractedGaussian> bfs = basisSetLibrary.getBasisFunctions();
+		final List<ContractedGaussian> bfs = basisSetLibrary.getBasisFunctions();
 
 		return Integrals.coulomb(bfs.get(i), bfs.get(j), bfs.get(k), bfs.get(l));
 	}
@@ -398,8 +405,8 @@ public final class TwoElectronIntegrals {
 	 * @param cgl Contracted Gaussian function l.
 	 * @return the value of two integral electron
 	 */
-	public double compute2E(ContractedGaussian cgi, ContractedGaussian cgj, ContractedGaussian cgk,
-			ContractedGaussian cgl) {
+	public double compute2E(final ContractedGaussian cgi, final ContractedGaussian cgj, final ContractedGaussian cgk,
+			final ContractedGaussian cgl) {
 		return Integrals.coulomb(cgi, cgj, cgk, cgl);
 	}
 
@@ -417,7 +424,7 @@ public final class TwoElectronIntegrals {
 	 * 
 	 * @param twoEIntegrals New value of property twoEIntegrals.
 	 */
-	public void setTwoEIntegrals(double[] twoEIntegrals) {
+	public void setTwoEIntegrals(final double[] twoEIntegrals) {
 		this.twoEIntegrals = twoEIntegrals;
 	}
 
@@ -427,7 +434,7 @@ public final class TwoElectronIntegrals {
 	 * @param atomIndex the reference atom index
 	 * @param scfMethod the reference SCF method
 	 */
-	public void compute2EDerivatives(int atomIndex, SCFMethod scfMethod) {
+	public void compute2EDerivatives(final int atomIndex, final SCFMethod scfMethod) {
 		final List<ContractedGaussian> bfs = basisSetLibrary.getBasisFunctions();
 		final int noOfBasisFunctions = bfs.size();
 
@@ -436,9 +443,9 @@ public final class TwoElectronIntegrals {
 
 		twoEDer = new ArrayList<>();
 
-		double[] dxTwoE = new double[twoEIntegrals.length];
-		double[] dyTwoE = new double[twoEIntegrals.length];
-		double[] dzTwoE = new double[twoEIntegrals.length];
+		final double[] dxTwoE = new double[twoEIntegrals.length];
+		final double[] dyTwoE = new double[twoEIntegrals.length];
+		final double[] dzTwoE = new double[twoEIntegrals.length];
 
 		twoEDer.add(dxTwoE);
 		twoEDer.add(dyTwoE);
@@ -446,22 +453,22 @@ public final class TwoElectronIntegrals {
 
 		// we only need i <= j, k <= l, and ij >= kl
 		IntStream.range(0, noOfBasisFunctions).parallel().forEach(i -> {
-			ContractedGaussian bfi = bfs.get(i);
+			final ContractedGaussian bfi = bfs.get(i);
 
 			IntStream.range(0, i + 1).parallel().forEach(j -> {
-				ContractedGaussian bfj = bfs.get(j);
-				int ij = i * (i + 1) / 2 + j;
+				final ContractedGaussian bfj = bfs.get(j);
+				final int ij = i * (i + 1) / 2 + j;
 				IntStream.range(0, noOfBasisFunctions).parallel().forEach(k -> {
-					ContractedGaussian bfk = bfs.get(k);
+					final ContractedGaussian bfk = bfs.get(k);
 					IntStream.range(0, k + 1).parallel().forEach(l -> {
-						ContractedGaussian bfl = bfs.get(l);
-						int kl = k * (k + 1) / 2 + l;
+						final ContractedGaussian bfl = bfs.get(l);
+						final int kl = k * (k + 1) / 2 + l;
 
 						if (ij >= kl) {
-							int ijkl = IntegralsUtil.ijkl2intindex(i, j, k, l);
+							final int ijkl = IntegralsUtil.ijkl2intindex(i, j, k, l);
 
 							// record derivative of the 2E integrals
-							Vector3D twoEDerEle = compute2EDerivativeElement(bfi, bfj, bfk, bfl);
+							final Vector3D twoEDerEle = compute2EDerivativeElement(bfi, bfj, bfk, bfl);
 
 							dxTwoE[ijkl] = twoEDerEle.getX();
 							dyTwoE[ijkl] = twoEDerEle.getY();
@@ -498,13 +505,13 @@ public final class TwoElectronIntegrals {
 	 * 
 	 * @param onTheFly new value of onTheFly
 	 */
-	public void setOnTheFly(boolean onTheFly) {
+	public void setOnTheFly(final boolean onTheFly) {
 		this.onTheFly = onTheFly;
 	}
 
 	public void printCompleteIntegralList() {
 
-		int noOfBasisFunctions = basisSetLibrary.getBasisFunctions().size();
+		final int noOfBasisFunctions = basisSetLibrary.getBasisFunctions().size();
 
 		System.out.println("");
 		System.out.println("Complete integral list");
@@ -513,7 +520,7 @@ public final class TwoElectronIntegrals {
 			for (int j = 0; j < noOfBasisFunctions; j++) {
 				for (int k = 0; k < noOfBasisFunctions; k++) {
 					for (int l = 0; l < noOfBasisFunctions; l++) {
-						int ijkl = IntegralsUtil.ijkl2intindex(i, j, k, l);
+						final int ijkl = IntegralsUtil.ijkl2intindex(i, j, k, l);
 						System.out.println(i + " " + j + " " + k + " " + l + "\t\t" + twoEIntegrals[ijkl]);
 
 					}

@@ -11,7 +11,7 @@ public class SCFType {
 	/**
 	 * Holds value of property type.
 	 */
-	private int type;
+	private final int type;
 
 	/**
 	 * The Hartree Fock method
@@ -34,7 +34,7 @@ public class SCFType {
 	public static final SCFType UNRESTRICTED_HARTREE_FOCK_DIRECT = new SCFType(3);
 
 	/** Creates a new instance of SCFType */
-	private SCFType(int type) {
+	private SCFType(final int type) {
 		this.type = type;
 	}
 
@@ -77,7 +77,7 @@ public class SCFType {
 	 * @return true/ false specifying the equality or inequality
 	 */
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
 		}

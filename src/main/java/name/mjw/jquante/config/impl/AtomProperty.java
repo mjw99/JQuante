@@ -26,7 +26,7 @@ public final class AtomProperty implements Parameter {
 	 * @param atomicNumber   Atomic nubmer of atom.
 	 * @param atomicWeight   Atomic weight of atom.
 	 */
-	public AtomProperty(String name, int atomicNumber, double atomicWeight) {
+	public AtomProperty(final String name, final int atomicNumber, final double atomicWeight) {
 
 		this.name = name;
 		this.atomicNumber = atomicNumber;
@@ -49,7 +49,7 @@ public final class AtomProperty implements Parameter {
 	 * @param name New value of property name.
 	 * 
 	 */
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 
@@ -69,7 +69,7 @@ public final class AtomProperty implements Parameter {
 	 * @param atomicNumber New value of property atomicNumber.
 	 * 
 	 */
-	public void setAtomicNumber(int atomicNumber) {
+	public void setAtomicNumber(final int atomicNumber) {
 		this.atomicNumber = atomicNumber;
 	}
 
@@ -89,7 +89,7 @@ public final class AtomProperty implements Parameter {
 	 * @param atomicWeight New value of property atomicWeight.
 	 * 
 	 */
-	public void setAtomicWeight(double atomicWeight) {
+	public void setAtomicWeight(final double atomicWeight) {
 		this.atomicWeight = atomicWeight;
 	}
 
@@ -99,8 +99,8 @@ public final class AtomProperty implements Parameter {
 	}
 
 	@Override
-	public void setValue(Object value) {
-		AtomProperty ap = (AtomProperty) value;
+	public void setValue(final Object value) {
+		final AtomProperty ap = (AtomProperty) value;
 
 		this.name = ap.name;
 		this.atomicNumber = ap.atomicNumber;

@@ -13,20 +13,19 @@ public final class BasisSet {
 	/**
 	 * The name of the basis set.
 	 */
-	private String name;
+	private final String name;
 
 	/**
 	 * Holds the collection of atomic basis, with the symbol as the key
 	 */
-	private HashMap<String, AtomicBasis> atomicBasisSet;
+	private final HashMap<String, AtomicBasis> atomicBasisSet;
 
 	/**
 	 * Creates a new instance of Basis
 	 * 
-	 * @param name
-	 *            - the name of this basis set (say "sto-3g")
+	 * @param name - the name of this basis set (say "sto-3g")
 	 */
-	public BasisSet(String name) {
+	public BasisSet(final String name) {
 		this.name = name;
 
 		atomicBasisSet = new HashMap<>();
@@ -44,24 +43,22 @@ public final class BasisSet {
 	/**
 	 * Add a relevant atomic basis to this basis set
 	 * 
-	 * @param atomicBasis
-	 *            the instance of AtomicBasis to be added to this basis set
+	 * @param atomicBasis the instance of AtomicBasis to be added to this basis set
 	 */
-	public void addAtomicBasis(AtomicBasis atomicBasis) {
+	public void addAtomicBasis(final AtomicBasis atomicBasis) {
 		atomicBasisSet.put(atomicBasis.getChemicalSymbol(), atomicBasis);
 	}
 
 	/**
 	 * Returns appropriate basis for a given chemical symbol. Will throw
-	 * <code>BasisNotFoundException</code> if the basis set does not contain
-	 * atomic basis for the requested atomic symbol.
+	 * <code>BasisNotFoundException</code> if the basis set does not contain atomic
+	 * basis for the requested atomic symbol.
 	 * 
-	 * @param chemicalSymbol
-	 *            for which the basis is requested
+	 * @param chemicalSymbol for which the basis is requested
 	 * @return instance of AtomicBasis
 	 */
-	public AtomicBasis getAtomicBasis(String chemicalSymbol) {
-		AtomicBasis atomicBasis = atomicBasisSet.get(chemicalSymbol);
+	public AtomicBasis getAtomicBasis(final String chemicalSymbol) {
+		final AtomicBasis atomicBasis = atomicBasisSet.get(chemicalSymbol);
 
 		if (atomicBasis == null) {
 			throw new BasisNotFoundException("Basis for atom '" + chemicalSymbol

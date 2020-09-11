@@ -20,9 +20,9 @@ public class ThreePointInterpolater extends Interpolater {
 	private double j2;
 	private double w1;
 	private double w2;
-	private double[] x1 = new double[9]; 
-	private double[] y1 = new double[8];
-	private double[] delta = new double[3];
+	private final double[] x1 = new double[9];
+	private final double[] y1 = new double[8];
+	private final double[] delta = new double[3];
 
 	/**
 	 * Interpolate value at X depending upon value at Y. Same as @class
@@ -34,14 +34,12 @@ public class ThreePointInterpolater extends Interpolater {
 	 * interpolater(s) are set as sub-interpolater. Else this routine will fail to
 	 * operate.
 	 * 
-	 * @param y
-	 *            the Y values (results of fuction evaluation)
-	 * @param x
-	 *            the X values at fuction evaluation is performed or is expected
+	 * @param y the Y values (results of fuction evaluation)
+	 * @param x the X values at fuction evaluation is performed or is expected
 	 * @return the interpolated value depending upon the interpolation formula
 	 */
 	@Override
-	public double interpolate(double[] y, double[] x) {
+	public double interpolate(final double[] y, final double[] x) {
 		delta[0] = (x[3] - x[0]) / x[6];
 		delta[1] = (x[4] - x[1]) / x[7];
 		delta[2] = (x[5] - x[2]) / x[8];

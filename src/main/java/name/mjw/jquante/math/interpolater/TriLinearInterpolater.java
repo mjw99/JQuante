@@ -58,8 +58,8 @@ public class TriLinearInterpolater extends Interpolater {
 	 * @return the interpolated value depending upon the interpolation formula
 	 */
 	@Override
-	public double interpolate(double[] y, double[] x) {
-		double[] delta = new double[] { (x[3] - x[0]) / x[6], (x[4] - x[1]) / x[7], (x[5] - x[2]) / x[8] };
+	public double interpolate(final double[] y, final double[] x) {
+		final double[] delta = new double[] { (x[3] - x[0]) / x[6], (x[4] - x[1]) / x[7], (x[5] - x[2]) / x[8] };
 		double i1;
 		double i2;
 		double j1;

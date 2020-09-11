@@ -21,29 +21,26 @@ public final class Fock extends Array2DRowRealMatrix {
 	 * @param n
 	 *            the dimension
 	 */
-	public Fock(int n) {
+	public Fock(final int n) {
 		super(n, n);
 	}
 
 	/**
 	 * Creates a new instance of Matrix, based on already allocated 2D array
 	 * 
-	 * @param a
-	 *            the 2D array
+	 * @param a the 2D array
 	 */
-	public Fock(double[][] a) {
+	public Fock(final double[][] a) {
 		super(a);
 	}
 
 	/**
 	 * Form the Fock matrix from the HCore and the GMatrix
 	 * 
-	 * @param hCore
-	 *            the HCore matrix
-	 * @param gMatrix
-	 *            the GMatrix
+	 * @param hCore   the HCore matrix
+	 * @param gMatrix the GMatrix
 	 */
-	public void compute(HCore hCore, GMatrix gMatrix) {
+	public void compute(final HCore hCore, final GMatrix gMatrix) {
 		setSubMatrix((hCore.add(gMatrix)).getData(), 0, 0);
 	}
 

@@ -26,7 +26,7 @@ public class PropertyNotDefinedException extends Exception {
 	 * @param errMsg
 	 *            Error message.
 	 */
-	public PropertyNotDefinedException(String errMsg) {
+	public PropertyNotDefinedException(final String errMsg) {
 		this.errMsg = errMsg;
 	}
 

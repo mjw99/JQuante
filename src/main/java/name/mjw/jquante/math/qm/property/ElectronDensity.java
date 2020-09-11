@@ -19,19 +19,18 @@ import name.mjw.jquante.math.qm.basis.ContractedGaussian;
  */
 public class ElectronDensity extends OneElectronProperty {
 
-	private int nbf;
+	private final int nbf;
 
-	private List<ContractedGaussian> bfs;
+	private final List<ContractedGaussian> bfs;
 
-	private double[][] dm;
+	private final double[][] dm;
 
 	/**
 	 * Creates a new instance of ElectronDensity
 	 * 
-	 * @param scfMethod
-	 *            the Self Consistent Field (SCF) method
+	 * @param scfMethod the Self Consistent Field (SCF) method
 	 */
-	public ElectronDensity(SCFMethod scfMethod) {
+	public ElectronDensity(final SCFMethod scfMethod) {
 		super(scfMethod);
 
 		bfs = scfMethod.getOneEI().getBasisSetLibrary().getBasisFunctions();
@@ -43,12 +42,10 @@ public class ElectronDensity extends OneElectronProperty {
 	/**
 	 * Creates a new instance of ElectronDensity
 	 * 
-	 * @param bsl
-	 *            the basis functions of a given molecule and a basis set
-	 * @param den
-	 *            the density matrix
+	 * @param bsl the basis functions of a given molecule and a basis set
+	 * @param den the density matrix
 	 */
-	public ElectronDensity(BasisSetLibrary bsl, Density den) {
+	public ElectronDensity(final BasisSetLibrary bsl, final Density den) {
 		this.bfs = bsl.getBasisFunctions();
 		this.nbf = this.bfs.size();
 
@@ -61,14 +58,13 @@ public class ElectronDensity extends OneElectronProperty {
 	 * Note that the unit of Point3D object must be a.u. No attempt is made to
 	 * verify this.
 	 * 
-	 * @param point
-	 *            the point of interest
+	 * @param point the point of interest
 	 * @return the value of this property at this point
 	 */
 	@Override
-	public double compute(Vector3D point) {
-		RealVector amplitudes = new ArrayRealVector(nbf);
-		double[] amp = amplitudes.toArray();
+	public double compute(final Vector3D point) {
+		final RealVector amplitudes = new ArrayRealVector(nbf);
+		final double[] amp = amplitudes.toArray();
 		double density = 0.0;
 		double amp_xyz;
 		int m;

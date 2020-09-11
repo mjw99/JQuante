@@ -35,7 +35,7 @@ public class PointProperty {
 	 * @param point
 	 *            New value of property point.
 	 */
-	public void setPoint(Vector3D point) {
+	public void setPoint(final Vector3D point) {
 		this.point = point;
 	}
 
@@ -56,10 +56,9 @@ public class PointProperty {
 	/**
 	 * Setter for property value.
 	 * 
-	 * @param value
-	 *            New value of property value.
+	 * @param value New value of property value.
 	 */
-	public void setValue(double value) {
+	public void setValue(final double value) {
 		this.value = value;
 	}
 

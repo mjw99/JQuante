@@ -63,10 +63,11 @@ public class BasisSetReader {
 	 * @throws SAXException if there was a problem with parsing the XML.
 	 * @throws ParserConfigurationException if there is a serious configuration error.
 	 */
-	public BasisSet readBasisSet(String basisSetName) throws ParserConfigurationException, SAXException, IOException {
-		String basisLibraryPath = "/name/mjw/jquante/math/qm/basis/basis_";
+	public BasisSet readBasisSet(final String basisSetName)
+			throws ParserConfigurationException, SAXException, IOException {
+		final String basisLibraryPath = "/name/mjw/jquante/math/qm/basis/basis_";
 		// read the XML config file
-		Document basisDoc = Utility
+		final Document basisDoc = Utility
 				.parseXML(getClass().getResourceAsStream(basisLibraryPath + basisSetName + ".xml"));
 
 		// and save the basis info. properly
@@ -78,17 +79,19 @@ public class BasisSetReader {
 	/**
 	 * Read a particular basis set from the basis set library (XML)
 	 * 
-	 * @param basisSetFileName
-	 *            the name of external basis set file name.
+	 * @param basisSetFileName the name of external basis set file name.
 	 * @return BasisSet object, representing the requested basis set.
-	 * @throws IOException if stream from basisFileName cannot be read.
-	 * @throws SAXException if there was a problem with parsing the XML.
-	 * @throws ParserConfigurationException if there is a serious configuration error. 
+	 * @throws IOException                  if stream from basisFileName cannot be
+	 *                                      read.
+	 * @throws SAXException                 if there was a problem with parsing the
+	 *                                      XML.
+	 * @throws ParserConfigurationException if there is a serious configuration
+	 *                                      error.
 	 */
-	public BasisSet readExternalBasisSet(String basisSetFileName)
+	public BasisSet readExternalBasisSet(final String basisSetFileName)
 			throws ParserConfigurationException, SAXException, IOException {
 		// read the XML basis set file
-		Document basisDoc = Utility.parseXML(getClass().getResourceAsStream(basisSetFileName));
+		final Document basisDoc = Utility.parseXML(getClass().getResourceAsStream(basisSetFileName));
 
 		// and save the basis info. properly
 		saveIt(basisDoc);
@@ -100,43 +103,43 @@ public class BasisSetReader {
 	 * Recursive routine save DOM tree nodes ... and hoping that it reads the basis
 	 * properly
 	 */
-	private void saveIt(Node n) {
-		int type = n.getNodeType(); // get node type
+	private void saveIt(final Node n) {
+		final int type = n.getNodeType(); // get node type
 
 		switch (type) {
-		case Node.ATTRIBUTE_NODE:
-			String nodeName = n.getNodeName();
+			case Node.ATTRIBUTE_NODE:
+				final String nodeName = n.getNodeName();
 
-			if (nodeName.equals("name")) {
-				// instance of a new basis set
-				basisSet = new BasisSet(nodeName);
-			}
+				if (nodeName.equals("name")) {
+					// instance of a new basis set
+					basisSet = new BasisSet(nodeName);
+				}
 
-			break;
-		case Node.ELEMENT_NODE:
-			String element = n.getNodeName();
+				break;
+			case Node.ELEMENT_NODE:
+				final String element = n.getNodeName();
 
-			NamedNodeMap atts = n.getAttributes();
+				final NamedNodeMap atts = n.getAttributes();
 
-			if ("atom".equals(element)) {
-				// a new atomic basis
-				atomicBasis = new AtomicBasis(atts.getNamedItem("symbol").getNodeValue(),
-						Integer.parseInt(atts.getNamedItem("atomicNumber").getNodeValue()));
-				basisSet.addAtomicBasis(atomicBasis);
-			} else if ("orbital".equals(element)) {
-				// a orbital entry for atomic basis
-				orbital = new Orbital(atts.getNamedItem("type").getNodeValue());
-				atomicBasis.addOrbital(orbital);
-			} else if ("entry".equals(element)) {
-				// a orbital (coefficient, exponent) entry
-				orbital.addEntry(Double.parseDouble(atts.getNamedItem("coeff").getNodeValue()),
-						Double.parseDouble(atts.getNamedItem("exp").getNodeValue()));
-			} else {
-				if (atts == null)
-					return;
+				if ("atom".equals(element)) {
+					// a new atomic basis
+					atomicBasis = new AtomicBasis(atts.getNamedItem("symbol").getNodeValue(),
+							Integer.parseInt(atts.getNamedItem("atomicNumber").getNodeValue()));
+					basisSet.addAtomicBasis(atomicBasis);
+				} else if ("orbital".equals(element)) {
+					// a orbital entry for atomic basis
+					orbital = new Orbital(atts.getNamedItem("type").getNodeValue());
+					atomicBasis.addOrbital(orbital);
+				} else if ("entry".equals(element)) {
+					// a orbital (coefficient, exponent) entry
+					orbital.addEntry(Double.parseDouble(atts.getNamedItem("coeff").getNodeValue()),
+							Double.parseDouble(atts.getNamedItem("exp").getNodeValue()));
+				} else {
+					if (atts == null)
+						return;
 
-				for (int i = 0; i < atts.getLength(); i++) {
-					Node att = atts.item(i);
+					for (int i = 0; i < atts.getLength(); i++) {
+						final Node att = atts.item(i);
 					saveIt(att);
 				}
 			}

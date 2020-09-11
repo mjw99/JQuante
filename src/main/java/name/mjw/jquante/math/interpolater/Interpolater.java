@@ -60,7 +60,7 @@ public abstract class Interpolater {
 	 * @param subInterpolater
 	 *            New value of property subInterpolater.
 	 */
-	public void setSubInterpolater(Interpolater subInterpolater) {
+	public void setSubInterpolater(final Interpolater subInterpolater) {
 		this.subInterpolater = subInterpolater;
 	}
 }

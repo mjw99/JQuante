@@ -50,7 +50,7 @@ public class GridProperty {
 	private double zIncrement;
 
 	private double[] xVals = new double[9];
-	private double[] yVals = new double[8];
+	private final double[] yVals = new double[8];
 
 	/**
 	 * Holds value of property functionValues.
@@ -73,91 +73,65 @@ public class GridProperty {
 	/**
 	 * Creates a new instance of GridProperty
 	 * 
-	 * @param bb
-	 *            BoundingBox.
-	 * @param inc
-	 *            Increment.
+	 * @param bb  BoundingBox.
+	 * @param inc Increment.
 	 */
-	public GridProperty(BoundingBox bb, double inc) {
-		this(bb, inc, inc, inc, (int) (bb.getXWidth() / inc), (int) (bb
-				.getYWidth() / inc), (int) (bb.getZWidth() / inc),
-				new double[((int) (bb.getXWidth() / inc))
-						* ((int) (bb.getYWidth() / inc))
+	public GridProperty(final BoundingBox bb, final double inc) {
+		this(bb, inc, inc, inc, (int) (bb.getXWidth() / inc), (int) (bb.getYWidth() / inc),
+				(int) (bb.getZWidth() / inc), new double[((int) (bb.getXWidth() / inc)) * ((int) (bb.getYWidth() / inc))
 						* ((int) (bb.getZWidth() / inc))]);
 	}
 
 	/**
 	 * Creates a new instance of GridProperty
 	 * 
-	 * @param bb
-	 *            BoundingBox.
-	 * @param xinc
-	 *            X increment.
-	 * @param yinc
-	 *            Y increment.
-	 * @param zinc
-	 *            Z increment.
+	 * @param bb   BoundingBox.
+	 * @param xinc X increment.
+	 * @param yinc Y increment.
+	 * @param zinc Z increment.
 	 */
-	public GridProperty(BoundingBox bb, double xinc, double yinc, double zinc) {
-		this(bb, xinc, yinc, zinc, (int) (bb.getXWidth() / xinc), (int) (bb
-				.getYWidth() / yinc), (int) (bb.getZWidth() / zinc),
-				new double[((int) (bb.getXWidth() / xinc))
-						* ((int) (bb.getYWidth() / yinc))
-						* ((int) (bb.getZWidth() / zinc))]);
+	public GridProperty(final BoundingBox bb, final double xinc, final double yinc, final double zinc) {
+		this(bb, xinc, yinc, zinc, (int) (bb.getXWidth() / xinc), (int) (bb.getYWidth() / yinc),
+				(int) (bb.getZWidth() / zinc), new double[((int) (bb.getXWidth() / xinc))
+						* ((int) (bb.getYWidth() / yinc)) * ((int) (bb.getZWidth() / zinc))]);
 	}
 
 	/**
 	 * Creates a new instance of GridProperty
 	 * 
-	 * @param bb
-	 *            BoundingBox.
-	 * @param xyzPoints
-	 *            Number of xyzPoints.
+	 * @param bb        BoundingBox.
+	 * @param xyzPoints Number of xyzPoints.
 	 */
-	public GridProperty(BoundingBox bb, int xyzPoints) {
-		this(bb, bb.getXWidth() / xyzPoints, bb.getYWidth() / xyzPoints, bb
-				.getZWidth() / xyzPoints);
+	public GridProperty(final BoundingBox bb, final int xyzPoints) {
+		this(bb, bb.getXWidth() / xyzPoints, bb.getYWidth() / xyzPoints, bb.getZWidth() / xyzPoints);
 	}
 
 	/**
 	 * Creates a new instance of GridProperty
 	 * 
-	 * @param bb
-	 *            BoundingBox
-	 * @param xpnt
-	 *            Number of x points.
-	 * @param ypnt
-	 *            Number of y points.
-	 * @param zpnt
-	 *            Number of z points.
+	 * @param bb   BoundingBox
+	 * @param xpnt Number of x points.
+	 * @param ypnt Number of y points.
+	 * @param zpnt Number of z points.
 	 */
-	public GridProperty(BoundingBox bb, int xpnt, int ypnt, int zpnt) {
-		this(bb, bb.getXWidth() / xpnt, bb.getYWidth() / ypnt, bb.getZWidth()
-				/ zpnt);
+	public GridProperty(final BoundingBox bb, final int xpnt, final int ypnt, final int zpnt) {
+		this(bb, bb.getXWidth() / xpnt, bb.getYWidth() / ypnt, bb.getZWidth() / zpnt);
 	}
 
 	/**
 	 * Creates a new instance of GridProperty
 	 * 
-	 * @param bb
-	 *            BoundingBox
-	 * @param xinc
-	 *            X increment.
-	 * @param yinc
-	 *            Y increment.
-	 * @param zinc
-	 *            Z increment.
-	 * @param xpnt
-	 *            Number of X points.
-	 * @param ypnt
-	 *            Number of Y points.
-	 * @param zpnt
-	 *            Number of Z points.
-	 * @param funcVals
-	 *            Function values.
+	 * @param bb       BoundingBox
+	 * @param xinc     X increment.
+	 * @param yinc     Y increment.
+	 * @param zinc     Z increment.
+	 * @param xpnt     Number of X points.
+	 * @param ypnt     Number of Y points.
+	 * @param zpnt     Number of Z points.
+	 * @param funcVals Function values.
 	 */
-	public GridProperty(BoundingBox bb, double xinc, double yinc, double zinc,
-			int xpnt, int ypnt, int zpnt, double[] funcVals) {
+	public GridProperty(final BoundingBox bb, final double xinc, final double yinc, final double zinc, final int xpnt,
+			final int ypnt, final int zpnt, final double[] funcVals) {
 		boundingBox = bb;
 
 		xIncrement = xinc;
@@ -223,10 +197,9 @@ public class GridProperty {
 	/**
 	 * Setter for property boundingBox.
 	 * 
-	 * @param boundingBox
-	 *            New value of property boundingBox.
+	 * @param boundingBox New value of property boundingBox.
 	 */
-	public void setBoundingBox(BoundingBox boundingBox) {
+	public void setBoundingBox(final BoundingBox boundingBox) {
 		this.boundingBox = boundingBox;
 	}
 
@@ -242,10 +215,9 @@ public class GridProperty {
 	/**
 	 * Setter for property xIncrement.
 	 * 
-	 * @param xIncrement
-	 *            New value of property xIncrement.
+	 * @param xIncrement New value of property xIncrement.
 	 */
-	public void setXIncrement(double xIncrement) {
+	public void setXIncrement(final double xIncrement) {
 		this.xIncrement = xIncrement;
 	}
 
@@ -261,10 +233,9 @@ public class GridProperty {
 	/**
 	 * Setter for property yIncrement.
 	 * 
-	 * @param yIncrement
-	 *            New value of property yIncrement.
+	 * @param yIncrement New value of property yIncrement.
 	 */
-	public void setYIncrement(double yIncrement) {
+	public void setYIncrement(final double yIncrement) {
 		this.yIncrement = yIncrement;
 	}
 
@@ -280,10 +251,9 @@ public class GridProperty {
 	/**
 	 * Setter for property zIncrement.
 	 * 
-	 * @param zIncrement
-	 *            New value of property zIncrement.
+	 * @param zIncrement New value of property zIncrement.
 	 */
-	public void setZIncrement(double zIncrement) {
+	public void setZIncrement(final double zIncrement) {
 		this.zIncrement = zIncrement;
 	}
 
@@ -299,10 +269,9 @@ public class GridProperty {
 	/**
 	 * Setter for property noOfPointsAlongX.
 	 * 
-	 * @param noOfPointsAlongX
-	 *            New value of property noOfPointsAlongX.
+	 * @param noOfPointsAlongX New value of property noOfPointsAlongX.
 	 */
-	public void setNoOfPointsAlongX(int noOfPointsAlongX) {
+	public void setNoOfPointsAlongX(final int noOfPointsAlongX) {
 		this.noOfPointsAlongX = noOfPointsAlongX;
 	}
 
@@ -318,10 +287,9 @@ public class GridProperty {
 	/**
 	 * Setter for property noOfPointsAlongY.
 	 * 
-	 * @param noOfPointsAlongY
-	 *            New value of property noOfPointsAlongY.
+	 * @param noOfPointsAlongY New value of property noOfPointsAlongY.
 	 */
-	public void setNoOfPointsAlongY(int noOfPointsAlongY) {
+	public void setNoOfPointsAlongY(final int noOfPointsAlongY) {
 		this.noOfPointsAlongY = noOfPointsAlongY;
 	}
 
@@ -337,32 +305,28 @@ public class GridProperty {
 	/**
 	 * Setter for property noOfPointsAlongZ.
 	 * 
-	 * @param noOfPointsAlongZ
-	 *            New value of property noOfPointsAlongZ.
+	 * @param noOfPointsAlongZ New value of property noOfPointsAlongZ.
 	 */
-	public void setNoOfPointsAlongZ(int noOfPointsAlongZ) {
+	public void setNoOfPointsAlongZ(final int noOfPointsAlongZ) {
 		this.noOfPointsAlongZ = noOfPointsAlongZ;
 	}
 
 	/**
 	 * Get the function value on or near this point
 	 * 
-	 * @param x
-	 *            X coordinate
-	 * @param y
-	 *            Y coordinate
-	 * @param z
-	 *            Z coordinate
+	 * @param x X coordinate
+	 * @param y Y coordinate
+	 * @param z Z coordinate
 	 * @return the value
 	 */
-	public double getFunctionValueAt(double x, double y, double z) {
-		double xMin = boundingBox.getUpperLeft().getX();
-		double yMin = boundingBox.getUpperLeft().getY();
-		double zMin = boundingBox.getUpperLeft().getZ();
+	public double getFunctionValueAt(final double x, final double y, final double z) {
+		final double xMin = boundingBox.getUpperLeft().getX();
+		final double yMin = boundingBox.getUpperLeft().getY();
+		final double zMin = boundingBox.getUpperLeft().getZ();
 
-		int i = (int) FastMath.rint(FastMath.abs((x - xMin) / xIncrement));
-		int j = (int) FastMath.rint(FastMath.abs((y - yMin) / yIncrement));
-		int k = (int) FastMath.rint(FastMath.abs((z - zMin) / zIncrement));
+		final int i = (int) FastMath.rint(FastMath.abs((x - xMin) / xIncrement));
+		final int j = (int) FastMath.rint(FastMath.abs((y - yMin) / yIncrement));
+		final int k = (int) FastMath.rint(FastMath.abs((z - zMin) / zIncrement));
 
 		return getFunctionValueAt(i, j, k);
 	}
@@ -370,12 +334,9 @@ public class GridProperty {
 	/**
 	 * Get the function value on or near this point
 	 * 
-	 * @param i
-	 *            ith index alog X direction
-	 * @param j
-	 *            jth index alog Y direction
-	 * @param k
-	 *            kth index alog Z direction
+	 * @param i ith index alog X direction
+	 * @param j jth index alog Y direction
+	 * @param k kth index alog Z direction
 	 * @return the value
 	 */
 	public double getFunctionValueAt(int i, int j, int k) {
@@ -386,33 +347,27 @@ public class GridProperty {
 		if (k >= noOfPointsAlongZ)
 			k = noOfPointsAlongZ - 1;
 
-		int pointsAlongSlice = noOfPointsAlongZ * noOfPointsAlongY;
+		final int pointsAlongSlice = noOfPointsAlongZ * noOfPointsAlongY;
 
-		return getFunctionValues((i * pointsAlongSlice)
-				+ (j * noOfPointsAlongZ) + k);
+		return getFunctionValues((i * pointsAlongSlice) + (j * noOfPointsAlongZ) + k);
 	}
 
 	/**
 	 * Get interpolated function value on this point.
 	 * 
-	 * @param x
-	 *            X coordinate
-	 * @param y
-	 *            Y coordinate
-	 * @param z
-	 *            Z coordinate
-	 * @param interpolater
-	 *            the Interpolater (preferably trilinear)
+	 * @param x            X coordinate
+	 * @param y            Y coordinate
+	 * @param z            Z coordinate
+	 * @param interpolater the Interpolater (preferably trilinear)
 	 * @return the value
 	 */
-	public double getInterpolatedFunctionValueAt(double x, double y, double z,
-			Interpolater interpolater) {
-		Vector3D p0 = getGridPointNear(x, y, z);
-		int[] idx = getGridIndexNear(x, y, z);
+	public double getInterpolatedFunctionValueAt(final double x, final double y, final double z,
+			final Interpolater interpolater) {
+		final Vector3D p0 = getGridPointNear(x, y, z);
+		final int[] idx = getGridIndexNear(x, y, z);
 
 		// else we apply interpolation
-		xVals = new double[] { p0.getX(), p0.getY(), p0.getZ(), x, y, z,
-				xIncrement, yIncrement, zIncrement };
+		xVals = new double[] { p0.getX(), p0.getY(), p0.getZ(), x, y, z, xIncrement, yIncrement, zIncrement };
 
 		yVals[0] = getFunctionValueAt(idx[0], idx[1], idx[2]);
 		yVals[1] = getFunctionValueAt(idx[0], idx[1], idx[2] + 1);
@@ -429,22 +384,20 @@ public class GridProperty {
 	/**
 	 * Get the function value on or near this point
 	 * 
-	 * @param point
-	 *            the point at which the function value needs to be found
+	 * @param point the point at which the function value needs to be found
 	 * @return the value
 	 */
-	public double getFunctionValueAt(Vector3D point) {
+	public double getFunctionValueAt(final Vector3D point) {
 		return getFunctionValueAt(point.getX(), point.getY(), point.getZ());
 	}
 
 	/**
 	 * Indexed getter for property functionValues.
 	 * 
-	 * @param index
-	 *            Index of the property.
+	 * @param index Index of the property.
 	 * @return Value of the property at <CODE>index</CODE>.
 	 */
-	public double getFunctionValues(int index) {
+	public double getFunctionValues(final int index) {
 		return this.functionValues[index];
 	}
 
@@ -460,12 +413,10 @@ public class GridProperty {
 	/**
 	 * Indexed setter for property functionValues.
 	 * 
-	 * @param index
-	 *            Index of the property.
-	 * @param functionValues
-	 *            New value of the property at <CODE>index</CODE>.
+	 * @param index          Index of the property.
+	 * @param functionValues New value of the property at <CODE>index</CODE>.
 	 */
-	public void setFunctionValues(int index, double functionValues) {
+	public void setFunctionValues(final int index, final double functionValues) {
 		this.functionValues[index] = functionValues;
 
 		stateChanged = true;
@@ -474,10 +425,9 @@ public class GridProperty {
 	/**
 	 * Setter for property functionValues.
 	 * 
-	 * @param functionValues
-	 *            New value of property functionValues.
+	 * @param functionValues New value of property functionValues.
 	 */
-	public void setFunctionValues(double[] functionValues) {
+	public void setFunctionValues(final double[] functionValues) {
 		this.functionValues = functionValues;
 
 		stateChanged = true;
@@ -519,31 +469,27 @@ public class GridProperty {
 	/**
 	 * Return a list of values that fall in the range (lowerLimit, upperLimit).
 	 * 
-	 * @param lowerLimit
-	 *            the lower limit (inclusive)
-	 * @param upperLimit
-	 *            the upper limit (inclusive)
+	 * @param lowerLimit the lower limit (inclusive)
+	 * @param upperLimit the upper limit (inclusive)
 	 * @return an ArrayList object containing all the function values which fall
 	 *         with in the range (lowerLimit, upperLimit). In case there are no
 	 *         function values at all to check a <code>null</code> is returned.
 	 */
-	public ArrayList<Double> getFunctionValuesInRange(double lowerLimit,
-			double upperLimit) {
+	public ArrayList<Double> getFunctionValuesInRange(double lowerLimit, double upperLimit) {
 		if (functionValues == null)
 			return null;
 
-		ArrayList<Double> fVals = new ArrayList<>();
+		final ArrayList<Double> fVals = new ArrayList<>();
 
 		// just flip if not normal
 		if (lowerLimit > upperLimit) {
-			double temp = lowerLimit;
+			final double temp = lowerLimit;
 			lowerLimit = upperLimit;
 			upperLimit = temp;
 		}
 
 		for (int i = 0; i < functionValues.length; i++) {
-			if ((functionValues[i] >= lowerLimit)
-					&& (functionValues[i] <= upperLimit)) {
+			if ((functionValues[i] >= lowerLimit) && (functionValues[i] <= upperLimit)) {
 				fVals.add(Double.valueOf(functionValues[i]));
 			}
 		}
@@ -554,15 +500,12 @@ public class GridProperty {
 	/**
 	 * Return number of values that fall in the range (lowerLimit, upperLimit).
 	 * 
-	 * @param lowerLimit
-	 *            the lower limit (inclusive)
-	 * @param upperLimit
-	 *            the upper limit (inclusive)
-	 * @return an integer indicating the number of function values satisfying
-	 *         the range constraint
+	 * @param lowerLimit the lower limit (inclusive)
+	 * @param upperLimit the upper limit (inclusive)
+	 * @return an integer indicating the number of function values satisfying the
+	 *         range constraint
 	 */
-	public int getNumberOfFunctionValuesInRange(double lowerLimit,
-			double upperLimit) {
+	public int getNumberOfFunctionValuesInRange(double lowerLimit, double upperLimit) {
 		if (functionValues == null)
 			return 0;
 
@@ -570,14 +513,13 @@ public class GridProperty {
 
 		// just flip if not normal
 		if (lowerLimit > upperLimit) {
-			double temp = lowerLimit;
+			final double temp = lowerLimit;
 			lowerLimit = upperLimit;
 			upperLimit = temp;
 		}
 
 		for (int i = 0; i < functionValues.length; i++) {
-			if ((functionValues[i] >= lowerLimit)
-					&& (functionValues[i] <= upperLimit)) {
+			if ((functionValues[i] >= lowerLimit) && (functionValues[i] <= upperLimit)) {
 				count++;
 			}
 		}
@@ -614,49 +556,45 @@ public class GridProperty {
 	 */
 	@Override
 	public String toString() {
-		StringBuffer sb = new StringBuffer();
+		final StringBuffer sb = new StringBuffer();
 
 		sb.append("Grid limits: \n");
 		sb.append(boundingBox + "\n");
-		sb.append("Increment (points) along X: " + xIncrement + " ("
-				+ noOfPointsAlongX + ") \n");
-		sb.append("Increment (points) along Y: " + yIncrement + " ("
-				+ noOfPointsAlongY + ") \n");
-		sb.append("Increment (points) along Z: " + zIncrement + " ("
-				+ noOfPointsAlongZ + ") \n");
+		sb.append("Increment (points) along X: " + xIncrement + " (" + noOfPointsAlongX + ") \n");
+		sb.append("Increment (points) along Y: " + yIncrement + " (" + noOfPointsAlongY + ") \n");
+		sb.append("Increment (points) along Z: " + zIncrement + " (" + noOfPointsAlongZ + ") \n");
 		sb.append("Total number of points: " + getNumberOfGridPoints() + "\n");
 
 		return sb.toString();
 	}
 
 	/**
-	 * Addition of two GridProperty objects. This operation is only defined at
-	 * the common positions between the GridProperty objects this and gp. This
-	 * operation is defined a specified position as <code>this + gp</code>.
+	 * Addition of two GridProperty objects. This operation is only defined at the
+	 * common positions between the GridProperty objects this and gp. This operation
+	 * is defined a specified position as <code>this + gp</code>.
 	 * 
-	 * @param gp
-	 *            the GridProperty object to be added to this object
+	 * @param gp the GridProperty object to be added to this object
 	 * @return the resultant new GridProperty object
 	 */
-	public GridProperty add(GridProperty gp) {
+	public GridProperty add(final GridProperty gp) {
 		// first the new bounding box is a combination
 		// of the two boxes.
-		BoundingBox newBB = gp.getBoundingBox().intersect(getBoundingBox());
-		Vector3D newUL = newBB.getUpperLeft();
+		final BoundingBox newBB = gp.getBoundingBox().intersect(getBoundingBox());
+		final Vector3D newUL = newBB.getUpperLeft();
 
 		// then the new increments will be lesser of the two
-		double xInc = FastMath.min(gp.getXIncrement(), xIncrement);
-		double yInc = FastMath.min(gp.getYIncrement(), yIncrement);
-		double zInc = FastMath.min(gp.getZIncrement(), zIncrement);
+		final double xInc = FastMath.min(gp.getXIncrement(), xIncrement);
+		final double yInc = FastMath.min(gp.getYIncrement(), yIncrement);
+		final double zInc = FastMath.min(gp.getZIncrement(), zIncrement);
 
 		// and then we need to recompute the number of points in the
 		// "added" grid
-		int nx = (int) (newBB.getXWidth() / xInc);
-		int ny = (int) (newBB.getYWidth() / yInc);
-		int nz = (int) (newBB.getZWidth() / zInc);
+		final int nx = (int) (newBB.getXWidth() / xInc);
+		final int ny = (int) (newBB.getYWidth() / yInc);
+		final int nz = (int) (newBB.getZWidth() / zInc);
 
 		// then fill in the new function values
-		double[] fvals = new double[nx * ny * nz];
+		final double[] fvals = new double[nx * ny * nz];
 		int ii = 0;
 		int i;
 		int j;
@@ -667,10 +605,8 @@ public class GridProperty {
 
 		for (x = newUL.getX(), i = 0; i < nx; x = newUL.getX() + (xInc * i), i++) {
 			for (y = newUL.getY(), j = 0; j < ny; y = newUL.getY() + (yInc * j), j++) {
-				for (z = newUL.getZ(), k = 0; k < nz; z = newUL.getZ()
-						+ (zInc * k), k++) {
-					fvals[ii++] = getFunctionValueAt(x, y, z)
-							+ gp.getFunctionValueAt(x, y, z);
+				for (z = newUL.getZ(), k = 0; k < nz; z = newUL.getZ() + (zInc * k), k++) {
+					fvals[ii++] = getFunctionValueAt(x, y, z) + gp.getFunctionValueAt(x, y, z);
 				}
 			}
 		}
@@ -679,33 +615,32 @@ public class GridProperty {
 	}
 
 	/**
-	 * Substraction of two GridProperty objects. This operation is only defined
-	 * at the common positions between the GridProperty objects this and gp.
-	 * This operation is defined a specified position as <code>this - gp</code>.
+	 * Substraction of two GridProperty objects. This operation is only defined at
+	 * the common positions between the GridProperty objects this and gp. This
+	 * operation is defined a specified position as <code>this - gp</code>.
 	 * 
-	 * @param gp
-	 *            the GridProperty object to be subtracted from this object
+	 * @param gp the GridProperty object to be subtracted from this object
 	 * @return the resultant new GridProperty object
 	 */
-	public GridProperty subtract(GridProperty gp) {
+	public GridProperty subtract(final GridProperty gp) {
 		// first the new bounding box is a combination
 		// of the two boxes.
-		BoundingBox newBB = gp.getBoundingBox().intersect(getBoundingBox());
-		Vector3D newUL = newBB.getUpperLeft();
+		final BoundingBox newBB = gp.getBoundingBox().intersect(getBoundingBox());
+		final Vector3D newUL = newBB.getUpperLeft();
 
 		// then the new increments will be lesser of the two
-		double xInc = FastMath.min(gp.getXIncrement(), xIncrement);
-		double yInc = FastMath.min(gp.getYIncrement(), yIncrement);
-		double zInc = FastMath.min(gp.getZIncrement(), zIncrement);
+		final double xInc = FastMath.min(gp.getXIncrement(), xIncrement);
+		final double yInc = FastMath.min(gp.getYIncrement(), yIncrement);
+		final double zInc = FastMath.min(gp.getZIncrement(), zIncrement);
 
 		// and then we need to recompute the number of points in the
 		// "added" grid
-		int nx = (int) (newBB.getXWidth() / xInc);
-		int ny = (int) (newBB.getYWidth() / yInc);
-		int nz = (int) (newBB.getZWidth() / zInc);
+		final int nx = (int) (newBB.getXWidth() / xInc);
+		final int ny = (int) (newBB.getYWidth() / yInc);
+		final int nz = (int) (newBB.getZWidth() / zInc);
 
 		// then fill in the new function values
-		double[] fvals = new double[nx * ny * nz];
+		final double[] fvals = new double[nx * ny * nz];
 		int ii = 0;
 		int i;
 		int j;
@@ -716,10 +651,8 @@ public class GridProperty {
 
 		for (x = newUL.getX(), i = 0; i < nx; x = newUL.getX() + (xInc * i), i++) {
 			for (y = newUL.getY(), j = 0; j < ny; y = newUL.getY() + (yInc * j), j++) {
-				for (z = newUL.getZ(), k = 0; k < nz; z = newUL.getZ()
-						+ (zInc * k), k++) {
-					fvals[ii++] = getFunctionValueAt(x, y, z)
-							- gp.getFunctionValueAt(x, y, z);
+				for (z = newUL.getZ(), k = 0; k < nz; z = newUL.getZ() + (zInc * k), k++) {
+					fvals[ii++] = getFunctionValueAt(x, y, z) - gp.getFunctionValueAt(x, y, z);
 				}
 			}
 		}
@@ -728,33 +661,32 @@ public class GridProperty {
 	}
 
 	/**
-	 * Product of two GridProperty objects. This operation is only defined at
-	 * the common positions between the GridProperty objects this and gp. This
-	 * operation is defined a specified position as <code>this * gp</code>.
+	 * Product of two GridProperty objects. This operation is only defined at the
+	 * common positions between the GridProperty objects this and gp. This operation
+	 * is defined a specified position as <code>this * gp</code>.
 	 * 
-	 * @param gp
-	 *            the GridProperty object to be subtracted from this object
+	 * @param gp the GridProperty object to be subtracted from this object
 	 * @return the resultant new GridProperty object
 	 */
-	public GridProperty product(GridProperty gp) {
+	public GridProperty product(final GridProperty gp) {
 		// first the new bounding box is a combination
 		// of the two boxes.
-		BoundingBox newBB = gp.getBoundingBox().intersect(getBoundingBox());
-		Vector3D newUL = newBB.getUpperLeft();
+		final BoundingBox newBB = gp.getBoundingBox().intersect(getBoundingBox());
+		final Vector3D newUL = newBB.getUpperLeft();
 
 		// then the new increments will be lesser of the two
-		double xInc = FastMath.min(gp.getXIncrement(), xIncrement);
-		double yInc = FastMath.min(gp.getYIncrement(), yIncrement);
-		double zInc = FastMath.min(gp.getZIncrement(), zIncrement);
+		final double xInc = FastMath.min(gp.getXIncrement(), xIncrement);
+		final double yInc = FastMath.min(gp.getYIncrement(), yIncrement);
+		final double zInc = FastMath.min(gp.getZIncrement(), zIncrement);
 
 		// and then we need to recompute the number of points in the
 		// "added" grid
-		int nx = (int) (newBB.getXWidth() / xInc);
-		int ny = (int) (newBB.getYWidth() / yInc);
-		int nz = (int) (newBB.getZWidth() / zInc);
+		final int nx = (int) (newBB.getXWidth() / xInc);
+		final int ny = (int) (newBB.getYWidth() / yInc);
+		final int nz = (int) (newBB.getZWidth() / zInc);
 
 		// then fill in the new function values
-		double[] fvals = new double[nx * ny * nz];
+		final double[] fvals = new double[nx * ny * nz];
 		int ii = 0;
 		int i;
 		int j;
@@ -765,14 +697,12 @@ public class GridProperty {
 
 		for (x = newUL.getX(), i = 0; i < nx; x = newUL.getX() + (xInc * i), i++) {
 			for (y = newUL.getY(), j = 0; j < ny; y = newUL.getY() + (yInc * j), j++) {
-				for (z = newUL.getZ(), k = 0; k < nz; z = newUL.getZ()
-						+ (zInc * k), k++) {
-					fvals[ii++] = getFunctionValueAt(x, y, z)
-							* gp.getFunctionValueAt(x, y, z);
+				for (z = newUL.getZ(), k = 0; k < nz; z = newUL.getZ() + (zInc * k), k++) {
+					fvals[ii++] = getFunctionValueAt(x, y, z) * gp.getFunctionValueAt(x, y, z);
 				}
 			}
 		}
-		
+
 		return new GridProperty(newBB, xInc, yInc, zInc, nx, ny, nz, fvals);
 	}
 
@@ -783,37 +713,35 @@ public class GridProperty {
 	 * <code>this + gp</code> only if the following conditions are satisfied:
 	 * <ol>
 	 * <li>this and gp at the specified position are opposite in signs.</li>
-	 * <li> <code>|this + gp|</code> at the specified postion is less than
+	 * <li><code>|this + gp|</code> at the specified postion is less than
 	 * <code>threshold</code>.</li>
 	 * </ol>
 	 * Else the value at the specified postion is set to zero.
 	 * 
-	 * @param gp
-	 *            the GridProperty object to be subtracted from this object
-	 * @param threshold
-	 *            the threshold condition for perfoming lock and key operation
-	 *            (see above).
+	 * @param gp        the GridProperty object to be subtracted from this object
+	 * @param threshold the threshold condition for perfoming lock and key operation
+	 *                  (see above).
 	 * @return the resultant new GridProperty object
 	 */
-	public GridProperty lockAndKey(GridProperty gp, double threshold) {
+	public GridProperty lockAndKey(final GridProperty gp, final double threshold) {
 		// first the new bounding box is a combination
 		// of the two boxes.
-		BoundingBox newBB = gp.getBoundingBox().intersect(getBoundingBox());
-		Vector3D newUL = newBB.getUpperLeft();
+		final BoundingBox newBB = gp.getBoundingBox().intersect(getBoundingBox());
+		final Vector3D newUL = newBB.getUpperLeft();
 
 		// then the new increments will be lesser of the two
-		double xInc = FastMath.min(gp.getXIncrement(), xIncrement);
-		double yInc = FastMath.min(gp.getYIncrement(), yIncrement);
-		double zInc = FastMath.min(gp.getZIncrement(), zIncrement);
+		final double xInc = FastMath.min(gp.getXIncrement(), xIncrement);
+		final double yInc = FastMath.min(gp.getYIncrement(), yIncrement);
+		final double zInc = FastMath.min(gp.getZIncrement(), zIncrement);
 
 		// and then we need to recompute the number of points in the
 		// "added" grid
-		int nx = (int) (newBB.getXWidth() / xInc);
-		int ny = (int) (newBB.getYWidth() / yInc);
-		int nz = (int) (newBB.getZWidth() / zInc);
+		final int nx = (int) (newBB.getXWidth() / xInc);
+		final int ny = (int) (newBB.getYWidth() / yInc);
+		final int nz = (int) (newBB.getZWidth() / zInc);
 
 		// then fill in the new function values
-		double[] fvals = new double[nx * ny * nz];
+		final double[] fvals = new double[nx * ny * nz];
 		int ii = 0;
 		int i;
 		int j;
@@ -826,8 +754,7 @@ public class GridProperty {
 
 		for (x = newUL.getX(), i = 0; i < nx; x = newUL.getX() + (xInc * i), i++) {
 			for (y = newUL.getY(), j = 0; j < ny; y = newUL.getY() + (yInc * j), j++) {
-				for (z = newUL.getZ(), k = 0; k < nz; z = newUL.getZ()
-						+ (zInc * k), k++) {
+				for (z = newUL.getZ(), k = 0; k < nz; z = newUL.getZ() + (zInc * k), k++) {
 					f1 = getFunctionValueAt(x, y, z);
 					f2 = gp.getFunctionValueAt(x, y, z);
 
@@ -846,66 +773,57 @@ public class GridProperty {
 	/**
 	 * Return a grid point near to this point.
 	 * 
-	 * @param x
-	 *            the X coordinated of the point
-	 * @param y
-	 *            the Y coordinated of the point
-	 * @param z
-	 *            the Z coordinated of the point
+	 * @param x the X coordinated of the point
+	 * @param y the Y coordinated of the point
+	 * @param z the Z coordinated of the point
 	 * 
 	 * @return the grid point near the specified point.
 	 */
-	public Vector3D getGridPointNear(double x, double y, double z) {
-		double xMin = boundingBox.getUpperLeft().getX();
-		double yMin = boundingBox.getUpperLeft().getY();
-		double zMin = boundingBox.getUpperLeft().getZ();
+	public Vector3D getGridPointNear(final double x, final double y, final double z) {
+		final double xMin = boundingBox.getUpperLeft().getX();
+		final double yMin = boundingBox.getUpperLeft().getY();
+		final double zMin = boundingBox.getUpperLeft().getZ();
 
-		int i = (int) FastMath.rint(FastMath.abs((x - xMin) / xIncrement));
-		int j = (int) FastMath.rint(FastMath.abs((y - yMin) / yIncrement));
-		int k = (int) FastMath.rint(FastMath.abs((z - zMin) / zIncrement));
+		final int i = (int) FastMath.rint(FastMath.abs((x - xMin) / xIncrement));
+		final int j = (int) FastMath.rint(FastMath.abs((y - yMin) / yIncrement));
+		final int k = (int) FastMath.rint(FastMath.abs((z - zMin) / zIncrement));
 
-		return new Vector3D(xMin + (i * xIncrement), yMin + (j * yIncrement),
-				zMin + (k * zIncrement));
+		return new Vector3D(xMin + (i * xIncrement), yMin + (j * yIncrement), zMin + (k * zIncrement));
 	}
 
 	/**
 	 * Return a grid point near to this point.
 	 * 
-	 * @param point
-	 *            the Point3D object near which the grid point is to be searched
+	 * @param point the Point3D object near which the grid point is to be searched
 	 * @return the grid point near the specified point.
 	 */
-	public Vector3D getGridPointNear(Vector3D point) {
+	public Vector3D getGridPointNear(final Vector3D point) {
 		return getGridPointNear(point.getX(), point.getY(), point.getZ());
 	}
 
 	/**
 	 * Return a grid index near this point
 	 * 
-	 * @param point
-	 *            the Point3D object near which the grid index is to be searched
+	 * @param point the Point3D object near which the grid index is to be searched
 	 * @return an interger array with three values indicating the index
 	 */
-	public int[] getGridIndexNear(Vector3D point) {
+	public int[] getGridIndexNear(final Vector3D point) {
 		return getGridIndexNear(point.getX(), point.getY(), point.getZ());
 	}
 
 	/**
 	 * Return a grid index near this point
 	 * 
-	 * @param x
-	 *            the X coordinate
-	 * @param y
-	 *            the Y coordinate
-	 * @param z
-	 *            the Z coordinate
+	 * @param x the X coordinate
+	 * @param y the Y coordinate
+	 * @param z the Z coordinate
 	 * 
 	 * @return an interger array with three values indicating the index
 	 */
-	public int[] getGridIndexNear(double x, double y, double z) {
-		double xMin = boundingBox.getUpperLeft().getX();
-		double yMin = boundingBox.getUpperLeft().getY();
-		double zMin = boundingBox.getUpperLeft().getZ();
+	public int[] getGridIndexNear(final double x, final double y, final double z) {
+		final double xMin = boundingBox.getUpperLeft().getX();
+		final double yMin = boundingBox.getUpperLeft().getY();
+		final double zMin = boundingBox.getUpperLeft().getZ();
 
 		return new int[] { (int) FastMath.rint(FastMath.abs((x - xMin) / xIncrement)),
 				(int) FastMath.rint(FastMath.abs((y - yMin) / yIncrement)),
@@ -915,37 +833,32 @@ public class GridProperty {
 	/**
 	 * Return a grid point near to the index (i, j, k).
 	 * 
-	 * @param i
-	 *            the ith index in the grid
-	 * @param j
-	 *            the ith index in the grid
-	 * @param k
-	 *            the ith index in the grid
+	 * @param i the ith index in the grid
+	 * @param j the ith index in the grid
+	 * @param k the ith index in the grid
 	 * 
 	 * @return the grid point near the specified point.
 	 */
-	public Vector3D getGridPointNear(int i, int j, int k) {
-		double xMin = boundingBox.getUpperLeft().getX();
-		double yMin = boundingBox.getUpperLeft().getY();
-		double zMin = boundingBox.getUpperLeft().getZ();
+	public Vector3D getGridPointNear(final int i, final int j, final int k) {
+		final double xMin = boundingBox.getUpperLeft().getX();
+		final double yMin = boundingBox.getUpperLeft().getY();
+		final double zMin = boundingBox.getUpperLeft().getZ();
 
-		return new Vector3D(xMin + (i * xIncrement), yMin + (j * yIncrement),
-				zMin + (k * zIncrement));
+		return new Vector3D(xMin + (i * xIncrement), yMin + (j * yIncrement), zMin + (k * zIncrement));
 	}
 
 	/**
-	 * Returns a new sub property defined by a new bounding box. The resultunt
-	 * sub property may not have the same bounding box as the one that is
-	 * supplied but will be best approximation to the existing grid. Also it is
-	 * required to have the new bounding box to completely lie inside the
-	 * original bounding box. In case is this condition is violated then the
-	 * returned subProperty will be exactly same as the original one.
+	 * Returns a new sub property defined by a new bounding box. The resultunt sub
+	 * property may not have the same bounding box as the one that is supplied but
+	 * will be best approximation to the existing grid. Also it is required to have
+	 * the new bounding box to completely lie inside the original bounding box. In
+	 * case is this condition is violated then the returned subProperty will be
+	 * exactly same as the original one.
 	 * 
-	 * @param newBoundingBox
-	 *            the new bounding box of grid property
+	 * @param newBoundingBox the new bounding box of grid property
 	 * @return the resultant new GridProperty object
 	 */
-	public GridProperty subProperty(BoundingBox newBoundingBox) {
+	public GridProperty subProperty(final BoundingBox newBoundingBox) {
 		Vector3D newUL = newBoundingBox.getUpperLeft();
 		Vector3D newBR = newBoundingBox.getBottomRight();
 
@@ -956,15 +869,12 @@ public class GridProperty {
 			newBR = getGridPointNear(newBR);
 
 			// find new nx, ny, nz
-			int newNX = (int) FastMath.abs((newBR.getX() - newUL.getX())
-					/ xIncrement);
-			int newNY = (int) FastMath.abs((newBR.getY() - newUL.getY())
-					/ yIncrement);
-			int newNZ = (int) FastMath.abs((newBR.getZ() - newUL.getZ())
-					/ zIncrement);
+			final int newNX = (int) FastMath.abs((newBR.getX() - newUL.getX()) / xIncrement);
+			final int newNY = (int) FastMath.abs((newBR.getY() - newUL.getY()) / yIncrement);
+			final int newNZ = (int) FastMath.abs((newBR.getZ() - newUL.getZ()) / zIncrement);
 
 			// and the collect the sub property values
-			ArrayList<Double> fVals = new ArrayList<Double>();
+			final ArrayList<Double> fVals = new ArrayList<Double>();
 			double x;
 			double y;
 			double z;
@@ -972,71 +882,62 @@ public class GridProperty {
 			int j;
 			int k;
 
-			for (x = newUL.getX(), i = 0; i < newNX; x = newUL.getX()
-					+ (xIncrement * i), i++) {
-				for (y = newUL.getY(), j = 0; j < newNY; y = newUL.getY()
-						+ (yIncrement * j), j++) {
-					for (z = newUL.getZ(), k = 0; k < newNZ; z = newUL.getZ()
-							+ (zIncrement * k), k++) {
+			for (x = newUL.getX(), i = 0; i < newNX; x = newUL.getX() + (xIncrement * i), i++) {
+				for (y = newUL.getY(), j = 0; j < newNY; y = newUL.getY() + (yIncrement * j), j++) {
+					for (z = newUL.getZ(), k = 0; k < newNZ; z = newUL.getZ() + (zIncrement * k), k++) {
 						fVals.add(getFunctionValueAt(x, y, z));
 					}
 				}
 			}
 
-			double[] newFunctionValues = new double[fVals.size()];
+			final double[] newFunctionValues = new double[fVals.size()];
 			for (i = 0; i < fVals.size(); i++)
 				newFunctionValues[i] = fVals.get(i);
 
-			return new GridProperty(new BoundingBox(newUL, newBR), xIncrement,
-					yIncrement, zIncrement, newNX, newNY, newNZ,
-					newFunctionValues);
+			return new GridProperty(new BoundingBox(newUL, newBR), xIncrement, yIncrement, zIncrement, newNX, newNY,
+					newNZ, newFunctionValues);
 		} else {
 			return this;
 		}
 	}
 
 	/**
-	 * Interpolate this GridProperty object by changing increments along x, y
-	 * and z equally by [x | y | z] / factor.
+	 * Interpolate this GridProperty object by changing increments along x, y and z
+	 * equally by [x | y | z] / factor.
 	 * 
-	 * @param factor
-	 *            a factor with which to reduce the increments along x, y, z
-	 * @param interpolater
-	 *            the Interpolater method to use
+	 * @param factor       a factor with which to reduce the increments along x, y,
+	 *                     z
+	 * @param interpolater the Interpolater method to use
 	 * @return a new GridProperty which is interpolated along the increments
 	 */
-	public GridProperty interpolate(double factor, Interpolater interpolater) {
+	public GridProperty interpolate(final double factor, final Interpolater interpolater) {
 		return interpolate(factor, factor, factor, interpolater);
 	}
 
 	/**
-	 * Interpolate this GridProperty object by changing increments along x, y
-	 * and z by [x / fx | y / fy | z / fz].
+	 * Interpolate this GridProperty object by changing increments along x, y and z
+	 * by [x / fx | y / fy | z / fz].
 	 * 
-	 * @param fx
-	 *            a factor with which to reduce the increments along x
-	 * @param fy
-	 *            a factor with which to reduce the increments along y
-	 * @param fz
-	 *            a factor with which to reduce the increments along z
-	 * @param interpolater
-	 *            the Interpolater method to use
+	 * @param fx           a factor with which to reduce the increments along x
+	 * @param fy           a factor with which to reduce the increments along y
+	 * @param fz           a factor with which to reduce the increments along z
+	 * @param interpolater the Interpolater method to use
 	 * @return a new GridProperty which is interpolated along the increments
 	 */
-	public GridProperty interpolate(double fx, double fy, double fz,
-			Interpolater interpolater) {
+	public GridProperty interpolate(final double fx, final double fy, final double fz,
+			final Interpolater interpolater) {
 		// recompute increments
-		double xInc = xIncrement / fx;
-		double yInc = yIncrement / fy;
-		double zInc = zIncrement / fz;
+		final double xInc = xIncrement / fx;
+		final double yInc = yIncrement / fy;
+		final double zInc = zIncrement / fz;
 
 		// and then the number of points
-		int nx = (int) (boundingBox.getXWidth() / xInc);
-		int ny = (int) (boundingBox.getYWidth() / yInc);
-		int nz = (int) (boundingBox.getZWidth() / zInc);
+		final int nx = (int) (boundingBox.getXWidth() / xInc);
+		final int ny = (int) (boundingBox.getYWidth() / yInc);
+		final int nz = (int) (boundingBox.getZWidth() / zInc);
 
 		// and re-form the function values
-		double[] fvals = new double[nx * ny * nz];
+		final double[] fvals = new double[nx * ny * nz];
 
 		double x;
 		double y;
@@ -1044,7 +945,7 @@ public class GridProperty {
 		int i;
 		int j;
 		int k;
-		Vector3D ul = boundingBox.getUpperLeft();
+		final Vector3D ul = boundingBox.getUpperLeft();
 
 		int ii = 0;
 		for (x = ul.getX(), i = 0; i < nx; x = ul.getX() + (i * xInc), i++) {

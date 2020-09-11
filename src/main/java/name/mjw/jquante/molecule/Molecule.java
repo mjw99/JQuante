@@ -1,6 +1,5 @@
 package name.mjw.jquante.molecule;
 
-import java.io.Serializable;
 import java.util.Iterator;
 
 import org.hipparchus.geometry.euclidean.threed.Vector3D;
@@ -382,7 +381,7 @@ public abstract class Molecule {
 	 * 
 	 */
 	public synchronized void addMoleculeStateChangeListener(
-			MoleculeStateChangeListener listener) {
+			final MoleculeStateChangeListener listener) {
 		if (listenerList == null) {
 			listenerList = new EventListenerList<>();
 		}
@@ -392,30 +391,26 @@ public abstract class Molecule {
 	/**
 	 * Removes MoleculeStateChangeListener from the list of listeners.
 	 * 
-	 * @param listener
-	 *            The listener to remove.
+	 * @param listener The listener to remove.
 	 * 
 	 */
-	public synchronized void removeMoleculeStateChangeListener(
-			MoleculeStateChangeListener listener) {
+	public synchronized void removeMoleculeStateChangeListener(final MoleculeStateChangeListener listener) {
 		listenerList.remove(MoleculeStateChangeListener.class, listener);
 	}
 
 	/**
 	 * Notifies all registered listeners about the event.
 	 * 
-	 * @param event
-	 *            The event to be fired
+	 * @param event The event to be fired
 	 * 
 	 */
-	protected void fireMoleculeStateChangeListenerMoleculeChanged(
-			MoleculeStateChangeEvent event) {
+	protected void fireMoleculeStateChangeListenerMoleculeChanged(final MoleculeStateChangeEvent event) {
 		if (!enableListeners)
 			return;
 		if (listenerList == null)
 			return;
 
-		for (Object listener : listenerList.getListenerList()) {
+		for (final Object listener : listenerList.getListenerList()) {
 			((MoleculeStateChangeListener) listener).moleculeChanged(event);
 		} // end for
 	}
@@ -434,42 +429,32 @@ public abstract class Molecule {
 	 * @return Extended description of Molecule class
 	 */
 	public String toExtendedString() {
-		StringBuilder sb = new StringBuilder();
+		final StringBuilder sb = new StringBuilder();
 
 		sb.append("Molecule Name           : ").append(getTitle()).append("\n");
-		sb.append("Number of atoms         : ").append(getNumberOfAtoms())
-				.append("\n");
-		sb.append("Molecular formula       : ").append(getFormula().toString())
-				.append("\n");
-		sb.append("Number of electrons     : ").append(getNumberOfElectrons())
-				.append("\n");
-		sb.append("Molecular mass          : ")
-				.append(new DecimalFormat("#.###").format(getMolecularMass()))
+		sb.append("Number of atoms         : ").append(getNumberOfAtoms()).append("\n");
+		sb.append("Molecular formula       : ").append(getFormula().toString()).append("\n");
+		sb.append("Number of electrons     : ").append(getNumberOfElectrons()).append("\n");
+		sb.append("Molecular mass          : ").append(new DecimalFormat("#.###").format(getMolecularMass()))
 				.append(" a.m.u \n");
-		sb.append("Center of mass          : ").append(getCenterOfMass())
-				.append("\n");
-		sb.append("Bounding box            : ").append(getBoundingBox())
-				.append("\n");
+		sb.append("Center of mass          : ").append(getCenterOfMass()).append("\n");
+		sb.append("Bounding box            : ").append(getBoundingBox()).append("\n");
 
 		if (isAdditionalInformationAvailable()) {
-			AdditionalInformation ai = getAdditionalInformation();
+			final AdditionalInformation ai = getAdditionalInformation();
 
 			if (ai != null) { // just to be extra sure!
 				if (ai.isEnergyAvailable()) {
-					sb.append("Energy                  : ")
-							.append(ai.getEnergy()).append("\n");
+					sb.append("Energy                  : ").append(ai.getEnergy()).append("\n");
 				}
 
 				if (ai.isZpEnergyAvailable()) {
-					sb.append("ZP Correction           : ")
-							.append(ai.getZpEnergy()).append("\n");
+					sb.append("ZP Correction           : ").append(ai.getZpEnergy()).append("\n");
 				}
 
 				if (ai.isDipoleAvailable()) {
-					sb.append("Dipole Moment           : ")
-							.append(ai.getDipole().toString()).append("\n");
-					sb.append("Total Dipole Moment     : ")
-							.append(ai.getDipole().getNorm()).append("\n");
+					sb.append("Dipole Moment           : ").append(ai.getDipole().toString()).append("\n");
+					sb.append("Total Dipole Moment     : ").append(ai.getDipole().getNorm()).append("\n");
 				}
 			}
 		}
@@ -512,10 +497,9 @@ public abstract class Molecule {
 	/**
 	 * Setter for property zMatrixComputed.
 	 * 
-	 * @param zMatrixComputed
-	 *            New value of property zMatrixComputed.
+	 * @param zMatrixComputed New value of property zMatrixComputed.
 	 */
-	public void setZMatrixComputed(boolean zMatrixComputed) {
+	public void setZMatrixComputed(final boolean zMatrixComputed) {
 		this.zMatrixComputed = zMatrixComputed;
 	}
 
@@ -564,10 +548,9 @@ public abstract class Molecule {
 		/**
 		 * Setter for property energy.
 		 * 
-		 * @param energy
-		 *            New value of property energy.
+		 * @param energy New value of property energy.
 		 */
-		public void setEnergy(double energy) {
+		public void setEnergy(final double energy) {
 			this.energy = energy;
 		}
 
@@ -588,10 +571,9 @@ public abstract class Molecule {
 		/**
 		 * Setter for property zpEnergy.
 		 * 
-		 * @param zpEnergy
-		 *            New value of property zpEnergy.
+		 * @param zpEnergy New value of property zpEnergy.
 		 */
-		public void setZpEnergy(double zpEnergy) {
+		public void setZpEnergy(final double zpEnergy) {
 			this.zpEnergy = zpEnergy;
 		}
 
@@ -612,10 +594,9 @@ public abstract class Molecule {
 		/**
 		 * Setter for property rmsGradient.
 		 * 
-		 * @param rmsGradient
-		 *            New value of property rmsGradient.
+		 * @param rmsGradient New value of property rmsGradient.
 		 */
-		public void setRmsGradient(double rmsGradient) {
+		public void setRmsGradient(final double rmsGradient) {
 			this.rmsGradient = rmsGradient;
 		}
 
@@ -636,10 +617,9 @@ public abstract class Molecule {
 		/**
 		 * Setter for property maxGradient.
 		 * 
-		 * @param maxGradient
-		 *            New value of property maxGradient.
+		 * @param maxGradient New value of property maxGradient.
 		 */
-		public void setMaxGradient(double maxGradient) {
+		public void setMaxGradient(final double maxGradient) {
 			this.maxGradient = maxGradient;
 		}
 
@@ -649,14 +629,13 @@ public abstract class Molecule {
 		private boolean readConnectivity;
 
 		/**
-		 * @return true if the connectivity information was read from the
-		 *         molecule file
+		 * @return true if the connectivity information was read from the molecule file
 		 */
 		public boolean isReadConnectivity() {
 			return readConnectivity;
 		}
 
-		public void setReadConnectivity(boolean readConnectivity) {
+		public void setReadConnectivity(final boolean readConnectivity) {
 			this.readConnectivity = readConnectivity;
 		}
 
@@ -677,10 +656,9 @@ public abstract class Molecule {
 		/**
 		 * Setter for property pdb.
 		 * 
-		 * @param pdb
-		 *            New value of property pdb.
+		 * @param pdb New value of property pdb.
 		 */
-		public void setPdb(boolean pdb) {
+		public void setPdb(final boolean pdb) {
 			this.pdb = pdb;
 		}
 
@@ -701,10 +679,9 @@ public abstract class Molecule {
 		/**
 		 * Setter for property level.
 		 * 
-		 * @param level
-		 *            New value of property level.
+		 * @param level New value of property level.
 		 */
-		public void setLevel(String level) {
+		public void setLevel(final String level) {
 			this.level = level;
 		}
 
@@ -725,10 +702,9 @@ public abstract class Molecule {
 		/**
 		 * Setter for property basis.
 		 * 
-		 * @param basis
-		 *            New value of property basis.
+		 * @param basis New value of property basis.
 		 */
-		public void setBasis(String basis) {
+		public void setBasis(final String basis) {
 			this.basis = basis;
 		}
 
@@ -749,10 +725,9 @@ public abstract class Molecule {
 		/**
 		 * Setter for property frequencyDataAvailable.
 		 * 
-		 * @param frequencyDataAvailable
-		 *            New value of property frequencyDataAvailable.
+		 * @param frequencyDataAvailable New value of property frequencyDataAvailable.
 		 */
-		public void setFrequencyDataAvailable(boolean frequencyDataAvailable) {
+		public void setFrequencyDataAvailable(final boolean frequencyDataAvailable) {
 			this.frequencyDataAvailable = frequencyDataAvailable;
 		}
 
@@ -773,10 +748,9 @@ public abstract class Molecule {
 		/**
 		 * Setter for property volumetricDataAvailable.
 		 * 
-		 * @param volumetricDataAvailable
-		 *            New value of property volumetricDataAvailable.
+		 * @param volumetricDataAvailable New value of property volumetricDataAvailable.
 		 */
-		public void setVolumetricDataAvailable(boolean volumetricDataAvailable) {
+		public void setVolumetricDataAvailable(final boolean volumetricDataAvailable) {
 			this.volumetricDataAvailable = volumetricDataAvailable;
 		}
 
@@ -797,10 +771,9 @@ public abstract class Molecule {
 		/**
 		 * Setter for property dipole.
 		 * 
-		 * @param dipole
-		 *            New value of property dipole.
+		 * @param dipole New value of property dipole.
 		 */
-		public void setDipole(Vector3D dipole) {
+		public void setDipole(final Vector3D dipole) {
 			this.dipole = dipole;
 		}
 
@@ -821,10 +794,9 @@ public abstract class Molecule {
 		/**
 		 * Set the value of energyAvailable
 		 * 
-		 * @param energyAvailable
-		 *            new value of energyAvailable
+		 * @param energyAvailable new value of energyAvailable
 		 */
-		public void setEnergyAvailable(boolean energyAvailable) {
+		public void setEnergyAvailable(final boolean energyAvailable) {
 			this.energyAvailable = energyAvailable;
 		}
 
@@ -845,10 +817,9 @@ public abstract class Molecule {
 		/**
 		 * Set the value of zpEnergyAvailable
 		 * 
-		 * @param zpEnergyAvailable
-		 *            new value of zpEnergyAvailable
+		 * @param zpEnergyAvailable new value of zpEnergyAvailable
 		 */
-		public void setZpEnergyAvailable(boolean zpEnergyAvailable) {
+		public void setZpEnergyAvailable(final boolean zpEnergyAvailable) {
 			this.zpEnergyAvailable = zpEnergyAvailable;
 		}
 
@@ -869,10 +840,9 @@ public abstract class Molecule {
 		/**
 		 * Set the value of gradientAvailable
 		 * 
-		 * @param gradientAvailable
-		 *            new value of gradientAvailable
+		 * @param gradientAvailable new value of gradientAvailable
 		 */
-		public void setGradientAvailable(boolean gradientAvailable) {
+		public void setGradientAvailable(final boolean gradientAvailable) {
 			this.gradientAvailable = gradientAvailable;
 		}
 
@@ -893,10 +863,9 @@ public abstract class Molecule {
 		/**
 		 * Set the value of dipoleAvailable
 		 * 
-		 * @param dipoleAvailable
-		 *            new value of dipoleAvailable
+		 * @param dipoleAvailable new value of dipoleAvailable
 		 */
-		public void setDipoleAvailable(boolean dipoleAvailable) {
+		public void setDipoleAvailable(final boolean dipoleAvailable) {
 			this.dipoleAvailable = dipoleAvailable;
 		}
 
@@ -917,10 +886,9 @@ public abstract class Molecule {
 		/**
 		 * Set the value of energyUnit
 		 * 
-		 * @param energyUnit
-		 *            new value of energyUnit
+		 * @param energyUnit new value of energyUnit
 		 */
-		public void setEnergyUnit(String energyUnit) {
+		public void setEnergyUnit(final String energyUnit) {
 			this.energyUnit = energyUnit;
 		}
 
@@ -941,10 +909,9 @@ public abstract class Molecule {
 		/**
 		 * Set the value of gradientUnit
 		 * 
-		 * @param gradientUnit
-		 *            new value of gradientUnit
+		 * @param gradientUnit new value of gradientUnit
 		 */
-		public void setGradientUnit(String gradientUnit) {
+		public void setGradientUnit(final String gradientUnit) {
 			this.gradientUnit = gradientUnit;
 		}
 
@@ -965,10 +932,9 @@ public abstract class Molecule {
 		/**
 		 * Set the value of dipoleUnit
 		 * 
-		 * @param dipoleUnit
-		 *            new value of dipoleUnit
+		 * @param dipoleUnit new value of dipoleUnit
 		 */
-		public void setDipoleUnit(String dipoleUnit) {
+		public void setDipoleUnit(final String dipoleUnit) {
 			this.dipoleUnit = dipoleUnit;
 		}
 
@@ -989,10 +955,9 @@ public abstract class Molecule {
 		/**
 		 * Set the value of frequencyUnit
 		 * 
-		 * @param frequencyUnit
-		 *            new value of frequencyUnit
+		 * @param frequencyUnit new value of frequencyUnit
 		 */
-		public void setFrequencyUnit(String frequencyUnit) {
+		public void setFrequencyUnit(final String frequencyUnit) {
 			this.frequencyUnit = frequencyUnit;
 		}
 
@@ -1001,23 +966,20 @@ public abstract class Molecule {
 		/**
 		 * Add a user defined molecular property.
 		 * 
-		 * @param uProp
-		 *            the new instance of property to be added
-		 * @throws UnsupportedOperationException
-		 *             if a property with the same name already exists
+		 * @param uProp the new instance of property to be added
+		 * @throws UnsupportedOperationException if a property with the same name
+		 *                                       already exists
 		 */
-		public void addUserDefinedMolecularProperty(
-				UserDefinedMolecularProperty uProp) {
+		public void addUserDefinedMolecularProperty(final UserDefinedMolecularProperty uProp) {
 			if (userProperties == null)
 				userProperties = new ArrayList<>();
 
 			// first check if this property already exists
-			String name = uProp.getName();
-			for (UserDefinedMolecularProperty uprop : userProperties) {
+			final String name = uProp.getName();
+			for (final UserDefinedMolecularProperty uprop : userProperties) {
 				if (uprop.getName().equals(name)) {
 					throw new UnsupportedOperationException(
-							"Property with name" + " '" + name
-									+ "' is already defined for this object!");
+							"Property with name" + " '" + name + "' is already defined for this object!");
 				} // end if
 			} // end for
 
@@ -1027,11 +989,9 @@ public abstract class Molecule {
 		/**
 		 * Remove a user defined property.
 		 * 
-		 * @param uProp
-		 *            instance of UserDefinedMolecularProperty to be removed
+		 * @param uProp instance of UserDefinedMolecularProperty to be removed
 		 */
-		public void removeUserDefinedMolecularProperty(
-				UserDefinedMolecularProperty uProp) {
+		public void removeUserDefinedMolecularProperty(final UserDefinedMolecularProperty uProp) {
 			if (userProperties == null)
 				return;
 
@@ -1039,8 +999,8 @@ public abstract class Molecule {
 		}
 
 		/**
-		 * Get a list of all the user defined molecular properties, null if no
-		 * user defined properties were ever added to this Molecule object.
+		 * Get a list of all the user defined molecular properties, null if no user
+		 * defined properties were ever added to this Molecule object.
 		 * 
 		 * @return an Iterator object of list of instances of
 		 *         UserDefinedMolecularProperty
@@ -1053,19 +1013,17 @@ public abstract class Molecule {
 		}
 
 		/**
-		 * Get a user defined molecular properties with the specified name, null
-		 * if no user defined properties with the specified name exists.
+		 * Get a user defined molecular properties with the specified name, null if no
+		 * user defined properties with the specified name exists.
 		 * 
-		 * @param name
-		 *            the name of the requested UserDefinedMolecularProperty
+		 * @param name the name of the requested UserDefinedMolecularProperty
 		 * @return an instances of UserDefinedMolecularProperty
 		 */
-		public UserDefinedMolecularProperty getUserDefinedMolecularProperty(
-				String name) {
+		public UserDefinedMolecularProperty getUserDefinedMolecularProperty(final String name) {
 			if (userProperties == null)
 				return null;
 
-			for (UserDefinedMolecularProperty uprop : userProperties)
+			for (final UserDefinedMolecularProperty uprop : userProperties)
 				if (uprop.getName().equals(name))
 					return uprop;
 
@@ -1090,11 +1048,10 @@ public abstract class Molecule {
 	/**
 	 * Setter for property additionalInformationAvailable.
 	 * 
-	 * @param additionalInformationAvailable
-	 *            New value of property additionalInformationAvailable.
+	 * @param additionalInformationAvailable New value of property
+	 *                                       additionalInformationAvailable.
 	 */
-	public void setAdditionalInformationAvailable(
-			boolean additionalInformationAvailable) {
+	public void setAdditionalInformationAvailable(final boolean additionalInformationAvailable) {
 		this.additionalInformationAvailable = additionalInformationAvailable;
 	}
 
@@ -1115,11 +1072,9 @@ public abstract class Molecule {
 	/**
 	 * Setter for property additionalInformation.
 	 * 
-	 * @param additionalInformation
-	 *            New value of property additionalInformation.
+	 * @param additionalInformation New value of property additionalInformation.
 	 */
-	public void setAdditionalInformation(
-			AdditionalInformation additionalInformation) {
+	public void setAdditionalInformation(final AdditionalInformation additionalInformation) {
 		this.additionalInformation = additionalInformation;
 		this.additionalInformationAvailable = true;
 	}
@@ -1141,10 +1096,9 @@ public abstract class Molecule {
 	/**
 	 * Setter for property centerOfMass.
 	 * 
-	 * @param centerOfMass
-	 *            New value of property centerOfMass.
+	 * @param centerOfMass New value of property centerOfMass.
 	 */
-	public void setCenterOfMass(Vector3D centerOfMass) {
+	public void setCenterOfMass(final Vector3D centerOfMass) {
 		this.centerOfMass = centerOfMass;
 	}
 

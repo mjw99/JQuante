@@ -96,22 +96,22 @@ public class StringResource implements Resource {
 	/**
 	 * Holds value of property remoteAppDir.
 	 */
-	private String remoteAppDir;
+	private final String remoteAppDir;
 
 	/**
 	 * Holds value of property updateDir.
 	 */
-	private String updateDir;
+	private final String updateDir;
 
 	/**
 	 * Holds value of property extLibDir.
 	 */
-	private String extLibDir;
+	private final String extLibDir;
 
 	/**
 	 * Holds value of property extLibFile.
 	 */
-	private String extLibFile;
+	private final String extLibFile;
 
 	/**
 	 * Holds value of property basisLibraryPath.
@@ -156,40 +156,26 @@ public class StringResource implements Resource {
 	/** Creates a new instance of StringResource -- private! */
 	private StringResource() {
 		// common strings for the IDE
-		newWorkspaceTip = "<html><body>"
-				+ "Opens up a wizard which guides you for creation "
-				+ "of a new workspace. <br>"
-				+ "You can use workspace to organize all your "
-				+ "data and analysis files pertaining to a "
-				+ "particular project." + "</html></body>";
-		openWorkspaceTip = "Opens an existing workspace "
-				+ "previously created by you";
+		newWorkspaceTip = "<html><body>" + "Opens up a wizard which guides you for creation "
+				+ "of a new workspace. <br>" + "You can use workspace to organize all your "
+				+ "data and analysis files pertaining to a " + "particular project." + "</html></body>";
+		openWorkspaceTip = "Opens an existing workspace " + "previously created by you";
 		saveWorkspaceTip = "Saves the current workspace";
 		saveAsWorkspaceTip = "Saves the current workspace with a new name";
 		exitTip = "Exit the IDE";
 		openBeanShellTip = "Opens a new BeanShell interpreter in a GUI shell";
 		atomInfoSettingsTip = "Opens up a dialog which allows you to change "
 				+ "various paramenters related to representation of an atom";
-		openMoleculeTip = "<html><body>"
-				+ "Opens up a molecule file in a viewer, so "
-				+ "that you can view/ query the molecular " + "geometry."
-				+ "</html></body>";
-		newMoleculeTip = "<html><body>" + "Opens up a molecule editor, so "
-				+ "that you can create a molecule "
-				+ "[CAUTION: This is an experimental feature!]."
-				+ "</html></body>";
-		openBeanShellTip = "<html><body>"
-				+ "Opens up a powerful bash(unix) like object "
-				+ "oriented shell. <br> "
-				+ "You can use this shell for seemless control "
-				+ "over each and every functionality of "
+		openMoleculeTip = "<html><body>" + "Opens up a molecule file in a viewer, so "
+				+ "that you can view/ query the molecular " + "geometry." + "</html></body>";
+		newMoleculeTip = "<html><body>" + "Opens up a molecule editor, so " + "that you can create a molecule "
+				+ "[CAUTION: This is an experimental feature!]." + "</html></body>";
+		openBeanShellTip = "<html><body>" + "Opens up a powerful bash(unix) like object " + "oriented shell. <br> "
+				+ "You can use this shell for seemless control " + "over each and every functionality of "
 				+ "<b>MeTA Studio</b>." + "</html></body>";
-		openJRManTip = "<html><body>"
-				+ "Opens up JRMan for rendering RenderMan files."
-				+ "</html></body>";
+		openJRManTip = "<html><body>" + "Opens up JRMan for rendering RenderMan files." + "</html></body>";
 		saveMoleculeTip = "<html><body>" + "Exports the current geometry "
-				+ "in Renderman format, <br> which can be rendered "
-				+ "using renderman compliant rendering tools like "
+				+ "in Renderman format, <br> which can be rendered " + "using renderman compliant rendering tools like "
 				+ "<i>JRMan</i>, <i>3Delight</i> etc.." + "</html></body>";
 		exportRIBTip = "Save the current geometry";
 		attachPropertyTip = "Attach a property file";
@@ -211,16 +197,13 @@ public class StringResource implements Resource {
 		fragmentationSchemeResource = "org.meta.fragmentor.impl.FragmentationSchemes";
 		fragmentGoodnessProbeResource = "org.meta.fragmentor.impl.FragmentGoodnessProbes";
 		defaultAtomInfo = "/name/mjw/jquante/config/impl/AtomInfo.xml";
-		edgeTableResource = "/org/meta/shell/idebeans/graphics/"
-				+ "surfaces/edgeTable.xml";
-		triTableResource = "/org/meta/shell/idebeans/graphics/"
-				+ "surfaces/triTable.xml";
-		federationRequestHandlers = "/org/meta/net/"
-				+ "FederationRequestHandlers.xml";
+		edgeTableResource = "/org/meta/shell/idebeans/graphics/" + "surfaces/edgeTable.xml";
+		triTableResource = "/org/meta/shell/idebeans/graphics/" + "surfaces/triTable.xml";
+		federationRequestHandlers = "/org/meta/net/" + "FederationRequestHandlers.xml";
 
 		try {
 			appDir = System.getProperty("user.home") + "/.meta2.0";
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			System.out.println("Running in restricted mode.");
 			appDir = ".meta2.0";
 		} // end of try catch
@@ -239,8 +222,7 @@ public class StringResource implements Resource {
 		remoteAppDir = appDir + "/remoteapps";
 		updateDir = appDir + "/updates";
 		extLibFile = appDir + "/extLibs";
-		extLibDir = ".." + File.separatorChar + "lib" + File.separatorChar
-				+ "ext";
+		extLibDir = ".." + File.separatorChar + "lib" + File.separatorChar + "ext";
 
 		workspaceItemImplResource = "org.meta.workspace.impl.WorkspaceItemTypeMap";
 		basisLibraryPath = "/name/mjw/jquante/math/qm/basis/basis_";
@@ -251,9 +233,8 @@ public class StringResource implements Resource {
 		ideHelpSet = "IdeHelp.hs";
 
 		// the xml
-		xmlHeader = "<?xml version=\"1.0\" standalone=\"yes\" ?> \n"
-				+ "<!-- \n" + " This document is automatically generated by: "
-				+ getVersion() + "\n" + "(c) V.Ganesh \n" + "--> \n";
+		xmlHeader = "<?xml version=\"1.0\" standalone=\"yes\" ?> \n" + "<!-- \n"
+				+ " This document is automatically generated by: " + getVersion() + "\n" + "(c) V.Ganesh \n" + "--> \n";
 
 		// workspace related
 		workspaceFileExtension = "mws";
@@ -261,10 +242,8 @@ public class StringResource implements Resource {
 		beanShellScriptExtension = "bsh";
 
 		// standard messages
-		stdErrorMessage = "An unhandled error has occured. \n"
-				+ "If you feel this is a bug, please save the"
-				+ " contents of Workspace and Runtime log and inform"
-				+ " the developers the same!";
+		stdErrorMessage = "An unhandled error has occured. \n" + "If you feel this is a bug, please save the"
+				+ " contents of Workspace and Runtime log and inform" + " the developers the same!";
 
 		// meta studio archive file related
 		marManifestFileName = "manifest.xml";
@@ -279,9 +258,9 @@ public class StringResource implements Resource {
 	}
 
 	/**
-	 * Refresh app specific settings. This is useful when an external
-	 * application is being run, and you don't want to mess around with default
-	 * MeTA Studio settings.
+	 * Refresh app specific settings. This is useful when an external application is
+	 * being run, and you don't want to mess around with default MeTA Studio
+	 * settings.
 	 */
 	public void refreshAppSettingsPath() {
 		recentFiles = appDir + "/recent.xml";
@@ -358,11 +337,10 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property newWorkspaceTip.
 	 * 
-	 * @param newWorkspaceTip
-	 *            New value of property newWorkspaceTip.
+	 * @param newWorkspaceTip New value of property newWorkspaceTip.
 	 * 
 	 */
-	public void setNewWorkspaceTip(String newWorkspaceTip) {
+	public void setNewWorkspaceTip(final String newWorkspaceTip) {
 		this.newWorkspaceTip = newWorkspaceTip;
 	}
 
@@ -379,11 +357,10 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property openWorkspaceTip.
 	 * 
-	 * @param openWorkspaceTip
-	 *            New value of property openWorkspaceTip.
+	 * @param openWorkspaceTip New value of property openWorkspaceTip.
 	 * 
 	 */
-	public void setOpenWorkspaceTip(String openWorkspaceTip) {
+	public void setOpenWorkspaceTip(final String openWorkspaceTip) {
 		this.openWorkspaceTip = openWorkspaceTip;
 	}
 
@@ -400,11 +377,10 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property saveWorkspaceTip.
 	 * 
-	 * @param saveWorkspaceTip
-	 *            New value of property saveWorkspaceTip.
+	 * @param saveWorkspaceTip New value of property saveWorkspaceTip.
 	 * 
 	 */
-	public void setSaveWorkspaceTip(String saveWorkspaceTip) {
+	public void setSaveWorkspaceTip(final String saveWorkspaceTip) {
 		this.saveWorkspaceTip = saveWorkspaceTip;
 	}
 
@@ -421,11 +397,10 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property saveAsWorkspaceTip.
 	 * 
-	 * @param saveAsWorkspaceTip
-	 *            New value of property saveAsWorkspaceTip.
+	 * @param saveAsWorkspaceTip New value of property saveAsWorkspaceTip.
 	 * 
 	 */
-	public void setSaveAsWorkspaceTip(String saveAsWorkspaceTip) {
+	public void setSaveAsWorkspaceTip(final String saveAsWorkspaceTip) {
 		this.saveAsWorkspaceTip = saveAsWorkspaceTip;
 	}
 
@@ -442,11 +417,10 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property exitTip.
 	 * 
-	 * @param exitTip
-	 *            New value of property exitTip.
+	 * @param exitTip New value of property exitTip.
 	 * 
 	 */
-	public void setExitTip(String exitTip) {
+	public void setExitTip(final String exitTip) {
 		this.exitTip = exitTip;
 	}
 
@@ -463,11 +437,10 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property uiClass.
 	 * 
-	 * @param uiClass
-	 *            New value of property uiClass.
+	 * @param uiClass New value of property uiClass.
 	 * 
 	 */
-	public void setUiClass(String uiClass) {
+	public void setUiClass(final String uiClass) {
 		this.uiClass = uiClass;
 	}
 
@@ -484,11 +457,10 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property ideLoggerName.
 	 * 
-	 * @param ideLoggerName
-	 *            New value of property ideLoggerName.
+	 * @param ideLoggerName New value of property ideLoggerName.
 	 * 
 	 */
-	public void setIdeLoggerName(String ideLoggerName) {
+	public void setIdeLoggerName(final String ideLoggerName) {
 		this.ideLoggerName = ideLoggerName;
 	}
 
@@ -505,11 +477,10 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property loggerClass.
 	 * 
-	 * @param loggerClass
-	 *            New value of property loggerClass.
+	 * @param loggerClass New value of property loggerClass.
 	 * 
 	 */
-	public void setLoggerClass(String loggerClass) {
+	public void setLoggerClass(final String loggerClass) {
 		this.loggerClass = loggerClass;
 	}
 
@@ -526,11 +497,10 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property defaultImplResource.
 	 * 
-	 * @param defaultImplResource
-	 *            New value of property defaultImplResource.
+	 * @param defaultImplResource New value of property defaultImplResource.
 	 * 
 	 */
-	public void setDefaultImplResource(String defaultImplResource) {
+	public void setDefaultImplResource(final String defaultImplResource) {
 		this.defaultImplResource = defaultImplResource;
 	}
 
@@ -547,11 +517,10 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property openBeanShellTip.
 	 * 
-	 * @param openBeanShellTip
-	 *            New value of property openBeanShellTip.
+	 * @param openBeanShellTip New value of property openBeanShellTip.
 	 * 
 	 */
-	public void setOpenBeanShellTip(String openBeanShellTip) {
+	public void setOpenBeanShellTip(final String openBeanShellTip) {
 		this.openBeanShellTip = openBeanShellTip;
 	}
 
@@ -568,11 +537,10 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property fileReaderResource.
 	 * 
-	 * @param fileReaderResource
-	 *            New value of property fileReaderResource.
+	 * @param fileReaderResource New value of property fileReaderResource.
 	 * 
 	 */
-	public void setFileReaderResource(String fileReaderResource) {
+	public void setFileReaderResource(final String fileReaderResource) {
 		this.fileReaderResource = fileReaderResource;
 	}
 
@@ -589,11 +557,10 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property ideHelpSet.
 	 * 
-	 * @param ideHelpSet
-	 *            New value of property ideHelpSet.
+	 * @param ideHelpSet New value of property ideHelpSet.
 	 * 
 	 */
-	public void setIdeHelpSet(String ideHelpSet) {
+	public void setIdeHelpSet(final String ideHelpSet) {
 		this.ideHelpSet = ideHelpSet;
 	}
 
@@ -610,11 +577,10 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property imageMapResource.
 	 * 
-	 * @param imageMapResource
-	 *            New value of property imageMapResource.
+	 * @param imageMapResource New value of property imageMapResource.
 	 * 
 	 */
-	public void setImageMapResource(String imageMapResource) {
+	public void setImageMapResource(final String imageMapResource) {
 		this.imageMapResource = imageMapResource;
 	}
 
@@ -631,11 +597,10 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property viewerResource.
 	 * 
-	 * @param viewerResource
-	 *            New value of property viewerResource.
+	 * @param viewerResource New value of property viewerResource.
 	 * 
 	 */
-	public void setViewerResource(String viewerResource) {
+	public void setViewerResource(final String viewerResource) {
 		this.viewerResource = viewerResource;
 	}
 
@@ -652,11 +617,10 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property xmlHeader.
 	 * 
-	 * @param xmlHeader
-	 *            New value of property xmlHeader.
+	 * @param xmlHeader New value of property xmlHeader.
 	 * 
 	 */
-	public void setXmlHeader(String xmlHeader) {
+	public void setXmlHeader(final String xmlHeader) {
 		this.xmlHeader = xmlHeader;
 	}
 
@@ -673,11 +637,10 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property defaultAtomInfo.
 	 * 
-	 * @param defaultAtomInfo
-	 *            New value of property defaultAtomInfo.
+	 * @param defaultAtomInfo New value of property defaultAtomInfo.
 	 * 
 	 */
-	public void setDefaultAtomInfo(String defaultAtomInfo) {
+	public void setDefaultAtomInfo(final String defaultAtomInfo) {
 		this.defaultAtomInfo = defaultAtomInfo;
 	}
 
@@ -694,11 +657,10 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property workspaceFileExtension.
 	 * 
-	 * @param workspaceFileExtension
-	 *            New value of property workspaceFileExtension.
+	 * @param workspaceFileExtension New value of property workspaceFileExtension.
 	 * 
 	 */
-	public void setWorkspaceFileExtension(String workspaceFileExtension) {
+	public void setWorkspaceFileExtension(final String workspaceFileExtension) {
 		this.workspaceFileExtension = workspaceFileExtension;
 	}
 
@@ -715,11 +677,11 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property workspaceItemFileExtension.
 	 * 
-	 * @param workspaceItemFileExtension
-	 *            New value of property workspaceItemFileExtension.
+	 * @param workspaceItemFileExtension New value of property
+	 *                                   workspaceItemFileExtension.
 	 * 
 	 */
-	public void setWorkspaceItemFileExtension(String workspaceItemFileExtension) {
+	public void setWorkspaceItemFileExtension(final String workspaceItemFileExtension) {
 		this.workspaceItemFileExtension = workspaceItemFileExtension;
 	}
 
@@ -736,11 +698,10 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property stdErrorMessage.
 	 * 
-	 * @param stdErrorMessage
-	 *            New value of property stdErrorMessage.
+	 * @param stdErrorMessage New value of property stdErrorMessage.
 	 * 
 	 */
-	public void setStdErrorMessage(String stdErrorMessage) {
+	public void setStdErrorMessage(final String stdErrorMessage) {
 		this.stdErrorMessage = stdErrorMessage;
 	}
 
@@ -757,11 +718,11 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property workspaceItemImplResource.
 	 * 
-	 * @param workspaceItemImplResource
-	 *            New value of property workspaceItemImplResource.
+	 * @param workspaceItemImplResource New value of property
+	 *                                  workspaceItemImplResource.
 	 * 
 	 */
-	public void setWorkspaceItemImplResource(String workspaceItemImplResource) {
+	public void setWorkspaceItemImplResource(final String workspaceItemImplResource) {
 		this.workspaceItemImplResource = workspaceItemImplResource;
 	}
 
@@ -777,10 +738,9 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property recentFiles.
 	 * 
-	 * @param recentFiles
-	 *            New value of property recentFiles.
+	 * @param recentFiles New value of property recentFiles.
 	 */
-	public void setRecentFiles(String recentFiles) {
+	public void setRecentFiles(final String recentFiles) {
 		this.recentFiles = recentFiles;
 	}
 
@@ -796,10 +756,9 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property appDir.
 	 * 
-	 * @param appDir
-	 *            New value of property appDir.
+	 * @param appDir New value of property appDir.
 	 */
-	public void setAppDir(String appDir) {
+	public void setAppDir(final String appDir) {
 		this.appDir = appDir;
 	}
 
@@ -824,10 +783,9 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property basisLibraryPath.
 	 * 
-	 * @param basisLibraryPath
-	 *            New value of property basisLibraryPath.
+	 * @param basisLibraryPath New value of property basisLibraryPath.
 	 */
-	public void setBasisLibraryPath(String basisLibraryPath) {
+	public void setBasisLibraryPath(final String basisLibraryPath) {
 		this.basisLibraryPath = basisLibraryPath;
 	}
 
@@ -843,10 +801,10 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property beanShellScriptExtension.
 	 * 
-	 * @param beanShellScriptExtension
-	 *            New value of property beanShellScriptExtension.
+	 * @param beanShellScriptExtension New value of property
+	 *                                 beanShellScriptExtension.
 	 */
-	public void setBeanShellScriptExtension(String beanShellScriptExtension) {
+	public void setBeanShellScriptExtension(final String beanShellScriptExtension) {
 		this.beanShellScriptExtension = beanShellScriptExtension;
 	}
 
@@ -862,10 +820,9 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property rdfList.
 	 * 
-	 * @param rdfList
-	 *            New value of property rdfList.
+	 * @param rdfList New value of property rdfList.
 	 */
-	public void setRdfList(String rdfList) {
+	public void setRdfList(final String rdfList) {
 		this.rdfList = rdfList;
 	}
 
@@ -881,10 +838,9 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property searchURLs.
 	 * 
-	 * @param searchURLs
-	 *            New value of property searchURLs.
+	 * @param searchURLs New value of property searchURLs.
 	 */
-	public void setSearchURLs(String searchURLs) {
+	public void setSearchURLs(final String searchURLs) {
 		this.searchURLs = searchURLs;
 	}
 
@@ -900,11 +856,10 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property fragmentationSchemeResource.
 	 * 
-	 * @param fragmentationSchemeResource
-	 *            New value of property fragmentationSchemeResource.
+	 * @param fragmentationSchemeResource New value of property
+	 *                                    fragmentationSchemeResource.
 	 */
-	public void setFragmentationSchemeResource(
-			String fragmentationSchemeResource) {
+	public void setFragmentationSchemeResource(final String fragmentationSchemeResource) {
 		this.fragmentationSchemeResource = fragmentationSchemeResource;
 	}
 
@@ -920,11 +875,10 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property fragmentGoodnessProbeResource.
 	 * 
-	 * @param fragmentGoodnessProbeResource
-	 *            New value of property fragmentGoodnessProbeResource.
+	 * @param fragmentGoodnessProbeResource New value of property
+	 *                                      fragmentGoodnessProbeResource.
 	 */
-	public void setFragmentGoodnessProbeResource(
-			String fragmentGoodnessProbeResource) {
+	public void setFragmentGoodnessProbeResource(final String fragmentGoodnessProbeResource) {
 		this.fragmentGoodnessProbeResource = fragmentGoodnessProbeResource;
 	}
 
@@ -940,10 +894,9 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property atomInfoSettingsTip.
 	 * 
-	 * @param atomInfoSettingsTip
-	 *            New value of property atomInfoSettingsTip.
+	 * @param atomInfoSettingsTip New value of property atomInfoSettingsTip.
 	 */
-	public void setAtomInfoSettingsTip(String atomInfoSettingsTip) {
+	public void setAtomInfoSettingsTip(final String atomInfoSettingsTip) {
 		this.atomInfoSettingsTip = atomInfoSettingsTip;
 	}
 
@@ -959,10 +912,9 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property userAtomInfo.
 	 * 
-	 * @param userAtomInfo
-	 *            New value of property userAtomInfo.
+	 * @param userAtomInfo New value of property userAtomInfo.
 	 */
-	public void setUserAtomInfo(String userAtomInfo) {
+	public void setUserAtomInfo(final String userAtomInfo) {
 		this.userAtomInfo = userAtomInfo;
 	}
 
@@ -983,10 +935,10 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property propertyFileReaderResource.
 	 * 
-	 * @param propertyFileReaderResource
-	 *            New value of property propertyFileReaderResource.
+	 * @param propertyFileReaderResource New value of property
+	 *                                   propertyFileReaderResource.
 	 */
-	public void setPropertyFileReaderResource(String propertyFileReaderResource) {
+	public void setPropertyFileReaderResource(final String propertyFileReaderResource) {
 		this.propertyFileReaderResource = propertyFileReaderResource;
 	}
 
@@ -1007,10 +959,9 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property lastVisitedFolder.
 	 * 
-	 * @param lastVisitedFolder
-	 *            New value of property lastVisitedFolder.
+	 * @param lastVisitedFolder New value of property lastVisitedFolder.
 	 */
-	public void setLastVisitedFolder(String lastVisitedFolder) {
+	public void setLastVisitedFolder(final String lastVisitedFolder) {
 		this.lastVisitedFolder = lastVisitedFolder;
 	}
 
@@ -1031,10 +982,9 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property pluginDir.
 	 * 
-	 * @param pluginDir
-	 *            New value of property pluginDir.
+	 * @param pluginDir New value of property pluginDir.
 	 */
-	public void setPluginDir(String pluginDir) {
+	public void setPluginDir(final String pluginDir) {
 		this.pluginDir = pluginDir;
 	}
 
@@ -1055,10 +1005,9 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property launcherConfig.
 	 * 
-	 * @param launcherConfig
-	 *            New value of property launcherConfig.
+	 * @param launcherConfig New value of property launcherConfig.
 	 */
-	public void setLauncherConfig(String launcherConfig) {
+	public void setLauncherConfig(final String launcherConfig) {
 		this.launcherConfig = launcherConfig;
 	}
 
@@ -1079,10 +1028,9 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property edgeTableResource.
 	 * 
-	 * @param edgeTableResource
-	 *            New value of property edgeTableResource.
+	 * @param edgeTableResource New value of property edgeTableResource.
 	 */
-	public void setEdgeTableResource(String edgeTableResource) {
+	public void setEdgeTableResource(final String edgeTableResource) {
 		this.edgeTableResource = edgeTableResource;
 	}
 
@@ -1103,10 +1051,9 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property triTableResource.
 	 * 
-	 * @param triTableResource
-	 *            New value of property triTableResource.
+	 * @param triTableResource New value of property triTableResource.
 	 */
-	public void setTriTableResource(String triTableResource) {
+	public void setTriTableResource(final String triTableResource) {
 		this.triTableResource = triTableResource;
 	}
 
@@ -1127,10 +1074,10 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property federationRequestHandlers.
 	 * 
-	 * @param federationRequestHandlers
-	 *            New value of property federationRequestHandlers.
+	 * @param federationRequestHandlers New value of property
+	 *                                  federationRequestHandlers.
 	 */
-	public void setFederationRequestHandlers(String federationRequestHandlers) {
+	public void setFederationRequestHandlers(final String federationRequestHandlers) {
 		this.federationRequestHandlers = federationRequestHandlers;
 	}
 
@@ -1151,10 +1098,9 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property openMoleculeTip.
 	 * 
-	 * @param openMoleculeTip
-	 *            New value of property openMoleculeTip.
+	 * @param openMoleculeTip New value of property openMoleculeTip.
 	 */
-	public void setOpenMoleculeTip(String openMoleculeTip) {
+	public void setOpenMoleculeTip(final String openMoleculeTip) {
 		this.openMoleculeTip = openMoleculeTip;
 	}
 
@@ -1175,10 +1121,9 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property newMoleculeTip.
 	 * 
-	 * @param newMoleculeTip
-	 *            New value of property newMoleculeTip.
+	 * @param newMoleculeTip New value of property newMoleculeTip.
 	 */
-	public void setNewMoleculeTip(String newMoleculeTip) {
+	public void setNewMoleculeTip(final String newMoleculeTip) {
 		this.newMoleculeTip = newMoleculeTip;
 	}
 
@@ -1199,10 +1144,9 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property openBeanshellTip.
 	 * 
-	 * @param openBeanshellTip
-	 *            New value of property openBeanshellTip.
+	 * @param openBeanshellTip New value of property openBeanshellTip.
 	 */
-	public void setOpenBeanshellTip(String openBeanshellTip) {
+	public void setOpenBeanshellTip(final String openBeanshellTip) {
 		this.openBeanshellTip = openBeanshellTip;
 	}
 
@@ -1223,10 +1167,9 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property openJRManTip.
 	 * 
-	 * @param openJRManTip
-	 *            New value of property openJRManTip.
+	 * @param openJRManTip New value of property openJRManTip.
 	 */
-	public void setOpenJRManTip(String openJRManTip) {
+	public void setOpenJRManTip(final String openJRManTip) {
 		this.openJRManTip = openJRManTip;
 	}
 
@@ -1247,10 +1190,9 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property exportRIBTip.
 	 * 
-	 * @param exportRIBTip
-	 *            New value of property exportRIBTip.
+	 * @param exportRIBTip New value of property exportRIBTip.
 	 */
-	public void setExportRIBTip(String exportRIBTip) {
+	public void setExportRIBTip(final String exportRIBTip) {
 		this.exportRIBTip = exportRIBTip;
 	}
 
@@ -1271,10 +1213,9 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property saveMoleculeTip.
 	 * 
-	 * @param saveMoleculeTip
-	 *            New value of property saveMoleculeTip.
+	 * @param saveMoleculeTip New value of property saveMoleculeTip.
 	 */
-	public void setSaveMoleculeTip(String saveMoleculeTip) {
+	public void setSaveMoleculeTip(final String saveMoleculeTip) {
 		this.saveMoleculeTip = saveMoleculeTip;
 	}
 
@@ -1295,10 +1236,9 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property saveMoleculeImageTip.
 	 * 
-	 * @param saveMoleculeImageTip
-	 *            New value of property saveMoleculeImageTip.
+	 * @param saveMoleculeImageTip New value of property saveMoleculeImageTip.
 	 */
-	public void setSaveMoleculeImageTip(String saveMoleculeImageTip) {
+	public void setSaveMoleculeImageTip(final String saveMoleculeImageTip) {
 		this.saveMoleculeImageTip = saveMoleculeImageTip;
 	}
 
@@ -1319,10 +1259,9 @@ public class StringResource implements Resource {
 	/**
 	 * Setter for property attachPropertyTip.
 	 * 
-	 * @param attachPropertyTip
-	 *            New value of property attachPropertyTip.
+	 * @param attachPropertyTip New value of property attachPropertyTip.
 	 */
-	public void setAttachPropertyTip(String attachPropertyTip) {
+	public void setAttachPropertyTip(final String attachPropertyTip) {
 		this.attachPropertyTip = attachPropertyTip;
 	}
 
@@ -1343,7 +1282,7 @@ public class StringResource implements Resource {
 	/**
 	 * Holds value of property widgetsDir.
 	 */
-	private String widgetsDir;
+	private final String widgetsDir;
 
 	/**
 	 * Getter for property widgetsDir.

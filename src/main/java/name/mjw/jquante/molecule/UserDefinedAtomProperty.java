@@ -28,7 +28,7 @@ public class UserDefinedAtomProperty implements Serializable {
 	 * @param value
 	 *            Property name.
 	 */
-	public UserDefinedAtomProperty(String name, Serializable value) {
+	public UserDefinedAtomProperty(final String name, final Serializable value) {
 		this.name = name;
 		this.value = value;
 	}
@@ -47,10 +47,9 @@ public class UserDefinedAtomProperty implements Serializable {
 	/**
 	 * Set the value of name
 	 * 
-	 * @param name
-	 *            new value of name
+	 * @param name new value of name
 	 */
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 
@@ -68,10 +67,9 @@ public class UserDefinedAtomProperty implements Serializable {
 	/**
 	 * Set the value of value
 	 * 
-	 * @param value
-	 *            new value of value
+	 * @param value new value of value
 	 */
-	public void setValue(Serializable value) {
+	public void setValue(final Serializable value) {
 		this.value = value;
 	}
 }

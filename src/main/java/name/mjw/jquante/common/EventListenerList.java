@@ -12,7 +12,7 @@ import java.util.HashMap;
  */
 public class EventListenerList<T> {
 
-	private HashMap<Class<T>, ArrayList<T>> listenerList;
+	private final HashMap<Class<T>, ArrayList<T>> listenerList;
 
 	/** Creates a new instance of EventListenerList */
 	public EventListenerList() {
@@ -22,12 +22,10 @@ public class EventListenerList<T> {
 	/**
 	 * Add a new listener
 	 * 
-	 * @param theClass
-	 *            the class of listener
-	 * @param theListener
-	 *            the listener instance
+	 * @param theClass    the class of listener
+	 * @param theListener the listener instance
 	 */
-	public void add(Class<T> theClass, T theListener) {
+	public void add(final Class<T> theClass, final T theListener) {
 		if (!listenerList.containsKey(theClass)) {
 			listenerList.put(theClass, new ArrayList<T>());
 		} // end if
@@ -38,12 +36,10 @@ public class EventListenerList<T> {
 	/**
 	 * Remove a listener
 	 * 
-	 * @param theClass
-	 *            the class of listener
-	 * @param theListener
-	 *            the listener instance
+	 * @param theClass    the class of listener
+	 * @param theListener the listener instance
 	 */
-	public void remove(Class<T> theClass, T theListener) {
+	public void remove(final Class<T> theClass, final T theListener) {
 		if (!listenerList.containsKey(theClass))
 			return;
 
@@ -56,9 +52,9 @@ public class EventListenerList<T> {
 	 * @return the list of listener objects
 	 */
 	public Object[] getListenerList() {
-		ArrayList<T> listeners = new ArrayList<T>();
+		final ArrayList<T> listeners = new ArrayList<T>();
 
-		for (Class<T> listenerClass : listenerList.keySet()) {
+		for (final Class<T> listenerClass : listenerList.keySet()) {
 			listeners.addAll(listenerList.get(listenerClass));
 		}
 
@@ -68,14 +64,13 @@ public class EventListenerList<T> {
 	/**
 	 * Get the listener list of a particular class
 	 * 
-	 * @param theListenerClass
-	 *            the query class
+	 * @param theListenerClass the query class
 	 * @return the list of listener objects
 	 */
-	public Object[] getListenerList(Class<T> theListenerClass) {
-		ArrayList<T> listeners = new ArrayList<T>();
+	public Object[] getListenerList(final Class<T> theListenerClass) {
+		final ArrayList<T> listeners = new ArrayList<T>();
 
-		for (Class<T> listenerClass : listenerList.keySet()) {
+		for (final Class<T> listenerClass : listenerList.keySet()) {
 			if (listenerClass.equals(theListenerClass)) {
 				listeners.addAll(listenerList.get(listenerClass));
 			} // end if
@@ -92,7 +87,7 @@ public class EventListenerList<T> {
 	public int getListenerCount() {
 		int listenerCount = 0;
 
-		for (Class<T> listenerClass : listenerList.keySet()) {
+		for (final Class<T> listenerClass : listenerList.keySet()) {
 			listenerCount += listenerList.get(listenerClass).size();
 		}
 
@@ -102,14 +97,13 @@ public class EventListenerList<T> {
 	/**
 	 * Get the listener count of a particular class
 	 * 
-	 * @param theListenerClass
-	 *            the query class
+	 * @param theListenerClass the query class
 	 * @return number of listeners
 	 */
-	public int getListenerCount(Class<T> theListenerClass) {
+	public int getListenerCount(final Class<T> theListenerClass) {
 		int listenerCount = 0;
 
-		for (Class<T> listenerClass : listenerList.keySet()) {
+		for (final Class<T> listenerClass : listenerList.keySet()) {
 			if (listenerClass.equals(theListenerClass)) {
 				listenerCount += listenerList.get(listenerClass).size();
 			}

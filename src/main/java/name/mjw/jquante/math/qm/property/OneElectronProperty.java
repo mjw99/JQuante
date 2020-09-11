@@ -29,7 +29,7 @@ public abstract class OneElectronProperty {
 	 *
 	 * @param scfMethod the Self Consistent Field (SCF) method.
 	 */
-	public OneElectronProperty(SCFMethod scfMethod) {
+	public OneElectronProperty(final SCFMethod scfMethod) {
 		this.scfMethod = scfMethod;
 	}
 
@@ -49,7 +49,7 @@ public abstract class OneElectronProperty {
 	 *
 	 * @param scfMethod new value of scfMethod
 	 */
-	public void setScfMethod(SCFMethod scfMethod) {
+	public void setScfMethod(final SCFMethod scfMethod) {
 		this.scfMethod = scfMethod;
 	}
 
@@ -73,8 +73,8 @@ public abstract class OneElectronProperty {
 	 * @param points the points of interest
 	 * @return the values of this property at each of the point
 	 */
-	public double[] compute(Vector3D[] points) {
-		double[] fValues = new double[points.length];
+	public double[] compute(final Vector3D[] points) {
+		final double[] fValues = new double[points.length];
 
 		IntStream.range(0, points.length).parallel().forEach(i -> fValues[i] = compute(points[i]));
 
@@ -89,20 +89,20 @@ public abstract class OneElectronProperty {
 	 * @param gp the GridProperty object describing the region of interest to
 	 *           compute the one-electron properties
 	 */
-	public void compute(GridProperty gp) {
-		int nx = gp.getNoOfPointsAlongX();
-		int ny = gp.getNoOfPointsAlongY();
-		int nz = gp.getNoOfPointsAlongZ();
-		double xinc = gp.getXIncrement();
-		double yinc = gp.getYIncrement();
-		double zinc = gp.getZIncrement();
+	public void compute(final GridProperty gp) {
+		final int nx = gp.getNoOfPointsAlongX();
+		final int ny = gp.getNoOfPointsAlongY();
+		final int nz = gp.getNoOfPointsAlongZ();
+		final double xinc = gp.getXIncrement();
+		final double yinc = gp.getYIncrement();
+		final double zinc = gp.getZIncrement();
 
-		Vector3D ul = gp.getBoundingBox().getUpperLeft();
-		double xmin = ul.getX();
-		double ymin = ul.getY();
-		double zmin = ul.getZ();
+		final Vector3D ul = gp.getBoundingBox().getUpperLeft();
+		final double xmin = ul.getX();
+		final double ymin = ul.getY();
+		final double zmin = ul.getZ();
 
-		Vector3D[] points = new Vector3D[nx * ny * nz];
+		final Vector3D[] points = new Vector3D[nx * ny * nz];
 
 		double x;
 		double y;
@@ -137,7 +137,7 @@ public abstract class OneElectronProperty {
 	 * @param pp the PointProperty object describing the region of interest to
 	 *           compute the one-electron properties
 	 */
-	public void compute(PointProperty pp) {
+	public void compute(final PointProperty pp) {
 		pp.setValue(compute(pp.getPoint()));
 	}
 }

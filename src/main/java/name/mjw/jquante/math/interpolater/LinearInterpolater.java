@@ -27,7 +27,7 @@ public class LinearInterpolater extends Interpolater {
 	 * @return the interpolated value depending upon the interpolation formula
 	 */
 	@Override
-	public double interpolate(double[] y, double[] x) {
+	public double interpolate(final double[] y, final double[] x) {
 		return (y[0] * (1.0 - x[0]) + y[1] * x[0]);
 	}
 

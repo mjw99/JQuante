@@ -28,7 +28,7 @@ public class DefaultConfiguration implements GlobalConfiguration {
 
 	private static DefaultConfiguration _defaultConfiguration;
 
-	private HashMap<String, Parameter> configuration;
+	private final HashMap<String, Parameter> configuration;
 
 	/** Creates a new instance of DefaultConfiguration */
 	private DefaultConfiguration() {
@@ -37,7 +37,7 @@ public class DefaultConfiguration implements GlobalConfiguration {
 		// the initial parameters
 		try {
 			setDefaultParams();
-		} catch (PropertyVetoException ignored) {
+		} catch (final PropertyVetoException ignored) {
 			// because it never should happen in this context
 			System.err.println(ignored.toString());
 		}
@@ -60,19 +60,17 @@ public class DefaultConfiguration implements GlobalConfiguration {
 	 * private method to set the default parameters
 	 */
 	private void setDefaultParams() throws PropertyVetoException {
-		StringResource strings = StringResource.getInstance();
-		ResourceBundle resources = ResourceBundle.getBundle(strings
-				.getDefaultImplResource());
+		final StringResource strings = StringResource.getInstance();
+		final ResourceBundle resources = ResourceBundle.getBundle(strings.getDefaultImplResource());
 
 		// first, we map the important interface implementation classes
 		// that define the concrete MeTA Studio implementation!
-		Enumeration<?> implKeys = resources.getKeys();
+		final Enumeration<?> implKeys = resources.getKeys();
 		String theKey;
 
 		while (implKeys.hasMoreElements()) {
 			theKey = (String) implKeys.nextElement();
-			setParameter(theKey,
-					new ClassImplParameter(resources.getString(theKey)));
+			setParameter(theKey, new ClassImplParameter(resources.getString(theKey)));
 		} // end while
 	}
 
@@ -80,27 +78,23 @@ public class DefaultConfiguration implements GlobalConfiguration {
 	 * Method returns the value of parameter pertaining to the key.
 	 * 
 	 * @return Parameter - the parameter value.
-	 * @throws NullPointerException
-	 *             if the key is not found
+	 * @throws NullPointerException if the key is not found
 	 */
 	@Override
-	public Parameter getParameter(String key) {
+	public Parameter getParameter(final String key) {
 		return configuration.get(key);
 	}
 
 	/**
 	 * method to set the new parameter value.
 	 * 
-	 * @param key
-	 *            - the key whose value needs to be changed or added
-	 * @param parameter
-	 *            - the new parameter value
-	 * @throws PropertyVetoException
-	 *             - incase changing property value is not supported
+	 * @param key       - the key whose value needs to be changed or added
+	 * @param parameter - the new parameter value
+	 * @throws PropertyVetoException - incase changing property value is not
+	 *                               supported
 	 */
 	@Override
-	public void setParameter(String key, Parameter parameter)
-			throws PropertyVetoException {
+	public void setParameter(final String key, final Parameter parameter) throws PropertyVetoException {
 		configuration.put(key, parameter);
 	}
 
@@ -128,24 +122,21 @@ public class DefaultConfiguration implements GlobalConfiguration {
 	/**
 	 * changes current value of file storage
 	 * 
-	 * @param storedAsFile
-	 *            new value of this storage
+	 * @param storedAsFile new value of this storage
 	 */
 	@Override
-	public void setStoredAsFile(boolean storedAsFile) {
+	public void setStoredAsFile(final boolean storedAsFile) {
 		// igonored! ... we don't want to listen here
 	}
 
 	/**
 	 * sets the value of a parameter
 	 * 
-	 * @param configFile
-	 *            - the new name of the config file
-	 * @throws PropertyVetoException
-	 *             some problem can't change the stuff!
+	 * @param configFile - the new name of the config file
+	 * @throws PropertyVetoException some problem can't change the stuff!
 	 */
 	@Override
-	public void setConfigFile(String configFile) throws PropertyVetoException {
+	public void setConfigFile(final String configFile) throws PropertyVetoException {
 		throw new PropertyVetoException("Cannot change this property!", null);
 	}
 

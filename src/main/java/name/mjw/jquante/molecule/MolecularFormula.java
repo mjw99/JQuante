@@ -33,13 +33,13 @@ public class MolecularFormula {
 	 * @param molecule
 	 *            Molecule object.
 	 */
-	public MolecularFormula(Molecule molecule) {
+	public MolecularFormula(final Molecule molecule) {
 		this.molecule = molecule;
 
 		// add a change listener
 		molecule.addMoleculeStateChangeListener(new MoleculeStateChangeListener() {
 			@Override
-			public void moleculeChanged(MoleculeStateChangeEvent msce) {
+			public void moleculeChanged(final MoleculeStateChangeEvent msce) {
 				makeFormulaString();
 			}
 		});
@@ -57,7 +57,7 @@ public class MolecularFormula {
 
 		// iterate through each atoms and collect the unique ones and their
 		// counts...
-		Iterator<Atom> atoms = molecule.getAtoms();
+		final Iterator<Atom> atoms = molecule.getAtoms();
 		Atom atom;
 
 		// TODO: a bit expensive (?) operation, may need optimization
@@ -65,18 +65,16 @@ public class MolecularFormula {
 			atom = atoms.next();
 
 			if (uniqueSymbols.containsKey(atom.getSymbol())) {
-				uniqueSymbols.put(
-						atom.getSymbol(),
-						Integer.valueOf((uniqueSymbols.get(atom.getSymbol()))
-								.intValue() + 1));
+				uniqueSymbols.put(atom.getSymbol(),
+						Integer.valueOf((uniqueSymbols.get(atom.getSymbol())).intValue() + 1));
 			} else {
 				uniqueSymbols.put(atom.getSymbol(), Integer.valueOf(1));
 			} // end if
 		} // end while
 
 		// now sort the stuff based on atomic symbols, alphabetically
-		Object[] keys = uniqueSymbols.keySet().toArray();
-		Object[] values = uniqueSymbols.values().toArray();
+		final Object[] keys = uniqueSymbols.keySet().toArray();
+		final Object[] values = uniqueSymbols.values().toArray();
 		sortKeys(keys, values);
 
 		// now make the real molecular formula string
@@ -84,15 +82,13 @@ public class MolecularFormula {
 	}
 
 	/**
-	 * Return atom count of a particular symbol. If none is found, zero is
-	 * returned.
+	 * Return atom count of a particular symbol. If none is found, zero is returned.
 	 * 
-	 * @param atomSymbol
-	 *            the atom symbol to query for
+	 * @param atomSymbol the atom symbol to query for
 	 * @return the count of the atoms for the queried symbol
 	 */
-	public int getAtomCount(String atomSymbol) {
-		Integer atmCnt = uniqueSymbols.get(atomSymbol);
+	public int getAtomCount(final String atomSymbol) {
+		final Integer atmCnt = uniqueSymbols.get(atomSymbol);
 
 		return (atmCnt == null ? 0 : atmCnt);
 	}
@@ -100,7 +96,7 @@ public class MolecularFormula {
 	/**
 	 * sort the keys
 	 */
-	private void sortKeys(Object[] keys, Object[] values) {
+	private void sortKeys(final Object[] keys, final Object[] values) {
 		Object temp;
 		int i;
 		int j;
@@ -124,7 +120,7 @@ public class MolecularFormula {
 	/**
 	 * make the real string
 	 */
-	private void makeFormulaString(Object[] keys, Object[] values) {
+	private void makeFormulaString(final Object[] keys, final Object[] values) {
 		formulaString = "";
 
 		for (int i = 0; i < keys.length; i++) {
@@ -132,7 +128,6 @@ public class MolecularFormula {
 
 		}
 	}
-
 
 	/**
 	 * Returns the formula as a string object
@@ -154,8 +149,8 @@ public class MolecularFormula {
 	/**
 	 * do add / sub depending on sign
 	 */
-	private MolecularFormula doAddSub(MolecularFormula formula, int sign) {
-		MolecularFormula newFormula = new MolecularFormula();
+	private MolecularFormula doAddSub(final MolecularFormula formula, final int sign) {
+		final MolecularFormula newFormula = new MolecularFormula();
 
 		// make a hashtable hashed by symbols
 		newFormula.uniqueSymbols = new LinkedHashMap<>(5);
@@ -166,11 +161,9 @@ public class MolecularFormula {
 		for (int i = 0; i < keys.length; i++) {
 			if (formula.uniqueSymbols.containsKey(keys[i])) {
 				newFormula.uniqueSymbols.put(keys[i].toString(),
-						uniqueSymbols.get(keys[i])
-								+ (sign * formula.uniqueSymbols.get(keys[i])));
+						uniqueSymbols.get(keys[i]) + (sign * formula.uniqueSymbols.get(keys[i])));
 			} else {
-				newFormula.uniqueSymbols.put(keys[i].toString(),
-						uniqueSymbols.get(keys[i]));
+				newFormula.uniqueSymbols.put(keys[i].toString(), uniqueSymbols.get(keys[i]));
 			} // end if
 		} // end for
 
@@ -179,14 +172,13 @@ public class MolecularFormula {
 		keys = formula.uniqueSymbols.keySet().toArray();
 		for (int i = 0; i < keys.length; i++) {
 			if (!newFormula.uniqueSymbols.containsKey(keys[i])) {
-				newFormula.uniqueSymbols.put(keys[i].toString(),
-						formula.uniqueSymbols.get(keys[i]));
+				newFormula.uniqueSymbols.put(keys[i].toString(), formula.uniqueSymbols.get(keys[i]));
 			} // end if
 		} // end for
 
 		// then make the formula strings
 		keys = newFormula.uniqueSymbols.keySet().toArray();
-		Object[] values = newFormula.uniqueSymbols.values().toArray();
+		final Object[] values = newFormula.uniqueSymbols.values().toArray();
 
 		newFormula.sortKeys(keys, values);
 		newFormula.makeFormulaString(keys, values);
@@ -197,34 +189,31 @@ public class MolecularFormula {
 	/**
 	 * Add a molecular formula and return the result as a new instance.
 	 * 
-	 * @param formula
-	 *            - is the formula to be added
+	 * @param formula - is the formula to be added
 	 * @return the new instance of the molecular formula
 	 */
-	public MolecularFormula add(MolecularFormula formula) {
+	public MolecularFormula add(final MolecularFormula formula) {
 		return doAddSub(formula, 1);
 	}
 
 	/**
 	 * Subtract a molecular formula and return the result as a new instance.
 	 * 
-	 * @param formula
-	 *            - is the formula to be subtracted
+	 * @param formula - is the formula to be subtracted
 	 * @return the new instance of the molecular formula
 	 */
-	public MolecularFormula sub(MolecularFormula formula) {
+	public MolecularFormula sub(final MolecularFormula formula) {
 		return doAddSub(formula, -1);
 	}
 
 	/**
 	 * overloaded equals()
 	 * 
-	 * @param obj
-	 *            the object to be compared
+	 * @param obj the object to be compared
 	 * @return true if they are equal, false otherwise
 	 */
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj)
 			return true;
 
@@ -232,9 +221,9 @@ public class MolecularFormula {
 			return false;
 		} else {
 			// then do a deep compare
-			MolecularFormula o = (MolecularFormula) obj;
+			final MolecularFormula o = (MolecularFormula) obj;
 
-			Object[] keys = uniqueSymbols.keySet().toArray();
+			final Object[] keys = uniqueSymbols.keySet().toArray();
 
 			for (int i = 0; i < keys.length; i++) {
 				if (o.uniqueSymbols.containsKey(keys[i])) {

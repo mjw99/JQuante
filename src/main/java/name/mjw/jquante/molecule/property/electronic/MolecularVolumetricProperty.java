@@ -22,7 +22,7 @@ public class MolecularVolumetricProperty {
 	 * @param molecule
 	 *            Molecule object.
 	 */
-	public MolecularVolumetricProperty(Molecule molecule) {
+	public MolecularVolumetricProperty(final Molecule molecule) {
 		this.molecule = molecule;
 
 		this.volumeItemList = new ArrayList<>();
@@ -40,10 +40,9 @@ public class MolecularVolumetricProperty {
 	/**
 	 * Add a new VolumeItem object to this property
 	 * 
-	 * @param volumeItem
-	 *            instance of new VolumeItem
+	 * @param volumeItem instance of new VolumeItem
 	 */
-	public void addVolumeItem(VolumeItem volumeItem) {
+	public void addVolumeItem(final VolumeItem volumeItem) {
 		volumeItem.setReferenceMolecule(molecule);
 		volumeItemList.add(volumeItem);
 	}
@@ -51,10 +50,9 @@ public class MolecularVolumetricProperty {
 	/**
 	 * Remove an existing VolumeItem from this property
 	 * 
-	 * @param volumeItem
-	 *            instance of VolumeItem to be removed
+	 * @param volumeItem instance of VolumeItem to be removed
 	 */
-	public void removeVolumeItem(VolumeItem volumeItem) {
+	public void removeVolumeItem(final VolumeItem volumeItem) {
 		volumeItem.setReferenceMolecule(null);
 		volumeItemList.remove(volumeItem);
 	}

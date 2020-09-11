@@ -27,7 +27,7 @@ public class UserDefinedMolecularProperty implements Serializable {
 	 * @param value
 	 *            Property value.
 	 */
-	public UserDefinedMolecularProperty(String name, Serializable value) {
+	public UserDefinedMolecularProperty(final String name, final Serializable value) {
 		this.name = name;
 		this.value = value;
 	}
@@ -46,10 +46,9 @@ public class UserDefinedMolecularProperty implements Serializable {
 	/**
 	 * Set the value of name
 	 * 
-	 * @param name
-	 *            new value of name
+	 * @param name new value of name
 	 */
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 
@@ -67,10 +66,9 @@ public class UserDefinedMolecularProperty implements Serializable {
 	/**
 	 * Set the value of value
 	 * 
-	 * @param value
-	 *            new value of value
+	 * @param value new value of value
 	 */
-	public void setValue(Serializable value) {
+	public void setValue(final Serializable value) {
 		this.value = value;
 	}
 
@@ -86,14 +84,13 @@ public class UserDefinedMolecularProperty implements Serializable {
 	}
 
 	/**
-	 * Set the value of originDependent. (Note: origin dependent property is the
-	 * one that is depended on the machine where Molecule object was created, an
-	 * example is CommonUserDefinedMolecularProperty.SOURCE_FILE_NAME)
+	 * Set the value of originDependent. (Note: origin dependent property is the one
+	 * that is depended on the machine where Molecule object was created, an example
+	 * is CommonUserDefinedMolecularProperty.SOURCE_FILE_NAME)
 	 * 
-	 * @param originDependent
-	 *            new value of originDependent
+	 * @param originDependent new value of originDependent
 	 */
-	public void setOriginDependent(boolean originDependent) {
+	public void setOriginDependent(final boolean originDependent) {
 		this.originDependent = originDependent;
 	}
 }

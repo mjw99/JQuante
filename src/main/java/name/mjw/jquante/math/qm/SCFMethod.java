@@ -108,37 +108,29 @@ public abstract class SCFMethod implements OptimizerFunction {
 	/**
 	 * Is this an open shell SCF method? 
 	 */
-	private boolean openShell;
+	private final boolean openShell;
 
 	/**
 	 * Creates a new instance of SCFMethod (closed shell).
 	 *
-	 * @param molecule
-	 *            the Molecule object.
-	 * @param oneEI
-	 *            the 1E integral driver.
-	 * @param twoEI
-	 *            the 2E integral driver.
+	 * @param molecule the Molecule object.
+	 * @param oneEI    the 1E integral driver.
+	 * @param twoEI    the 2E integral driver.
 	 */
-	public SCFMethod(Molecule molecule, OneElectronIntegrals oneEI, 
-	                 TwoElectronIntegrals twoEI) {
+	public SCFMethod(final Molecule molecule, final OneElectronIntegrals oneEI, final TwoElectronIntegrals twoEI) {
 		this(molecule, oneEI, twoEI, false);
 	}
 
 	/**
 	 * Creates a new instance of SCFMethod.
 	 *
-	 * @param molecule
-	 *            the Molecule object.
-	 * @param oneEI
-	 *            the 1E integral driver.
-	 * @param twoEI
-	 *            the 2E integral driver.
-	 * @param openShell
-	 * 	          is this a closed shell setup?
+	 * @param molecule  the Molecule object.
+	 * @param oneEI     the 1E integral driver.
+	 * @param twoEI     the 2E integral driver.
+	 * @param openShell is this a closed shell setup?
 	 */
-	public SCFMethod(Molecule molecule, OneElectronIntegrals oneEI, 
-	                 TwoElectronIntegrals twoEI, boolean openShell) {
+	public SCFMethod(final Molecule molecule, final OneElectronIntegrals oneEI, final TwoElectronIntegrals twoEI,
+			final boolean openShell) {
 		this.maxIteration = MAX_ITERATION;
 
 		this.energyTolerance = ENERGY_TOLERANCE;
@@ -173,14 +165,14 @@ public abstract class SCFMethod implements OptimizerFunction {
 		double eNuke = 0.0;
 		int i;
 		int j;
-		int noOfAtoms = molecule.getNumberOfAtoms();
+		final int noOfAtoms = molecule.getNumberOfAtoms();
 
 		Atom atomI;
 		Atom atomJ;
 
 		// read in the atomic numbers
-		int[] atomicNumbers = new int[noOfAtoms];
-		AtomInfo ai = AtomInfo.getInstance();
+		final int[] atomicNumbers = new int[noOfAtoms];
+		final AtomInfo ai = AtomInfo.getInstance();
 
 		for (i = 0; i < noOfAtoms; i++) {
 			atomicNumbers[i] = ai.getAtomicNumber(molecule.getAtom(i).getSymbol());
@@ -212,10 +204,9 @@ public abstract class SCFMethod implements OptimizerFunction {
 	/**
 	 * Setter for property energyTolerance.
 	 * 
-	 * @param energyTolerance
-	 *            New value of property energyTolerance.
+	 * @param energyTolerance New value of property energyTolerance.
 	 */
-	public void setEnergyTolerance(double energyTolerance) {
+	public void setEnergyTolerance(final double energyTolerance) {
 		this.energyTolerance = energyTolerance;
 	}
 
@@ -231,10 +222,9 @@ public abstract class SCFMethod implements OptimizerFunction {
 	/**
 	 * Setter for property densityTolerance.
 	 * 
-	 * @param densityTolerance
-	 *            New value of property densityTolerance.
+	 * @param densityTolerance New value of property densityTolerance.
 	 */
-	public void setDensityTolerance(double densityTolerance) {
+	public void setDensityTolerance(final double densityTolerance) {
 		this.densityTolerance = densityTolerance;
 	}
 
@@ -250,10 +240,9 @@ public abstract class SCFMethod implements OptimizerFunction {
 	/**
 	 * Setter for property maxIteration.
 	 * 
-	 * @param maxIteration
-	 *            New value of property maxIteration.
+	 * @param maxIteration New value of property maxIteration.
 	 */
-	public void setMaxIteration(int maxIteration) {
+	public void setMaxIteration(final int maxIteration) {
 		this.maxIteration = maxIteration;
 	}
 
@@ -269,11 +258,11 @@ public abstract class SCFMethod implements OptimizerFunction {
 	/**
 	 * Getter for property density.
 	 * 
-	 * @param denNo - 0 is A, 1 is B in case of open shell systems 
+	 * @param denNo - 0 is A, 1 is B in case of open shell systems
 	 * 
 	 * @return Value of property density.
 	 */
-	public Density getDensity(int denNo) {
+	public Density getDensity(final int denNo) {
 		if (this.openShell) {
 			return this.densityList.get(denNo);
 		} else {
@@ -293,11 +282,11 @@ public abstract class SCFMethod implements OptimizerFunction {
 	/**
 	 * Getter for property mos.
 	 * 
-	 * @param mosNo - 0 is A, 1 is B in case of open shell systems 
+	 * @param mosNo - 0 is A, 1 is B in case of open shell systems
 	 * 
 	 * @return Value of property mos.
 	 */
-	public MolecularOrbitals getMos(int mosNo) {
+	public MolecularOrbitals getMos(final int mosNo) {
 		if (this.openShell) {
 			return this.mosList.get(mosNo);
 		} else {
@@ -317,11 +306,11 @@ public abstract class SCFMethod implements OptimizerFunction {
 	/**
 	 * Getter for property orbE.
 	 * 
-	 * @param mosNo - 0 is A, 1 is B in case of open shell systems 
+	 * @param mosNo - 0 is A, 1 is B in case of open shell systems
 	 * 
 	 * @return Value of property orbE.
 	 */
-	public double[] getOrbE(int mosNo) {
+	public double[] getOrbE(final int mosNo) {
 		if (this.openShell) {
 			return this.mosList.get(mosNo).getOrbitalEnergies();
 		} else {
@@ -377,10 +366,9 @@ public abstract class SCFMethod implements OptimizerFunction {
 	/**
 	 * Setter for property densityGuesser.
 	 * 
-	 * @param densityGuesser
-	 *            New value of property densityGuesser.
+	 * @param densityGuesser New value of property densityGuesser.
 	 */
-	public void setDensityGuesser(DensityGuesser densityGuesser) {
+	public void setDensityGuesser(final DensityGuesser densityGuesser) {
 		this.densityGuesser = densityGuesser;
 	}
 
@@ -396,10 +384,9 @@ public abstract class SCFMethod implements OptimizerFunction {
 	/**
 	 * Setter for property guessInitialDM.
 	 * 
-	 * @param guessInitialDM
-	 *            New value of property guessInitialDM.
+	 * @param guessInitialDM New value of property guessInitialDM.
 	 */
-	public void setGuessInitialDM(boolean guessInitialDM) {
+	public void setGuessInitialDM(final boolean guessInitialDM) {
 		this.guessInitialDM = guessInitialDM;
 	}
 
@@ -415,11 +402,11 @@ public abstract class SCFMethod implements OptimizerFunction {
 	/**
 	 * Getter for property fock.
 	 * 
-	 * @param fckNo - 0 is A, 1 is B in case of open shell systems 
+	 * @param fckNo - 0 is A, 1 is B in case of open shell systems
 	 * 
 	 * @return Value of property fock.
 	 */
-	public Fock getFock(int fckNo) {
+	public Fock getFock(final int fckNo) {
 		if (this.openShell) {
 			return this.fockList.get(fckNo);
 		} else {
@@ -439,11 +426,11 @@ public abstract class SCFMethod implements OptimizerFunction {
 	/**
 	 * Get the value of gMatrix
 	 * 
-	 * @param gmatNo - 0 is A, 1 is B in case of open shell systems 
+	 * @param gmatNo - 0 is A, 1 is B in case of open shell systems
 	 * 
 	 * @return the value of gMatrix
 	 */
-	public GMatrix getGMatrix(int gmatNo) {
+	public GMatrix getGMatrix(final int gmatNo) {
 		if (this.openShell) {
 			return this.gMatrixList.get(gmatNo);
 		} else {
@@ -454,10 +441,9 @@ public abstract class SCFMethod implements OptimizerFunction {
 	/**
 	 * Registers SCFEventListener to receive events.
 	 * 
-	 * @param listener
-	 *            The listener to register.
+	 * @param listener The listener to register.
 	 */
-	public synchronized void addSCFEventListener(SCFEventListener listener) {
+	public synchronized void addSCFEventListener(final SCFEventListener listener) {
 		if (listenerList == null) {
 			listenerList = new EventListenerList<>();
 		}
@@ -467,25 +453,23 @@ public abstract class SCFMethod implements OptimizerFunction {
 	/**
 	 * Removes SCFEventListener from the list of listeners.
 	 * 
-	 * @param listener
-	 *            The listener to remove.
+	 * @param listener The listener to remove.
 	 */
-	public synchronized void removeSCFEventListener(SCFEventListener listener) {
+	public synchronized void removeSCFEventListener(final SCFEventListener listener) {
 		listenerList.remove(SCFEventListener.class, listener);
 	}
 
 	/**
 	 * Notifies all registered listeners about the event.
 	 * 
-	 * @param event
-	 *            The event to be fired
+	 * @param event The event to be fired
 	 */
-	protected void fireSCFEventListenerScfEventOccured(SCFEvent event) {
+	protected void fireSCFEventListenerScfEventOccured(final SCFEvent event) {
 		if (listenerList == null)
 			return;
-		Object[] listeners = listenerList.getListenerList();
+		final Object[] listeners = listenerList.getListenerList();
 
-		for (Object listener : listeners) {
+		for (final Object listener : listeners) {
 			((SCFEventListener) listener).scfEventOccured(event);
 		} // end for
 	}

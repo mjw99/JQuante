@@ -42,11 +42,11 @@ public class CubicInterpolater extends Interpolater {
 	 * @return the interpolated value depending upon the interpolation formula
 	 */
 	@Override
-	public double interpolate(double[] y, double[] x) {
-		double mu2 = x[0] * x[0];
-		double a0 = y[3] - y[2] - y[0] + y[1];
-		double a1 = y[0] - y[1] - a0;
-		double a2 = y[2] - y[0];
+	public double interpolate(final double[] y, final double[] x) {
+		final double mu2 = x[0] * x[0];
+		final double a0 = y[3] - y[2] - y[0] + y[1];
+		final double a1 = y[0] - y[1] - a0;
+		final double a2 = y[2] - y[0];
 
 		return (a0 * x[0] * mu2 + a1 * mu2 + a2 * x[0] + y[1]);
 	}

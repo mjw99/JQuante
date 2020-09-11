@@ -36,7 +36,7 @@ public final class AtomInfoChangeEvent extends EventObject {
 	 * @param source
 	 *            The object on which the Event initially occurred.
 	 */
-	public AtomInfoChangeEvent(Object source) {
+	public AtomInfoChangeEvent(final Object source) {
 		super(source);
 	}
 
@@ -53,11 +53,10 @@ public final class AtomInfoChangeEvent extends EventObject {
 	/**
 	 * Setter for property changeType.
 	 * 
-	 * @param changeType
-	 *            New value of property changeType.
+	 * @param changeType New value of property changeType.
 	 * 
 	 */
-	public void setChangeType(int changeType) {
+	public void setChangeType(final int changeType) {
 		this.changeType = changeType;
 	}
 
@@ -74,11 +73,10 @@ public final class AtomInfoChangeEvent extends EventObject {
 	/**
 	 * Setter for property newValue.
 	 * 
-	 * @param newValue
-	 *            New value of property newValue.
+	 * @param newValue New value of property newValue.
 	 * 
 	 */
-	public void setNewValue(Object newValue) {
+	public void setNewValue(final Object newValue) {
 		this.newValue = newValue;
 	}
 
@@ -95,11 +93,10 @@ public final class AtomInfoChangeEvent extends EventObject {
 	/**
 	 * Setter for property oldValue.
 	 * 
-	 * @param oldValue
-	 *            New value of property oldValue.
+	 * @param oldValue New value of property oldValue.
 	 * 
 	 */
-	public void setOldValue(Object oldValue) {
+	public void setOldValue(final Object oldValue) {
 		this.oldValue = oldValue;
 	}
 
@@ -116,11 +113,10 @@ public final class AtomInfoChangeEvent extends EventObject {
 	/**
 	 * Setter for property atomSymbol.
 	 * 
-	 * @param atomSymbol
-	 *            New value of property atomSymbol.
+	 * @param atomSymbol New value of property atomSymbol.
 	 * 
 	 */
-	public void setAtomSymbol(String atomSymbol) {
+	public void setAtomSymbol(final String atomSymbol) {
 		this.atomSymbol = atomSymbol;
 	}
 

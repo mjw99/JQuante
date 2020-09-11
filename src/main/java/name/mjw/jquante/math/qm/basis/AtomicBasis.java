@@ -34,7 +34,7 @@ public class AtomicBasis {
 	 * @param atomicNumber
 	 *            its atomic number
 	 */
-	public AtomicBasis(String chemicalSymbol, int atomicNumber) {
+	public AtomicBasis(final String chemicalSymbol, final int atomicNumber) {
 		this.chemicalSymbol = chemicalSymbol;
 		this.atomicNumber = atomicNumber;
 
@@ -53,10 +53,9 @@ public class AtomicBasis {
 	/**
 	 * Setter for property symbol.
 	 * 
-	 * @param symbol
-	 *            New value of property symbol.
+	 * @param symbol New value of property symbol.
 	 */
-	public void setChemicalSymbol(String symbol) {
+	public void setChemicalSymbol(final String symbol) {
 		this.chemicalSymbol = symbol;
 	}
 
@@ -72,10 +71,9 @@ public class AtomicBasis {
 	/**
 	 * Setter for property atomicNumber.
 	 * 
-	 * @param atomicNumber
-	 *            New value of property atomicNumber.
+	 * @param atomicNumber New value of property atomicNumber.
 	 */
-	public void setAtomicNumber(int atomicNumber) {
+	public void setAtomicNumber(final int atomicNumber) {
 		this.atomicNumber = atomicNumber;
 	}
 
@@ -91,20 +89,18 @@ public class AtomicBasis {
 	/**
 	 * Setter for property orbitals.
 	 * 
-	 * @param orbitals
-	 *            New value of property orbitals.
+	 * @param orbitals New value of property orbitals.
 	 */
-	public void setOrbitals(List<Orbital> orbitals) {
+	public void setOrbitals(final List<Orbital> orbitals) {
 		this.orbitals = orbitals;
 	}
 
 	/**
 	 * Add an orbital object to this atomic basis
 	 * 
-	 * @param orbital
-	 *            the Orbital object to be added to this atomic basis
+	 * @param orbital the Orbital object to be added to this atomic basis
 	 */
-	public void addOrbital(Orbital orbital) {
+	public void addOrbital(final Orbital orbital) {
 		orbitals.add(orbital);
 	}
 }

@@ -42,7 +42,7 @@ public class HartreeFockForce implements Force {
 	 * @return the computed force
 	 */
 	@Override
-	public Vector3D computeForce(int atomIndex, SCFMethod scfMethod) {
+	public Vector3D computeForce(final int atomIndex, final SCFMethod scfMethod) {
 		this.atomIndex = atomIndex;
 		this.scfMethod = scfMethod;
 
@@ -60,15 +60,15 @@ public class HartreeFockForce implements Force {
 
 	/** Compute the nuclear derivative contribution */
 	private Vector3D computeNuclearDerivative() {
-		Molecule mol = scfMethod.getMolecule();
+		final Molecule mol = scfMethod.getMolecule();
 		double nDer;
 
-		AtomInfo ai = AtomInfo.getInstance();
+		final AtomInfo ai = AtomInfo.getInstance();
 
-		Atom a = mol.getAtom(atomIndex);
+		final Atom a = mol.getAtom(atomIndex);
 		Atom b;
-		double aCharge = ai.getAtomicNumber(a.getSymbol());
-		Vector3D aCenter = a.getAtomCenterInAU() ;
+		final double aCharge = ai.getAtomicNumber(a.getSymbol());
+		final Vector3D aCenter = a.getAtomCenterInAU();
 		double ndx = 0.0;
 		double ndy = 0.0;
 		double ndz = 0.0;
@@ -76,10 +76,9 @@ public class HartreeFockForce implements Force {
 		for (int i = 0; i < mol.getNumberOfAtoms(); i++) {
 			if (i != atomIndex) {
 				b = mol.getAtom(i);
-				Vector3D bCenter = b.getAtomCenterInAU();
+				final Vector3D bCenter = b.getAtomCenterInAU();
 
-				nDer = aCharge * ai.getAtomicNumber(b.getSymbol())
-						/ FastMath.pow(bCenter.distanceSq(aCenter), 1.5);
+				nDer = aCharge * ai.getAtomicNumber(b.getSymbol()) / FastMath.pow(bCenter.distanceSq(aCenter), 1.5);
 
 				ndx += (nDer * (bCenter.getX() - aCenter.getX()));
 				ndy += (nDer * (bCenter.getY() - aCenter.getY()));
@@ -92,32 +91,30 @@ public class HartreeFockForce implements Force {
 
 	/** Compute the one electron derivative contribution */
 	private Vector3D computeOneElectronDerivative() {
-		HCore hCore = scfMethod.getOneEI().getHCore();
-		Density dens = scfMethod.getDensity();
-		List<HCore> hCoreDer = hCore.computeDerivative(atomIndex, scfMethod);
+		final HCore hCore = scfMethod.getOneEI().getHCore();
+		final Density dens = scfMethod.getDensity();
+		final List<HCore> hCoreDer = hCore.computeDerivative(atomIndex, scfMethod);
 
-		return new Vector3D(dens.multiply(hCoreDer.get(0)).getTrace(),
-				dens.multiply(hCoreDer.get(1)).getTrace(),
+		return new Vector3D(dens.multiply(hCoreDer.get(0)).getTrace(), dens.multiply(hCoreDer.get(1)).getTrace(),
 				dens.multiply(hCoreDer.get(2)).getTrace());
 	}
 
 	/** Compute the derivative contribution from density matrix */
 	private Vector3D computeDensityMatrixDerivative() {
-		Overlap overlap = scfMethod.getOneEI().getOverlap();
-		Density dens = scfMethod.getDensity();
-		List<Overlap> overlapDer = overlap.computeDerivative(atomIndex, scfMethod);
-		RealMatrix eMat = new Array2DRowRealMatrix(scfMethod.getOrbE());
-		RealMatrix qMat = dens.multiply(eMat.multiply(dens.transpose()));
+		final Overlap overlap = scfMethod.getOneEI().getOverlap();
+		final Density dens = scfMethod.getDensity();
+		final List<Overlap> overlapDer = overlap.computeDerivative(atomIndex, scfMethod);
+		final RealMatrix eMat = new Array2DRowRealMatrix(scfMethod.getOrbE());
+		final RealMatrix qMat = dens.multiply(eMat.multiply(dens.transpose()));
 
-		return new Vector3D(qMat.multiply(overlapDer.get(0)).getTrace(),
-				qMat.multiply(overlapDer.get(1)).getTrace(),
+		return new Vector3D(qMat.multiply(overlapDer.get(0)).getTrace(), qMat.multiply(overlapDer.get(1)).getTrace(),
 				qMat.multiply(overlapDer.get(2)).getTrace());
 	}
 
 	/** Compute the two electron derivative contribution */
 	private Vector3D computeTwoElectronDerivative() {
-		List<GMatrix> gDer = scfMethod.getGMatrix().computeDerivative(atomIndex, scfMethod);
-		Density density = scfMethod.getDensity();
+		final List<GMatrix> gDer = scfMethod.getGMatrix().computeDerivative(atomIndex, scfMethod);
+		final Density density = scfMethod.getDensity();
 
 		return new Vector3D(density.multiply(gDer.get(0)).getTrace(),
 				density.multiply(gDer.get(1)).getTrace(),

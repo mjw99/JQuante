@@ -50,7 +50,7 @@ public final class SCFEvent extends java.util.EventObject {
 	 *            The object upon which the Event in question initially occurred
 	 *            upon.
 	 */
-	public SCFEvent(Object source) {
+	public SCFEvent(final Object source) {
 		super(source);
 
 		currentEnergy = 0.0;
@@ -71,10 +71,9 @@ public final class SCFEvent extends java.util.EventObject {
 	/**
 	 * Setter for property currentIteration.
 	 * 
-	 * @param currentIteration
-	 *            New value of property currentIteration.
+	 * @param currentIteration New value of property currentIteration.
 	 */
-	public void setCurrentIteration(int currentIteration) {
+	public void setCurrentIteration(final int currentIteration) {
 		this.currentIteration = currentIteration;
 	}
 
@@ -90,10 +89,9 @@ public final class SCFEvent extends java.util.EventObject {
 	/**
 	 * Setter for property currentEnergy.
 	 * 
-	 * @param currentEnergy
-	 *            New value of property currentEnergy.
+	 * @param currentEnergy New value of property currentEnergy.
 	 */
-	public void setCurrentEnergy(double currentEnergy) {
+	public void setCurrentEnergy(final double currentEnergy) {
 		this.currentEnergy = currentEnergy;
 	}
 
@@ -109,10 +107,9 @@ public final class SCFEvent extends java.util.EventObject {
 	/**
 	 * Setter for property type.
 	 * 
-	 * @param type
-	 *            New value of property type.
+	 * @param type New value of property type.
 	 */
-	public void setType(int type) {
+	public void setType(final int type) {
 		this.type = type;
 	}
 

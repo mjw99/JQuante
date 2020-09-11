@@ -21,11 +21,11 @@ public class Density extends Array2DRowRealMatrix {
 	 * @param n
 	 *            the dimension
 	 */
-	public Density(int n) {
+	public Density(final int n) {
 		super(n, n);
 	}
 
-	public Density(double[][] data) {
+	public Density(final double[][] data) {
 		super(data);
 	}
 
@@ -33,28 +33,23 @@ public class Density extends Array2DRowRealMatrix {
 	 * Compute the density matrix. It is computed using the number of occupied
 	 * orbitals and the molecular orbitals coefficient matrix.
 	 * 
-	 * @param scfMethod
-	 *            The SCF method for which the density is to be formed
-	 * @param guessInitialDM
-	 *            Do a guess for DM?
-	 * @param densityGuesser
-	 *            Is there any special way to make the guess?
-	 * @param noOfOccupiedMOs
-	 *            Number of molecular orbitals occupied by electrons
-	 * @param mos
-	 *            the MolecularOrbitals, needed to compute the DM
+	 * @param scfMethod       The SCF method for which the density is to be formed
+	 * @param guessInitialDM  Do a guess for DM?
+	 * @param densityGuesser  Is there any special way to make the guess?
+	 * @param noOfOccupiedMOs Number of molecular orbitals occupied by electrons
+	 * @param mos             the MolecularOrbitals, needed to compute the DM
 	 */
-	public void compute(SCFMethod scfMethod, boolean guessInitialDM, DensityGuesser densityGuesser, int noOfOccupiedMOs,
-			MolecularOrbitals mos) {
+	public void compute(final SCFMethod scfMethod, final boolean guessInitialDM, final DensityGuesser densityGuesser,
+			final int noOfOccupiedMOs, final MolecularOrbitals mos) {
 		if (guessInitialDM && densityGuesser != null) {
 			this.setSubMatrix(densityGuesser.guessDM(scfMethod).getData(), 0, 0);
 			return;
 		}
 
 		// else construct it from the MOs .. C*C'
-		RealMatrix dVector = new Array2DRowRealMatrix(noOfOccupiedMOs, mos.getRowDimension());
+		final RealMatrix dVector = new Array2DRowRealMatrix(noOfOccupiedMOs, mos.getRowDimension());
 
-		double[][] c = mos.getData();
+		final double[][] c = mos.getData();
 
 		for (int i = 0; i < noOfOccupiedMOs; i++) {
 			for (int j = 0; j < c.length; j++) {

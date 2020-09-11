@@ -50,43 +50,32 @@ public class Atom implements Cloneable {
 	 * @param atomCenter
 	 *            The nuclear center of the atom in Cartesian coordinates
 	 */
-	public Atom(String symbol, Vector3D atomCenter) {
-		this(symbol, atomCenter, new HashMap<>(1),
-				null, 0);
+	public Atom(final String symbol, final Vector3D atomCenter) {
+		this(symbol, atomCenter, new HashMap<>(1), null, 0);
 	}
 
 	/**
 	 * Creates a new instance of Atom
 	 * 
-	 * @param symbol
-	 *            The atom symbol
-	 * @param atomCenter
-	 *            The nuclear center of the atom in Cartesian coordinates
-	 * @param atomIndex
-	 *            The atom index of this atom
+	 * @param symbol     The atom symbol
+	 * @param atomCenter The nuclear center of the atom in Cartesian coordinates
+	 * @param atomIndex  The atom index of this atom
 	 */
-	public Atom(String symbol, Vector3D atomCenter, int atomIndex) {
-		this(symbol, atomCenter, new HashMap<>(1),
-				null, atomIndex);
+	public Atom(final String symbol, final Vector3D atomCenter, final int atomIndex) {
+		this(symbol, atomCenter, new HashMap<>(1), null, atomIndex);
 	}
 
 	/**
 	 * Creates a new instance of Atom
 	 * 
-	 * @param symbol
-	 *            The atom symbol
-	 * @param atomCenter
-	 *            The nuclear center of the atom in Cartesian coordinates
-	 * @param connectedList
-	 *            The connected list
-	 * @param zMatrixElement
-	 *            ZMatrix elements
-	 * @param atomIndex
-	 *            the atom index of this atom.
+	 * @param symbol         The atom symbol
+	 * @param atomCenter     The nuclear center of the atom in Cartesian coordinates
+	 * @param connectedList  The connected list
+	 * @param zMatrixElement ZMatrix elements
+	 * @param atomIndex      the atom index of this atom.
 	 */
-	private Atom(String symbol, Vector3D atomCenter,
-			HashMap<Integer, BondType> connectedList,
-			ArrayList<ZMatrixItem> zMatrixElement, int atomIndex) {
+	private Atom(final String symbol, final Vector3D atomCenter, final HashMap<Integer, BondType> connectedList,
+			final ArrayList<ZMatrixItem> zMatrixElement, final int atomIndex) {
 		this.symbol = Utility.capitalise(symbol.toLowerCase());
 		this.index = atomIndex;
 		this.atomCenter = atomCenter;
@@ -121,10 +110,9 @@ public class Atom implements Cloneable {
 	/**
 	 * Setter for property symbol.
 	 * 
-	 * @param symbol
-	 *            New value of property symbol.
+	 * @param symbol New value of property symbol.
 	 */
-	public void setSymbol(String symbol) {
+	public void setSymbol(final String symbol) {
 		this.symbol = symbol;
 	}
 
@@ -143,9 +131,8 @@ public class Atom implements Cloneable {
 	 * @return Value of property atomCenterInAU.
 	 */
 	public Vector3D getAtomCenterInAU() {
-		return this.atomCenter.scalarMultiply((atomCenterUnits == Units.AU)
-				? 1.0
-				: 1.0 / Utility.AU_TO_ANGSTROM_FACTOR);
+		return this.atomCenter
+				.scalarMultiply((atomCenterUnits == Units.AU) ? 1.0 : 1.0 / Utility.AU_TO_ANGSTROM_FACTOR);
 	}
 
 	protected Units atomCenterUnits;
@@ -162,20 +149,18 @@ public class Atom implements Cloneable {
 	/**
 	 * Set the value of atomCenterUnits
 	 * 
-	 * @param atomCenterUnits
-	 *            new value of atomCenterUnits
+	 * @param atomCenterUnits new value of atomCenterUnits
 	 */
-	public void setAtomCenterUnits(Units atomCenterUnits) {
+	public void setAtomCenterUnits(final Units atomCenterUnits) {
 		this.atomCenterUnits = atomCenterUnits;
 	}
 
 	/**
 	 * Setter for property atomCenter.
 	 * 
-	 * @param atomCenter
-	 *            New value of property atomCenter.
+	 * @param atomCenter New value of property atomCenter.
 	 */
-	public void setAtomCenter(Vector3D atomCenter) {
+	public void setAtomCenter(final Vector3D atomCenter) {
 		this.atomCenter = atomCenter;
 	}
 
@@ -223,45 +208,40 @@ public class Atom implements Cloneable {
 	 * @return An extended description!
 	 */
 	public String toExtendedString() {
-		return symbol + " " + atomCenter.toString() + " "
-				+ connectedList.toString();
+		return symbol + " " + atomCenter.toString() + " " + connectedList.toString();
 	}
-
 
 	/**
 	 * Simple method to find the distance between two atom centers.
 	 * 
-	 * @param atom
-	 *            - the atom from which the distance is to be found
+	 * @param atom - the atom from which the distance is to be found
 	 * @return the distance between the two atom centers
 	 */
-	public double distanceFrom(Atom atom) {
+	public double distanceFrom(final Atom atom) {
 		return distanceFrom(atom.atomCenter);
 	}
 
 	/**
 	 * Simple method to find the distance between atom center and an point.
 	 * 
-	 * @param point
-	 *            - the point to which the distance is to be found
+	 * @param point - the point to which the distance is to be found
 	 * @return the distance between the point and the atom center
 	 */
-	public double distanceFrom(Vector3D point) {
+	public double distanceFrom(final Vector3D point) {
 		return atomCenter.distance(point);
 	}
 
 	/**
 	 * i do some cloning business ;)
 	 * 
-	 * @throws CloneNotSupportedException
-	 *             If that isn't possible
+	 * @throws CloneNotSupportedException If that isn't possible
 	 * @return A copy of the present object
 	 */
 	@Override
 	public Object clone() throws CloneNotSupportedException {
-		HashMap<Integer, BondType> theClonedConnection = new HashMap<>();
+		final HashMap<Integer, BondType> theClonedConnection = new HashMap<>();
 
-		Enumeration<Integer> keys = (Enumeration<Integer>) connectedList.keySet();
+		final Enumeration<Integer> keys = (Enumeration<Integer>) connectedList.keySet();
 		Integer key;
 
 		while (keys.hasMoreElements()) {
@@ -272,10 +252,10 @@ public class Atom implements Cloneable {
 		ArrayList<ZMatrixItem> theColonedZMatrixElement = new ArrayList<>();
 
 		try {
-			for (ZMatrixItem item : zMatrixElement) {
+			for (final ZMatrixItem item : zMatrixElement) {
 				theColonedZMatrixElement.add((ZMatrixItem) item.clone());
 			} // end for
-		} catch (NullPointerException npe) {
+		} catch (final NullPointerException npe) {
 			theColonedZMatrixElement = null;
 		} // end of try .. catch block
 
@@ -284,35 +264,30 @@ public class Atom implements Cloneable {
 	}
 
 	/**
-	 * Method to add a connection between the present atom and the atom
-	 * specified by atomIndex as specified by the implimentation of Molecule
-	 * interface.
+	 * Method to add a connection between the present atom and the atom specified by
+	 * atomIndex as specified by the implimentation of Molecule interface.
 	 * 
-	 * @param atomIndex
-	 *            the integer index of atom to be connected
-	 * @param bondType
-	 *            the bond type
+	 * @param atomIndex the integer index of atom to be connected
+	 * @param bondType  the bond type
 	 */
-	public void addConnection(int atomIndex, BondType bondType) {
-		Integer key = Integer.valueOf(atomIndex);
+	public void addConnection(final int atomIndex, final BondType bondType) {
+		final Integer key = Integer.valueOf(atomIndex);
 
 		if (bondType.equals(BondType.NO_BOND) && connectedList.containsKey(key)) {
 			connectedList.remove(key);
 			return;
 		}
-		
+
 		connectedList.put(key, bondType);
 	}
 
 	/**
-	 * Method to remove connection between the present atom and the atom
-	 * specified by atomIndex as specified by the implementation of Molecule
-	 * interface.
+	 * Method to remove connection between the present atom and the atom specified
+	 * by atomIndex as specified by the implementation of Molecule interface.
 	 * 
-	 * @param atomIndex
-	 *            the index of atom to be disconnected
+	 * @param atomIndex the index of atom to be disconnected
 	 */
-	public void removeConnection(int atomIndex) {
+	public void removeConnection(final int atomIndex) {
 		connectedList.remove(Integer.valueOf(atomIndex));
 	}
 
@@ -336,34 +311,30 @@ public class Atom implements Cloneable {
 	/**
 	 * Setter for property connectedList.
 	 * 
-	 * @param connectedList
-	 *            New value of property connectedList.
+	 * @param connectedList New value of property connectedList.
 	 * 
 	 */
-	public void setConnectedList(HashMap<Integer, BondType> connectedList) {
+	public void setConnectedList(final HashMap<Integer, BondType> connectedList) {
 		this.connectedList = connectedList;
 	}
 
 	/**
 	 * check if an atom index is in the connected list.
 	 * 
-	 * @param atomIndex
-	 *            the index to be checked
-	 * @return boolean - true / false indicating the present connectivity
-	 *         status.
+	 * @param atomIndex the index to be checked
+	 * @return boolean - true / false indicating the present connectivity status.
 	 */
-	public boolean isConnected(int atomIndex) {
+	public boolean isConnected(final int atomIndex) {
 		return (connectedList.containsKey(Integer.valueOf(atomIndex)));
 	}
 
 	/**
 	 * get the bond type of the current atom with the specified atom index.
 	 * 
-	 * @param atomIndex
-	 *            the index to be checked
+	 * @param atomIndex the index to be checked
 	 * @return BondType - type of bonding.
 	 */
-	public BondType getConnectivity(int atomIndex) {
+	public BondType getConnectivity(final int atomIndex) {
 		if (isConnected(atomIndex)) {
 			return connectedList.get(Integer.valueOf(atomIndex));
 		} else {
@@ -376,10 +347,9 @@ public class Atom implements Cloneable {
 	 */
 	public int getNumberOfStrongBonds() {
 		int bonds = 0;
-		Iterator<BondType> connectedListIter = connectedList.values()
-				.iterator();
+		final Iterator<BondType> connectedListIter = connectedList.values().iterator();
 		while (connectedListIter.hasNext()) {
-			BondType bond = connectedListIter.next();
+			final BondType bond = connectedListIter.next();
 			if (bond.isStrongBond()) {
 				bonds++;
 			}
@@ -393,10 +363,9 @@ public class Atom implements Cloneable {
 	 */
 	public double getSumOfBondOrders() {
 		double sumBondOrders = 0;
-		Iterator<BondType> connectedListIter = connectedList.values()
-				.iterator();
+		final Iterator<BondType> connectedListIter = connectedList.values().iterator();
 		while (connectedListIter.hasNext()) {
-			BondType bond = connectedListIter.next();
+			final BondType bond = connectedListIter.next();
 			sumBondOrders += bond.getBondOrder();
 		}
 
@@ -408,10 +377,9 @@ public class Atom implements Cloneable {
 	 */
 	public int getNumberOfDoubleBonds() {
 		int doubleBonds = 0;
-		Iterator<BondType> connectedListIter = connectedList.values()
-				.iterator();
+		final Iterator<BondType> connectedListIter = connectedList.values().iterator();
 		while (connectedListIter.hasNext()) {
-			BondType bond = connectedListIter.next();
+			final BondType bond = connectedListIter.next();
 			if (bond == BondType.DOUBLE_BOND) {
 				doubleBonds++;
 			}
@@ -424,11 +392,10 @@ public class Atom implements Cloneable {
 	 * @return true if this atom participates in a resonant bond structure
 	 */
 	public boolean hasResonantBonds() {
-		Iterator<Integer> connectedAtomsIter = connectedList.keySet()
-				.iterator();
+		final Iterator<Integer> connectedAtomsIter = connectedList.keySet().iterator();
 		while (connectedAtomsIter.hasNext()) {
-			Integer connectedIndex = connectedAtomsIter.next();
-			BondType bond = connectedList.get(connectedIndex);
+			final Integer connectedIndex = connectedAtomsIter.next();
+			final BondType bond = connectedList.get(connectedIndex);
 			if (bond == BondType.AROMATIC_BOND || bond == BondType.AMIDE_BOND) {
 				return true;
 			}
@@ -458,13 +425,13 @@ public class Atom implements Cloneable {
 	/**
 	 * Setter for property index.
 	 * 
-	 * @param index
-	 *            New value of property index.
+	 * @param index New value of property index.
 	 * 
 	 */
-	public void setIndex(int index) {
+	public void setIndex(final int index) {
 		this.index = index;
 	}
+
 	/** Position of length reference in the ZMatrixElement */
 	private static final int LENGTH_REFERENCE_POS = 0;
 
@@ -481,10 +448,9 @@ public class Atom implements Cloneable {
 	/**
 	 * Setter for property lengthReference.
 	 * 
-	 * @param lengthReference
-	 *            New value of property lengthReference.
+	 * @param lengthReference New value of property lengthReference.
 	 */
-	public void setLengthReference(ZMatrixItem lengthReference) {
+	public void setLengthReference(final ZMatrixItem lengthReference) {
 		initZMatrixItems();
 		zMatrixElement.set(LENGTH_REFERENCE_POS, lengthReference);
 	}
@@ -505,10 +471,9 @@ public class Atom implements Cloneable {
 	/**
 	 * Setter for property angleReference.
 	 * 
-	 * @param angleReference
-	 *            New value of property angleReference.
+	 * @param angleReference New value of property angleReference.
 	 */
-	public void setAngleReference(ZMatrixItem angleReference) {
+	public void setAngleReference(final ZMatrixItem angleReference) {
 		initZMatrixItems();
 		zMatrixElement.set(ANGLE_REFERENCE_POS, angleReference);
 	}
@@ -529,10 +494,9 @@ public class Atom implements Cloneable {
 	/**
 	 * Setter for property dihedralReference.
 	 * 
-	 * @param dihedralReference
-	 *            New value of property dihedralReference.
+	 * @param dihedralReference New value of property dihedralReference.
 	 */
-	public void setDihedralReference(ZMatrixItem dihedralReference) {
+	public void setDihedralReference(final ZMatrixItem dihedralReference) {
 		initZMatrixItems();
 		zMatrixElement.set(DIHEDRAL_REFERENCE_POS, dihedralReference);
 	}
@@ -542,21 +506,20 @@ public class Atom implements Cloneable {
 	/**
 	 * Add a user defined atom property.
 	 * 
-	 * @param uProp
-	 *            the new instance of property to be added
-	 * @throws UnsupportedOperationException
-	 *             if a property with the same name already exists
+	 * @param uProp the new instance of property to be added
+	 * @throws UnsupportedOperationException if a property with the same name
+	 *                                       already exists
 	 */
-	public void addUserDefinedAtomProperty(UserDefinedAtomProperty uProp) {
+	public void addUserDefinedAtomProperty(final UserDefinedAtomProperty uProp) {
 		if (userProperties == null)
 			userProperties = new ArrayList<>();
 
 		// first check if this property already exists
-		String name = uProp.getName();
-		for (UserDefinedAtomProperty uprop : userProperties) {
+		final String name = uProp.getName();
+		for (final UserDefinedAtomProperty uprop : userProperties) {
 			if (uprop.getName().equals(name)) {
-				throw new UnsupportedOperationException("Property with name"
-						+ " '" + name + "' is already defined for this object!");
+				throw new UnsupportedOperationException(
+						"Property with name" + " '" + name + "' is already defined for this object!");
 			}
 		}
 
@@ -566,10 +529,9 @@ public class Atom implements Cloneable {
 	/**
 	 * Remove a user defined property.
 	 * 
-	 * @param uProp
-	 *            instance of UserDefinedAtomProperty to be removed
+	 * @param uProp instance of UserDefinedAtomProperty to be removed
 	 */
-	public void removeUserDefinedAtomProperty(UserDefinedAtomProperty uProp) {
+	public void removeUserDefinedAtomProperty(final UserDefinedAtomProperty uProp) {
 		if (userProperties == null)
 			return;
 
@@ -577,11 +539,10 @@ public class Atom implements Cloneable {
 	}
 
 	/**
-	 * Get a list of all the user defined atom properties, null if no user
-	 * defined properties were ever added to this Atom object.
+	 * Get a list of all the user defined atom properties, null if no user defined
+	 * properties were ever added to this Atom object.
 	 * 
-	 * @return an Iterator object of list of instances of
-	 *         UserDefinedAtomProperty
+	 * @return an Iterator object of list of instances of UserDefinedAtomProperty
 	 */
 	public Iterator<UserDefinedAtomProperty> getUserDefinedAtomProperty() {
 		if (userProperties == null)
@@ -594,16 +555,14 @@ public class Atom implements Cloneable {
 	 * Get a user defined atom property with the specified name, null if no user
 	 * defined property with specified name exists.
 	 * 
-	 * @param name
-	 *            the name of the property want a reference to
-	 * @return an Iterator object of list of instances of
-	 *         UserDefinedAtomProperty
+	 * @param name the name of the property want a reference to
+	 * @return an Iterator object of list of instances of UserDefinedAtomProperty
 	 */
-	public UserDefinedAtomProperty getUserDefinedAtomProperty(String name) {
+	public UserDefinedAtomProperty getUserDefinedAtomProperty(final String name) {
 		if (userProperties == null)
 			return null;
 
-		for (UserDefinedAtomProperty uprop : userProperties)
+		for (final UserDefinedAtomProperty uprop : userProperties)
 			if (uprop.getName().equals(name))
 				return uprop;
 
@@ -616,14 +575,14 @@ public class Atom implements Cloneable {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Atom other = (Atom) obj;
+		final Atom other = (Atom) obj;
 		return Objects.equals(atomCenter, other.atomCenter)
 				&& index == other.index
 				&& Objects.equals(symbol, other.symbol);

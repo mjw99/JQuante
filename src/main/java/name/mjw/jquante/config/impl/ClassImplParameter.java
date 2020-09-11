@@ -21,7 +21,7 @@ public final class ClassImplParameter implements Parameter {
 	 * @param implClass
 	 *            Name of ClassImplParameter
 	 */
-	public ClassImplParameter(String implClass) {
+	public ClassImplParameter(final String implClass) {
 		this.implClass = implClass;
 	}
 
@@ -38,12 +38,11 @@ public final class ClassImplParameter implements Parameter {
 	/**
 	 * Setter for property value.
 	 * 
-	 * @param value
-	 *            New value of property value.
+	 * @param value New value of property value.
 	 * 
 	 */
 	@Override
-	public void setValue(Object value) {
+	public void setValue(final Object value) {
 		this.implClass = (String) value;
 	}
 

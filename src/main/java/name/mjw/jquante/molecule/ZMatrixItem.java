@@ -26,7 +26,7 @@ public class ZMatrixItem implements Cloneable {
 	 * @param value
 	 *            Value
 	 */
-	public ZMatrixItem(Atom referenceAtom, double value) {
+	public ZMatrixItem(final Atom referenceAtom, final double value) {
 		this.referenceAtom = referenceAtom;
 		this.value = value;
 	}
@@ -53,10 +53,9 @@ public class ZMatrixItem implements Cloneable {
 	/**
 	 * Setter for property referenceAtom.
 	 * 
-	 * @param referenceAtom
-	 *            New value of property referenceAtom.
+	 * @param referenceAtom New value of property referenceAtom.
 	 */
-	public void setReferenceAtom(Atom referenceAtom) {
+	public void setReferenceAtom(final Atom referenceAtom) {
 		this.referenceAtom = referenceAtom;
 	}
 
@@ -72,10 +71,9 @@ public class ZMatrixItem implements Cloneable {
 	/**
 	 * Setter for property value.
 	 * 
-	 * @param value
-	 *            New value of property value.
+	 * @param value New value of property value.
 	 */
-	public void setValue(double value) {
+	public void setValue(final double value) {
 		this.value = value;
 	}
 

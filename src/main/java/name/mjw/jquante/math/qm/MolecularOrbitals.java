@@ -30,7 +30,7 @@ public final class MolecularOrbitals extends Array2DRowRealMatrix {
 	 * @param n
 	 *            the dimension
 	 */
-	public MolecularOrbitals(int n) {
+	public MolecularOrbitals(final int n) {
 		super(n, n);
 	}
 
@@ -57,38 +57,34 @@ public final class MolecularOrbitals extends Array2DRowRealMatrix {
 	/**
 	 * Compute the MO coefficients and the orbital energies
 	 * 
-	 * @param hCore
-	 *            the HCore matrix
-	 * @param overlap
-	 *            the Overlap matrix
+	 * @param hCore   the HCore matrix
+	 * @param overlap the Overlap matrix
 	 */
-	public void compute(HCore hCore, Overlap overlap) {
+	public void compute(final HCore hCore, final Overlap overlap) {
 		compute((RealMatrix) hCore, overlap);
 	}
 
 	/**
 	 * Compute the MO coefficients and the orbital energies
 	 * 
-	 * @param fock
-	 *            the Fock matrix
-	 * @param overlap
-	 *            the Overlap matrix
+	 * @param fock    the Fock matrix
+	 * @param overlap the Overlap matrix
 	 */
-	public void compute(Fock fock, Overlap overlap) {
+	public void compute(final Fock fock, final Overlap overlap) {
 		compute((RealMatrix) fock, overlap);
 	}
 
 	/** The actual computation is irrelevant of the type of matrix */
-	private void compute(RealMatrix theMat, Overlap overlap) {
+	private void compute(final RealMatrix theMat, final Overlap overlap) {
 		LOG.debug("");
-		RealMatrix x = overlap.getSHalf();
+		final RealMatrix x = overlap.getSHalf();
 		LOG.debug("x: {}", x);
-		RealMatrix a = x.multiply(theMat).multiply(x.transpose());
+		final RealMatrix a = x.multiply(theMat).multiply(x.transpose());
 		LOG.debug("a: {}", a);
 
-		EigenDecomposition eig = new EigenDecomposition(a);
+		final EigenDecomposition eig = new EigenDecomposition(a);
 
-		SortedEigenDecomposition sortedEig = new SortedEigenDecomposition(eig);
+		final SortedEigenDecomposition sortedEig = new SortedEigenDecomposition(eig);
 
 		orbitalEnergies = sortedEig.getRealEigenvalues();
 
@@ -154,7 +150,7 @@ class SortedEigenDecomposition {
 	}
 
 	RealMatrix getVT() {
-		RealMatrix vt = MatrixUtils.createRealMatrix(n, n);
+		final RealMatrix vt = MatrixUtils.createRealMatrix(n, n);
 		for (int k = 0; k < n; ++k) {
 			vt.setRowVector(k, eigenvectors[k]);
 		}

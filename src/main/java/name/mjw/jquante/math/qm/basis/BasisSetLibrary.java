@@ -51,7 +51,7 @@ public final class BasisSetLibrary {
 	 * @throws Exception the basisName was not found.
 	 *
 	 */
-	public BasisSetLibrary(Molecule molecule, String basisName) throws Exception {
+	public BasisSetLibrary(final Molecule molecule, final String basisName) throws Exception {
 		// initialise the basis functions
 		getBasisFunctions(molecule, basisName);
 		this.basisName = basisName;
@@ -77,7 +77,7 @@ public final class BasisSetLibrary {
 	 * 
 	 * @param basisName new value of basisName
 	 */
-	public void setBasisName(String basisName) {
+	public void setBasisName(final String basisName) {
 		this.basisName = basisName;
 	}
 
@@ -111,9 +111,10 @@ public final class BasisSetLibrary {
 	 * @param basisName the name of the basis set (like sto3g)
 	 * @return Value of property basisFunctions.
 	 */
-	private ArrayList<ContractedGaussian> getBasisFunctions(Molecule molecule, String basisName) throws Exception {
-		BasisSet basisSet = BasisSetReader.getInstance().readBasisSet(basisName);
-		Iterator<Atom> atoms = molecule.getAtoms();
+	private ArrayList<ContractedGaussian> getBasisFunctions(final Molecule molecule, final String basisName)
+			throws Exception {
+		final BasisSet basisSet = BasisSetReader.getInstance().readBasisSet(basisName);
+		final Iterator<Atom> atoms = molecule.getAtoms();
 
 		basisFunctions = new ArrayList<>();
 
@@ -123,21 +124,21 @@ public final class BasisSetLibrary {
 			atom = atoms.next();
 			atomicBasis = basisSet.getAtomicBasis(atom.getSymbol());
 
-			Iterator<Orbital> orbitals = atomicBasis.getOrbitals().iterator();
+			final Iterator<Orbital> orbitals = atomicBasis.getOrbitals().iterator();
 			Orbital orbital;
-			ArrayList<ContractedGaussian> atomicFunctions = new ArrayList<>();
+			final ArrayList<ContractedGaussian> atomicFunctions = new ArrayList<>();
 
 			while (orbitals.hasNext()) { // loop over atom orbitals
 				orbital = orbitals.next();
 
-				Iterator<Power> pList = PowerList.getInstance().getPowerList(orbital.getType());
+				final Iterator<Power> pList = PowerList.getInstance().getPowerList(orbital.getType());
 				Power power;
 				while (pList.hasNext()) { // and the power list, sp2 etc..
 					power = pList.next();
 
-					ContractedGaussian cg = new ContractedGaussian(atom, power);
-					Iterator<Double> coeff = orbital.getCoefficients().iterator();
-					Iterator<Double> exp = orbital.getExponents().iterator();
+					final ContractedGaussian cg = new ContractedGaussian(atom, power);
+					final Iterator<Double> coeff = orbital.getCoefficients().iterator();
+					final Iterator<Double> exp = orbital.getExponents().iterator();
 
 					while (coeff.hasNext()) { // build the CG from PGs
 						cg.addPrimitive(exp.next().doubleValue(), coeff.next().doubleValue());
@@ -154,8 +155,8 @@ public final class BasisSetLibrary {
 			// this atom as a user defined property of the atom
 			try {
 				atom.addUserDefinedAtomProperty(new UserDefinedAtomProperty("basisFunctions", atomicFunctions));
-			} catch (UnsupportedOperationException e) {
-				UserDefinedAtomProperty up = atom.getUserDefinedAtomProperty("basisFunctions");
+			} catch (final UnsupportedOperationException e) {
+				final UserDefinedAtomProperty up = atom.getUserDefinedAtomProperty("basisFunctions");
 				up.setValue(atomicFunctions);
 			}
 		}
@@ -172,21 +173,20 @@ public final class BasisSetLibrary {
 		shells = new ArrayList<>();
 
 		// First entry always goes in.
-		Shell shell = new Shell(basisFunctions.get(0));
+		final Shell shell = new Shell(basisFunctions.get(0));
 		shell.setFirstBasisFunctionIndex(0);
 		shells.add(shell);
 
-
 		for (int i = 1; i < basisFunctions.size(); i++) {
-			ContractedGaussian contractedGaussian = basisFunctions.get(i);
+			final ContractedGaussian contractedGaussian = basisFunctions.get(i);
 
-			Shell tmpShell = new Shell(contractedGaussian);
+			final Shell tmpShell = new Shell(contractedGaussian);
 			tmpShell.setFirstBasisFunctionIndex(i);
 			tmpShell.setLastBasisFunctionIndex(i);
 
 			// Increment lastBasisFunctionIndex if we have seen it before
 			if (shells.contains(tmpShell)) {
-				int index = shells.indexOf(tmpShell);
+				final int index = shells.indexOf(tmpShell);
 				shells.get(index).setLastBasisFunctionIndex(i);
 			}
 
@@ -209,10 +209,10 @@ public final class BasisSetLibrary {
 	 * itertools.combinations_with_replacement does not exist in Guava, but
 	 * Sets.combinations can be augmented slightly to obtain the same result.
 	 * <p>
-	 * Overlall it is 
-	 * {nShells}^C_{2} + nShells
+	 * Overlall it is {nShells}^C_{2} + nShells
 	 * <p>
-	 * where the {n}^C_{r} notation can be found at https://en.wikipedia.org/wiki/Combination
+	 * where the {n}^C_{r} notation can be found at
+	 * https://en.wikipedia.org/wiki/Combination
 	 *
 	 * <p>
 	 * Also see: https://www.baeldung.com/java-combinations-algorithm
@@ -224,8 +224,8 @@ public final class BasisSetLibrary {
 		if (shells.size() == 1) {
 			uniqueShellPairs = new ArrayList<>();
 
-			for (Shell shell : shells) {
-				ArrayList<Shell> pair = new ArrayList<>();
+			for (final Shell shell : shells) {
+				final ArrayList<Shell> pair = new ArrayList<>();
 				pair.add(shell);
 				pair.add(shell);
 				uniqueShellPairs.add(pair);
@@ -234,17 +234,17 @@ public final class BasisSetLibrary {
 		}
 
 		// First, calculate {nShells}^C_{2} combinations
-		Set<Set<Shell>> tmpShellPairs = Sets.combinations(ImmutableSet.copyOf(shells), 2);
+		final Set<Set<Shell>> tmpShellPairs = Sets.combinations(ImmutableSet.copyOf(shells), 2);
 
 		uniqueShellPairs = new ArrayList<>();
-		for (Set<Shell> item : tmpShellPairs) {
-			ArrayList<Shell> pair = new ArrayList<>(item);
+		for (final Set<Shell> item : tmpShellPairs) {
+			final ArrayList<Shell> pair = new ArrayList<>(item);
 			uniqueShellPairs.add(pair);
 		}
 
 		// Second, add in missing self pairs
-		for (Shell shell : shells) {
-			ArrayList<Shell> pair = new ArrayList<>();
+		for (final Shell shell : shells) {
+			final ArrayList<Shell> pair = new ArrayList<>();
 			pair.add(shell);
 			pair.add(shell);
 			uniqueShellPairs.add(pair);
@@ -256,7 +256,7 @@ public final class BasisSetLibrary {
 		System.out.println("");
 		System.out.println("Basis function list");
 		System.out.println("===================");
-		for (ContractedGaussian bfs : this.getBasisFunctions()) {
+		for (final ContractedGaussian bfs : this.getBasisFunctions()) {
 			System.out.println(String.format("%2d", bfs.getBasisFunctionIndex()) + " " + bfs.getCenteredAtom() + " "
 					+ bfs.getPowers() + " " + bfs.getExponents() + " " + bfs.getCoefficients());
 
@@ -267,13 +267,13 @@ public final class BasisSetLibrary {
 		System.out.println("");
 		System.out.println("Unique shellpair list (" + this.uniqueShellPairs.size() + " pairs)");
 		System.out.println("=================================");
-		for (List<Shell> uniqueShellPair : this.uniqueShellPairs) {
-			System.out.print(
-					(shells.indexOf(uniqueShellPair.get(0)) + 1) + " " + (shells.indexOf(uniqueShellPair.get(1)) + 1)+ "\n"
-					//+ uniqueShellPair.get(0)
-					//+ uniqueShellPair.get(1) + "\n"
-					);					
-			
+		for (final List<Shell> uniqueShellPair : this.uniqueShellPairs) {
+			System.out.print((shells.indexOf(uniqueShellPair.get(0)) + 1) + " "
+					+ (shells.indexOf(uniqueShellPair.get(1)) + 1) + "\n"
+			// + uniqueShellPair.get(0)
+			// + uniqueShellPair.get(1) + "\n"
+			);
+
 		}
 	}
 
@@ -281,7 +281,7 @@ public final class BasisSetLibrary {
 		System.out.println("");
 		System.out.println("Shell list");
 		System.out.println("==========");
-		for (Shell shell : this.shells) {
+		for (final Shell shell : this.shells) {
 			System.out.print(shell);
 		}
 	}

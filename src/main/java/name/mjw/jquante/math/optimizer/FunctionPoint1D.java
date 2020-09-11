@@ -17,7 +17,7 @@ public class FunctionPoint1D {
 	/** The value of the first derivate f'(x). */
 	public double f1x;
 
-	public FunctionPoint1D(double x) {
+	public FunctionPoint1D(final double x) {
 		this.x = x;
 	}
 }

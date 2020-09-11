@@ -31,8 +31,8 @@ public final class OneElectronIntegrals {
 	 */
 	private HCore hCore;
 
-	private BasisSetLibrary basisSetLibrary;
-	private Molecule molecule;
+	private final BasisSetLibrary basisSetLibrary;
+	private final Molecule molecule;
 
 	/**
 	 * Creates a new instance of OneElectronIntegrals
@@ -41,7 +41,7 @@ public final class OneElectronIntegrals {
 	 * @param mol             the Molecule object, of whose 1E integrals are to be
 	 *                        evaluated
 	 */
-	public OneElectronIntegrals(BasisSetLibrary basisSetLibrary, Molecule mol) {
+	public OneElectronIntegrals(final BasisSetLibrary basisSetLibrary, final Molecule mol) {
 		this.basisSetLibrary = basisSetLibrary;
 		this.molecule = mol;
 
@@ -66,18 +66,18 @@ public final class OneElectronIntegrals {
 	}
 
 	private void computeOverlap() {
-		List<ContractedGaussian> bfs = basisSetLibrary.getBasisFunctions();
-		int noOfBasisFunctions = bfs.size();
+		final List<ContractedGaussian> bfs = basisSetLibrary.getBasisFunctions();
+		final int noOfBasisFunctions = bfs.size();
 
 		// Create the S matrix
 		this.overlap = new Overlap(noOfBasisFunctions);
 
 		// Populate the S matrix
 		for (int i = 0; i < noOfBasisFunctions; i++) {
-			ContractedGaussian bfi = bfs.get(i);
+			final ContractedGaussian bfi = bfs.get(i);
 
 			for (int j = 0; j < noOfBasisFunctions; j++) {
-				ContractedGaussian bfj = bfs.get(j);
+				final ContractedGaussian bfj = bfs.get(j);
 
 				overlap.setEntry(i, j, bfi.overlap(bfj)); // the overlap matrix
 			}
@@ -85,14 +85,14 @@ public final class OneElectronIntegrals {
 	}
 
 	private void computeHcore() {
-		List<ContractedGaussian> bfs = basisSetLibrary.getBasisFunctions();
-		int noOfBasisFunctions = bfs.size();
+		final List<ContractedGaussian> bfs = basisSetLibrary.getBasisFunctions();
+		final int noOfBasisFunctions = bfs.size();
 
 		this.hCore = new HCore(noOfBasisFunctions);
 
 		// read in the atomic numbers
-		int[] atomicNumbers = new int[molecule.getNumberOfAtoms()];
-		AtomInfo ai = AtomInfo.getInstance();
+		final int[] atomicNumbers = new int[molecule.getNumberOfAtoms()];
+		final AtomInfo ai = AtomInfo.getInstance();
 
 		for (int atomIndex = 0; atomIndex < atomicNumbers.length; atomIndex++) {
 			atomicNumbers[atomIndex] = ai.getAtomicNumber(molecule.getAtom(atomIndex).getSymbol());
@@ -100,10 +100,10 @@ public final class OneElectronIntegrals {
 
 		// Populate the hCore matrix
 		for (int i = 0; i < noOfBasisFunctions; i++) {
-			ContractedGaussian bfi = bfs.get(i);
+			final ContractedGaussian bfi = bfs.get(i);
 
 			for (int j = 0; j < noOfBasisFunctions; j++) {
-				ContractedGaussian bfj = bfs.get(j);
+				final ContractedGaussian bfj = bfs.get(j);
 
 				hCore.setEntry(i, j, bfi.kinetic(bfj)); // KE matrix elements
 

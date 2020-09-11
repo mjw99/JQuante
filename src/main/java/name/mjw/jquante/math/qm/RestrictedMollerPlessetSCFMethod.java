@@ -42,7 +42,8 @@ public final class RestrictedMollerPlessetSCFMethod extends RestrictedHartreeFoc
 	 * @param twoEI
 	 *            the 2E integral driver.
 	 */
-	public RestrictedMollerPlessetSCFMethod(Molecule molecule, OneElectronIntegrals oneEI, TwoElectronIntegrals twoEI) {
+	public RestrictedMollerPlessetSCFMethod(final Molecule molecule, final OneElectronIntegrals oneEI,
+			final TwoElectronIntegrals twoEI) {
 		super(molecule, oneEI, twoEI);
 
 		mpLevel = 2; // second level correction (MP2) is default
@@ -61,16 +62,16 @@ public final class RestrictedMollerPlessetSCFMethod extends RestrictedHartreeFoc
 		transformAOIntsToMOInts();
 
 		// now compute MP2 energy and then compute the total energy
-		int noOfBasisFunctions = mos.getRowDimension();
-		int noOfElectrons = molecule.getNumberOfElectrons();
-		int noOfOccupancies = noOfElectrons / 2;
-		int noOfVirtualOrbitals = noOfBasisFunctions - noOfOccupancies;
-		int noOfUnOccupied = noOfOccupancies + noOfVirtualOrbitals;
+		final int noOfBasisFunctions = mos.getRowDimension();
+		final int noOfElectrons = molecule.getNumberOfElectrons();
+		final int noOfOccupancies = noOfElectrons / 2;
+		final int noOfVirtualOrbitals = noOfBasisFunctions - noOfOccupancies;
+		final int noOfUnOccupied = noOfOccupancies + noOfVirtualOrbitals;
 
 		double mp2Energy = 0.0;
 		double arbs;
 		double asbr;
-		double[] orbE = mos.getOrbitalEnergies();
+		final double[] orbE = mos.getOrbitalEnergies();
 
 		for (int a = 0; a < noOfOccupancies; a++) {
 			for (int b = 0; b < noOfOccupancies; b++) {
@@ -112,14 +113,14 @@ public final class RestrictedMollerPlessetSCFMethod extends RestrictedHartreeFoc
 		int i;
 		int j;
 
-		int noOfBasisFunctions = mos.getRowDimension();
-		int noOfMOS = mos.getColumnDimension();
-		int noOfElectrons = molecule.getNumberOfElectrons();
-		int noOfOccupancies = noOfElectrons / 2;
+		final int noOfBasisFunctions = mos.getRowDimension();
+		final int noOfMOS = mos.getColumnDimension();
+		final int noOfElectrons = molecule.getNumberOfElectrons();
+		final int noOfOccupancies = noOfElectrons / 2;
 
-		RealVector tempVector = new ArrayRealVector(noOfBasisFunctions);
-		double[] tempvec = tempVector.toArray();
-		double[] aoints = twoEI.getTwoEIntegrals();
+		final RealVector tempVector = new ArrayRealVector(noOfBasisFunctions);
+		final double[] tempvec = tempVector.toArray();
+		final double[] aoints = twoEI.getTwoEIntegrals();
 
 		double[][][][] temp = new double[noOfBasisFunctions][noOfBasisFunctions][noOfOccupancies][noOfBasisFunctions];
 
@@ -137,7 +138,7 @@ public final class RestrictedMollerPlessetSCFMethod extends RestrictedHartreeFoc
 			} // end nu
 		} // end mu
 
-		double[][][][] temp2 = new double[noOfOccupancies][noOfBasisFunctions][noOfOccupancies][noOfBasisFunctions];
+		final double[][][][] temp2 = new double[noOfOccupancies][noOfBasisFunctions][noOfOccupancies][noOfBasisFunctions];
 
 		for (nu = 0; nu < noOfBasisFunctions; nu++) {
 			for (eta = 0; eta < noOfBasisFunctions; eta++) {
@@ -200,10 +201,9 @@ public final class RestrictedMollerPlessetSCFMethod extends RestrictedHartreeFoc
 	/**
 	 * Setter for property mpLevel.
 	 * 
-	 * @param mpLevel
-	 *            New value of property mpLevel.
+	 * @param mpLevel New value of property mpLevel.
 	 */
-	public void setMpLevel(int mpLevel) {
+	public void setMpLevel(final int mpLevel) {
 		this.mpLevel = mpLevel;
 	}
 

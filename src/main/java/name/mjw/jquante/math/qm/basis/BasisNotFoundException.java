@@ -27,7 +27,7 @@ public final class BasisNotFoundException extends java.lang.RuntimeException {
 	 * @param msg
 	 *            the detail message.
 	 */
-	public BasisNotFoundException(String msg) {
+	public BasisNotFoundException(final String msg) {
 		super(msg);
 	}
 }

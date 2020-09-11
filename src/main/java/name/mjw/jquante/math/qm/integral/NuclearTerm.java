@@ -74,7 +74,7 @@ public final class NuclearTerm implements IntegralsPackage {
 	public final double[] constructAArray(final int l1, final int l2, final double pa, final double pb, final double pc,
 			final double gamma) {
 		final int iMax = l1 + l2 + 1;
-		double[] a = new double[iMax];
+		final double[] a = new double[iMax];
 
 		int index;
 
@@ -94,7 +94,7 @@ public final class NuclearTerm implements IntegralsPackage {
 	public final double[] constructGradAArray(final int l1, final int l2, final double pa, final double pb,
 			final double pc, final double gamma) {
 		final int iMax = l1 + l2 + 1;
-		double[] a = new double[iMax];
+		final double[] a = new double[iMax];
 
 		int index;
 
@@ -181,7 +181,7 @@ public final class NuclearTerm implements IntegralsPackage {
 		for (int i = 0; i < dax.length; i++) {
 			for (int j = 0; j < day.length; j++) {
 				for (int k = 0; k < daz.length; k++) {
-					double fgamma = IntegralsUtil.computeFGamma(i + j + k + 1, rCPSquared * gamma);
+					final double fgamma = IntegralsUtil.computeFGamma(i + j + k + 1, rCPSquared * gamma);
 
 					gradX += dax[i] * ay[j] * az[k] * fgamma;
 					gradY += ax[i] * day[j] * az[k] * fgamma;
@@ -190,7 +190,7 @@ public final class NuclearTerm implements IntegralsPackage {
 			}
 		}
 
-		double factor = -4 * FastMath.PI * FastMath.exp(-alpha1 * alpha2 * rABSquared / gamma);
+		final double factor = -4 * FastMath.PI * FastMath.exp(-alpha1 * alpha2 * rABSquared / gamma);
 
 		gradX = factor * gradX;
 		gradY = factor * gradY;

@@ -18,22 +18,18 @@ public class VolumeItem {
 	 * @param gp
 	 *            the corresponding GridProperty object
 	 */
-	public VolumeItem(Molecule mol, GridProperty gp) {
+	public VolumeItem(final Molecule mol, final GridProperty gp) {
 		this(mol, gp, MolecularVolumetricPropertyType.UNKNOWN_TYPE);
 	}
 
 	/**
 	 * Creates a new instance of VolumeItem
 	 * 
-	 * @param mol
-	 *            the reference Molecule object
-	 * @param gp
-	 *            the corresponding GridProperty object
-	 * @param propertyType
-	 *            type of this VolumeItem
+	 * @param mol          the reference Molecule object
+	 * @param gp           the corresponding GridProperty object
+	 * @param propertyType type of this VolumeItem
 	 */
-	public VolumeItem(Molecule mol, GridProperty gp,
-			MolecularVolumetricPropertyType propertyType) {
+	public VolumeItem(final Molecule mol, final GridProperty gp, final MolecularVolumetricPropertyType propertyType) {
 		this.referenceMolecule = mol;
 		this.gridProperty = gp;
 		this.propertyType = propertyType;
@@ -53,10 +49,9 @@ public class VolumeItem {
 	/**
 	 * Set the value of propertyType
 	 * 
-	 * @param propertyType
-	 *            new value of propertyType
+	 * @param propertyType new value of propertyType
 	 */
-	public void setPropertyType(MolecularVolumetricPropertyType propertyType) {
+	public void setPropertyType(final MolecularVolumetricPropertyType propertyType) {
 		this.propertyType = propertyType;
 	}
 
@@ -74,10 +69,9 @@ public class VolumeItem {
 	/**
 	 * Set the value of referenceMolecule
 	 * 
-	 * @param referenceMolecule
-	 *            new value of referenceMolecule
+	 * @param referenceMolecule new value of referenceMolecule
 	 */
-	public void setReferenceMolecule(Molecule referenceMolecule) {
+	public void setReferenceMolecule(final Molecule referenceMolecule) {
 		this.referenceMolecule = referenceMolecule;
 	}
 
@@ -95,10 +89,9 @@ public class VolumeItem {
 	/**
 	 * Set the value of gridProperty
 	 * 
-	 * @param gridProperty
-	 *            new value of gridProperty
+	 * @param gridProperty new value of gridProperty
 	 */
-	public void setGridProperty(GridProperty gridProperty) {
+	public void setGridProperty(final GridProperty gridProperty) {
 		this.gridProperty = gridProperty;
 	}
 }

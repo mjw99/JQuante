@@ -35,11 +35,11 @@ public final class GMatrix extends Array2DRowRealMatrix {
 	 * 
 	 * @param n the dimension
 	 */
-	public GMatrix(int n) {
+	public GMatrix(final int n) {
 		super(n, n);
 	}
 
-	public GMatrix(double[][] data) {
+	public GMatrix(final double[][] data) {
 		super(data);
 	}
 
@@ -50,7 +50,7 @@ public final class GMatrix extends Array2DRowRealMatrix {
 	 * @param twoEI   the 2E integrals
 	 * @param density the Density matrix
 	 */
-	public void compute(SCFType scfType, TwoElectronIntegrals twoEI, Density density) {
+	public void compute(final SCFType scfType, final TwoElectronIntegrals twoEI, final Density density) {
 		this.twoEI = twoEI;
 		this.density = density;
 
@@ -85,15 +85,15 @@ public final class GMatrix extends Array2DRowRealMatrix {
 		IntStream.range(0, noOfBasisFunctions).parallel().forEach(i -> {
 			IntStream.range(0, i + 1).parallel().forEach(j -> {
 
-				RealVector tempVector = new ArrayRealVector(noOfBasisFunctions * noOfBasisFunctions);
+				final RealVector tempVector = new ArrayRealVector(noOfBasisFunctions * noOfBasisFunctions);
 				int kl = 0;
 
 				for (int k = 0; k < noOfBasisFunctions; k++) {
 					for (int l = 0; l < noOfBasisFunctions; l++) {
 
-						int indexJ = IntegralsUtil.ijkl2intindex(i, j, k, l);
-						int indexK1 = IntegralsUtil.ijkl2intindex(i, k, j, l);
-						int indexK2 = IntegralsUtil.ijkl2intindex(i, l, k, j);
+						final int indexJ = IntegralsUtil.ijkl2intindex(i, j, k, l);
+						final int indexK1 = IntegralsUtil.ijkl2intindex(i, k, j, l);
+						final int indexK2 = IntegralsUtil.ijkl2intindex(i, l, k, j);
 
 						tempVector.setEntry(kl, (2.0 * ints[indexJ] - 0.5 * ints[indexK1] - 0.5 * ints[indexK2]));
 
@@ -121,18 +121,18 @@ public final class GMatrix extends Array2DRowRealMatrix {
 		// allocate memory for partial GMatrices
 		partialGMatrixList = new ArrayList<>();
 
-		int noOfBasisFunctions = density.getRowDimension();
-		GMatrix theGMatrix = new GMatrix(noOfBasisFunctions);
+		final int noOfBasisFunctions = density.getRowDimension();
+		final GMatrix theGMatrix = new GMatrix(noOfBasisFunctions);
 
 		IntStream.range(0, noOfBasisFunctions).parallel().forEach(i -> {
 
-			double[][] gMatrix = theGMatrix.getData();
-			double[][] dMatrix = density.getData();
+			final double[][] gMatrix = theGMatrix.getData();
+			final double[][] dMatrix = density.getData();
 
-			int[] idx = new int[8];
-			int[] jdx = new int[8];
-			int[] kdx = new int[8];
-			int[] ldx = new int[8];
+			final int[] idx = new int[8];
+			final int[] jdx = new int[8];
+			final int[] kdx = new int[8];
+			final int[] ldx = new int[8];
 
 			idx[0] = i;
 			jdx[1] = i;
@@ -144,7 +144,7 @@ public final class GMatrix extends Array2DRowRealMatrix {
 			ldx[7] = i;
 
 			for (int j = 0; j < (i + 1); j++) {
-				int ij = i * (i + 1) / 2 + j;
+				final int ij = i * (i + 1) / 2 + j;
 
 				jdx[0] = j;
 				idx[1] = j;
@@ -164,14 +164,14 @@ public final class GMatrix extends Array2DRowRealMatrix {
 					idx[6] = k;
 					idx[7] = k;
 					for (int l = 0; l < (k + 1); l++) {
-						int kl = k * (k + 1) / 2 + l;
+						final int kl = k * (k + 1) / 2 + l;
 
 						if (ij >= kl) {
-							double twoEIntVal = twoEI.compute2E(i, j, k, l);
-							double twoEIntVal2 = twoEIntVal + twoEIntVal;
-							double twoEIntValHalf = 0.5 * twoEIntVal;
+							final double twoEIntVal = twoEI.compute2E(i, j, k, l);
+							final double twoEIntVal2 = twoEIntVal + twoEIntVal;
+							final double twoEIntValHalf = 0.5 * twoEIntVal;
 
-							boolean[] validIdx = new boolean[8];
+							final boolean[] validIdx = new boolean[8];
 							validIdx[0] = true;
 
 							setGMatrixElements(gMatrix, dMatrix, i, j, k, l, twoEIntVal2, twoEIntValHalf);
@@ -224,10 +224,10 @@ public final class GMatrix extends Array2DRowRealMatrix {
 
 		if (!partialGMatrixList.isEmpty()) {
 			// collect the result and sum the partial contributions
-			int n = this.getRowDimension();
+			final int n = this.getRowDimension();
 
 			// sum up the partial results
-			for (GMatrix pgMat : partialGMatrixList) {
+			for (final GMatrix pgMat : partialGMatrixList) {
 
 				IntStream.range(0, n).parallel().forEach(i -> {
 					IntStream.range(0, n).parallel().forEach(j -> {
@@ -256,26 +256,26 @@ public final class GMatrix extends Array2DRowRealMatrix {
 	 * @return three element array of GMatrix elements representing partial
 	 *         derivatives with respect to x, y and z of atom position
 	 */
-	public List<GMatrix> computeDerivative(int atomIndex, SCFMethod scfMethod) {
-		ArrayList<GMatrix> gDer = new ArrayList<>(3);
+	public List<GMatrix> computeDerivative(final int atomIndex, final SCFMethod scfMethod) {
+		final ArrayList<GMatrix> gDer = new ArrayList<>(3);
 
 		scfMethod.getTwoEI().compute2EDerivatives(atomIndex, scfMethod);
-		ArrayList<double[]> twoEDers = scfMethod.getTwoEI().getTwoEDer();
-		double[] d2IntsDxa = twoEDers.get(0);
-		double[] d2IntsDya = twoEDers.get(1);
-		double[] d2IntsDza = twoEDers.get(2);
+		final ArrayList<double[]> twoEDers = scfMethod.getTwoEI().getTwoEDer();
+		final double[] d2IntsDxa = twoEDers.get(0);
+		final double[] d2IntsDya = twoEDers.get(1);
+		final double[] d2IntsDza = twoEDers.get(2);
 
 		density = scfMethod.getDensity();
-		int noOfBasisFunctions = density.getRowDimension();
-		RealVector densityOneD = MathUtil.realMatrixToRealVector(density); // form 1D vector of density
+		final int noOfBasisFunctions = density.getRowDimension();
+		final RealVector densityOneD = MathUtil.realMatrixToRealVector(density); // form 1D vector of density
 
-		GMatrix gdx = new GMatrix(noOfBasisFunctions);
-		GMatrix gdy = new GMatrix(noOfBasisFunctions);
-		GMatrix gdz = new GMatrix(noOfBasisFunctions);
+		final GMatrix gdx = new GMatrix(noOfBasisFunctions);
+		final GMatrix gdy = new GMatrix(noOfBasisFunctions);
+		final GMatrix gdz = new GMatrix(noOfBasisFunctions);
 
-		RealVector xvec = new ArrayRealVector(noOfBasisFunctions * noOfBasisFunctions);
-		RealVector yvec = new ArrayRealVector(noOfBasisFunctions * noOfBasisFunctions);
-		RealVector zvec = new ArrayRealVector(noOfBasisFunctions * noOfBasisFunctions);
+		final RealVector xvec = new ArrayRealVector(noOfBasisFunctions * noOfBasisFunctions);
+		final RealVector yvec = new ArrayRealVector(noOfBasisFunctions * noOfBasisFunctions);
+		final RealVector zvec = new ArrayRealVector(noOfBasisFunctions * noOfBasisFunctions);
 
 		int i;
 		int j;
@@ -288,9 +288,9 @@ public final class GMatrix extends Array2DRowRealMatrix {
 		for (i = 0; i < noOfBasisFunctions; i++) {
 			for (j = 0; j < i + 1; j++) {
 				kl = 0;
-				double[] xtemp = xvec.toArray();
-				double[] ytemp = xvec.toArray();
-				double[] ztemp = xvec.toArray();
+				final double[] xtemp = xvec.toArray();
+				final double[] ytemp = xvec.toArray();
+				final double[] ztemp = xvec.toArray();
 				for (k = 0; k < noOfBasisFunctions; k++) {
 					for (l = 0; l < noOfBasisFunctions; l++) {
 						indexJ = IntegralsUtil.ijkl2intindex(i, j, k, l);
@@ -334,8 +334,8 @@ public final class GMatrix extends Array2DRowRealMatrix {
 	/**
 	 * Set the GMatrix value for a given combination
 	 */
-	private void setGMatrixElements(double[][] gMatrix, double[][] dMatrix, int i, int j, int k, int l,
-			double twoEIntVal2, double twoEIntValHalf) {
+	private void setGMatrixElements(final double[][] gMatrix, final double[][] dMatrix, final int i, final int j,
+			final int k, final int l, final double twoEIntVal2, final double twoEIntValHalf) {
 		gMatrix[i][j] += dMatrix[k][l] * twoEIntVal2;
 		gMatrix[k][l] += dMatrix[i][j] * twoEIntVal2;
 		gMatrix[i][k] -= dMatrix[j][l] * twoEIntValHalf;
@@ -347,7 +347,8 @@ public final class GMatrix extends Array2DRowRealMatrix {
 	/**
 	 * Find unique elements and mark the ones that are not
 	 */
-	private void filterUniqueElements(int[] idx, int[] jdx, int[] kdx, int[] ldx, boolean[] validIdx) {
+	private void filterUniqueElements(final int[] idx, final int[] jdx, final int[] kdx, final int[] ldx,
+			final boolean[] validIdx) {
 		int i;
 		int j;
 		int k;
@@ -368,14 +369,14 @@ public final class GMatrix extends Array2DRowRealMatrix {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj)
 			return true;
 		if (!super.equals(obj))
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		GMatrix other = (GMatrix) obj;
+		final GMatrix other = (GMatrix) obj;
 		return Objects.equals(density, other.density) && Objects.equals(partialGMatrixList, other.partialGMatrixList);
 	}
 

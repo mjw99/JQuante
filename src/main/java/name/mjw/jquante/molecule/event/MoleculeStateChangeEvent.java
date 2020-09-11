@@ -60,7 +60,7 @@ public class MoleculeStateChangeEvent extends java.util.EventObject {
 	 * @param source
 	 *            Object source.
 	 */
-	public MoleculeStateChangeEvent(Object source) {
+	public MoleculeStateChangeEvent(final Object source) {
 		super(source);
 
 		eventType = MAJOR_MODIFICATION;
@@ -80,11 +80,10 @@ public class MoleculeStateChangeEvent extends java.util.EventObject {
 	/**
 	 * Setter for property eventType.
 	 * 
-	 * @param eventType
-	 *            New value of property eventType.
+	 * @param eventType New value of property eventType.
 	 * 
 	 */
-	public void setEventType(int eventType) {
+	public void setEventType(final int eventType) {
 		this.eventType = eventType;
 	}
 
@@ -101,17 +100,15 @@ public class MoleculeStateChangeEvent extends java.util.EventObject {
 	/**
 	 * Setter for property atom1.
 	 * 
-	 * @param atom1
-	 *            New value of property atom1.
+	 * @param atom1 New value of property atom1.
 	 * 
 	 */
-	public void setAtom1(Atom atom1) {
+	public void setAtom1(final Atom atom1) {
 		this.atom1 = atom1;
 	}
 
 	/**
-	 * Getter for property atom2. Relevent only when a bond is modified or
-	 * removed.
+	 * Getter for property atom2. Relevent only when a bond is modified or removed.
 	 * 
 	 * @return Value of property atom2.
 	 * 
@@ -121,23 +118,20 @@ public class MoleculeStateChangeEvent extends java.util.EventObject {
 	}
 
 	/**
-	 * Setter for property atom2. Relevent only when a bond is modified or
-	 * removed.
+	 * Setter for property atom2. Relevent only when a bond is modified or removed.
 	 * 
-	 * @param atom2
-	 *            New value of property atom2.
+	 * @param atom2 New value of property atom2.
 	 * 
 	 */
-	public void setAtom2(Atom atom2) {
+	public void setAtom2(final Atom atom2) {
 		this.atom2 = atom2;
 	}
-
 
 	/**
 	 * overridden toString()
 	 */
 	public String toString() {
-		StringBuffer sb = new StringBuffer();
+		final StringBuffer sb = new StringBuffer();
 
 		switch (eventType) {
 		case ATOM_ADDED:

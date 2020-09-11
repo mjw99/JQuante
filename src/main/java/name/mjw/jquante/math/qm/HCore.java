@@ -33,42 +33,41 @@ public final class HCore extends Array2DRowRealMatrix {
 	 * @param n
 	 *            the dimension
 	 */
-	public HCore(int n) {
+	public HCore(final int n) {
 		super(n, n);
 	}
+
 	/**
 	 * Compute HCore partial derivative for an atom index.
 	 * 
-	 * @param atomIndex
-	 *            the atom index with respect to which the derivative are to be
-	 *            evaluated
-	 * @param scfMethod
-	 *            the reference to the SCFMethod
+	 * @param atomIndex the atom index with respect to which the derivative are to
+	 *                  be evaluated
+	 * @param scfMethod the reference to the SCFMethod
 	 * @return three element array of HCore elements representing partial
 	 *         derivatives with respect to x, y and z of atom position
 	 */
-	public List<HCore> computeDerivative(int atomIndex, SCFMethod scfMethod) {
+	public List<HCore> computeDerivative(final int atomIndex, final SCFMethod scfMethod) {
 		this.atomIndex = atomIndex;
 		this.scfMethod = scfMethod;
 		this.bsl = scfMethod.getOneEI().getBasisSetLibrary();
 		this.cgs = this.bsl.getBasisFunctions();
 
-		ArrayList<HCore> dHCore = new ArrayList<>(3);
+		final ArrayList<HCore> dHCore = new ArrayList<>(3);
 
-		int noOfBasisFunctions = this.getRowDimension();
-		HCore dHCoreDx = new HCore(noOfBasisFunctions);
-		HCore dHCoreDy = new HCore(noOfBasisFunctions);
-		HCore dHCoreDz = new HCore(noOfBasisFunctions);
+		final int noOfBasisFunctions = this.getRowDimension();
+		final HCore dHCoreDx = new HCore(noOfBasisFunctions);
+		final HCore dHCoreDy = new HCore(noOfBasisFunctions);
+		final HCore dHCoreDz = new HCore(noOfBasisFunctions);
 
-		double[][] hdx = dHCoreDx.getData();
-		double[][] hdy = dHCoreDy.getData();
-		double[][] hdz = dHCoreDz.getData();
+		final double[][] hdx = dHCoreDx.getData();
+		final double[][] hdy = dHCoreDy.getData();
+		final double[][] hdz = dHCoreDz.getData();
 
 		int i;
 		int j;
 		for (i = 0; i < noOfBasisFunctions; i++) {
 			for (j = 0; j < noOfBasisFunctions; j++) {
-				Vector3D dHCoreEle = computeHCoreDerElement(atomIndex, i, j);
+				final Vector3D dHCoreEle = computeHCoreDerElement(atomIndex, i, j);
 
 				hdx[i][j] = dHCoreEle.getX();
 				hdy[i][j] = dHCoreEle.getY();
@@ -84,12 +83,11 @@ public final class HCore extends Array2DRowRealMatrix {
 	}
 
 	/**
-	 * Compute one of the HCore derivative elements, with respect to an
-	 * atomIndex
+	 * Compute one of the HCore derivative elements, with respect to an atomIndex
 	 */
-	private Vector3D computeHCoreDerElement(int atomIndex, int i, int j) {		
-		ContractedGaussian cgi = this.cgs.get(i);
-		ContractedGaussian cgj = this.cgs.get(j);
+	private Vector3D computeHCoreDerElement(final int atomIndex, final int i, final int j) {
+		final ContractedGaussian cgi = this.cgs.get(i);
+		final ContractedGaussian cgj = this.cgs.get(j);
 
 		return cgi.kineticDerivative(atomIndex, cgj).add(
 				cgi.nuclearAttractionDerivative(scfMethod.getMolecule(),

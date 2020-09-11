@@ -63,33 +63,31 @@ public final class IntegralsPackageFactory {
 	 * @return the instance of 2-E integral package, if no suitable one
 	 *         available, then UnsupportedOperationException is thrown
 	 */
-	public TwoElectronTerm getTwoElectronTerm(IntegralPackageType type) {
+	public TwoElectronTerm getTwoElectronTerm(final IntegralPackageType type) {
 		TwoElectronTerm twoElectronTerm;
 
 		switch (type) {
-		case TWO_ELECTRON_HUZINAGA:
-			twoElectronTerm = new HuzinagaTwoElectronTerm();
-			break;
-		case TWO_ELECTRON_RYS:
-			twoElectronTerm = new RysTwoElectronTerm();
-			break;
-		case TWO_ELECTRON_HGP:
-			twoElectronTerm = new HGPTwoElectronTerm();
-			break;
-		default:
-			throw new UnsupportedOperationException("No 2E integral "
-					+ "package yet for: " + type);
+			case TWO_ELECTRON_HUZINAGA:
+				twoElectronTerm = new HuzinagaTwoElectronTerm();
+				break;
+			case TWO_ELECTRON_RYS:
+				twoElectronTerm = new RysTwoElectronTerm();
+				break;
+			case TWO_ELECTRON_HGP:
+				twoElectronTerm = new HGPTwoElectronTerm();
+				break;
+			default:
+				throw new UnsupportedOperationException("No 2E integral " + "package yet for: " + type);
 		}
 
 		return twoElectronTerm;
 	}
 
 	/**
-	 * Get the default 2E integral package. Currently this is:
-	 * TWO_ELECTRON_HUZINAGA
+	 * Get the default 2E integral package. Currently this is: TWO_ELECTRON_HUZINAGA
 	 * 
-	 * @return the instance of 2-E integral package, if no suitable one
-	 *         available, then UnsupportedOperationException is thrown
+	 * @return the instance of 2-E integral package, if no suitable one available,
+	 *         then UnsupportedOperationException is thrown
 	 */
 	public TwoElectronTerm getTwoElectronTerm() {
 		return getTwoElectronTerm(defaultTwoElectronIntegralPackage);
@@ -107,11 +105,10 @@ public final class IntegralsPackageFactory {
 	/**
 	 * Set the value of defaultTwoElectronIntegralPackage
 	 * 
-	 * @param defaultTwoElectronIntegralPackage
-	 *            new value of defaultTwoElectronIntegralPackage
+	 * @param defaultTwoElectronIntegralPackage new value of
+	 *                                          defaultTwoElectronIntegralPackage
 	 */
-	public void setDefaultTwoElectronIntegralPackage(
-			IntegralPackageType defaultTwoElectronIntegralPackage) {
+	public void setDefaultTwoElectronIntegralPackage(final IntegralPackageType defaultTwoElectronIntegralPackage) {
 		this.defaultTwoElectronIntegralPackage = defaultTwoElectronIntegralPackage;
 
 		// change here affects the statically initialised Integral package
@@ -122,12 +119,11 @@ public final class IntegralsPackageFactory {
 	/**
 	 * Get a requested integral package.
 	 * 
-	 * @param type
-	 *            the requested IntegralPackageType
-	 * @return the instance of the requested IntegralPackageType, if not
-	 *         available the an UnsupportedOperationException is thrown
+	 * @param type the requested IntegralPackageType
+	 * @return the instance of the requested IntegralPackageType, if not available
+	 *         the an UnsupportedOperationException is thrown
 	 */
-	public IntegralsPackage getPackage(IntegralPackageType type) {
+	public IntegralsPackage getPackage(final IntegralPackageType type) {
 		switch (type) {
 		case NUCLEAR_TERM:
 			return getNuclearTerm();

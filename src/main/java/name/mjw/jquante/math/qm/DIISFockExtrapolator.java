@@ -27,8 +27,8 @@ public final class DIISFockExtrapolator implements FockExtrapolator {
 
 	private static final Logger LOG = LogManager.getLogger(DIISFockExtrapolator.class);
 
-	private ArrayList<Fock> fockMatrixList = new ArrayList<>();
-	private ArrayList<RealVector> errorVectorList = new ArrayList<>();
+	private final ArrayList<Fock> fockMatrixList = new ArrayList<>();
+	private final ArrayList<RealVector> errorVectorList = new ArrayList<>();
 
 	protected int diisStep = 0;
 
@@ -41,33 +41,30 @@ public final class DIISFockExtrapolator implements FockExtrapolator {
 	/**
 	 * Get the next extrapolated fock matrix
 	 * 
-	 * @param currentFock
-	 *            the current fock
-	 * @param overlap
-	 *            the overlap matrix
-	 * @param density
-	 *            the current density matrix
+	 * @param currentFock the current fock
+	 * @param overlap     the overlap matrix
+	 * @param density     the current density matrix
 	 * @return extrapolated fock
 	 */
 	@Override
-	public Fock next(Fock currentFock, Overlap overlap, Density density) {
-		DecimalFormat df = new DecimalFormat("+#,##0.000;-#");
+	public Fock next(final Fock currentFock, final Overlap overlap, final Density density) {
+		final DecimalFormat df = new DecimalFormat("+#,##0.000;-#");
 		df.setGroupingUsed(false);
-		RealVectorFormat vf = new RealVectorFormat("{", "}", ",", df);
-		RealMatrixFormat mf = new RealMatrixFormat("\n", "", "", "", "\n", " ", df);
+		final RealVectorFormat vf = new RealVectorFormat("{", "}", ",", df);
+		final RealMatrixFormat mf = new RealMatrixFormat("\n", "", "", "", "\n", " ", df);
 
 		Fock newFock = new Fock(currentFock.getData());
 
-		RealMatrix fPS = currentFock.multiply(density).multiply(overlap);
-		RealMatrix sPF = overlap.multiply(density).multiply(currentFock);
+		final RealMatrix fPS = currentFock.multiply(density).multiply(overlap);
+		final RealMatrix sPF = overlap.multiply(density).multiply(currentFock);
 
 		// The commutator of the Fock and density matrices (the orbital gradient)
-		RealVector errorVector = MathUtil.realMatrixToRealVector(fPS.subtract(sPF));
+		final RealVector errorVector = MathUtil.realMatrixToRealVector(fPS.subtract(sPF));
 
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("errorVector {} ", vf.format(errorVector));
 		}
-		double mxerr = errorVector.getNorm();
+		final double mxerr = errorVector.getNorm();
 		LOG.debug("errorVector.getNorm() {}", mxerr);
 
 		if (mxerr > errorThreshold && !isDiisStarted) {
@@ -90,15 +87,15 @@ public final class DIISFockExtrapolator implements FockExtrapolator {
 		fockMatrixList.add(currentFock);
 		errorVectorList.add(errorVector);
 
-		int noOfIterations = errorVectorList.size();
+		final int noOfIterations = errorVectorList.size();
 
 		LOG.debug("noOfIterations: {}", noOfIterations);
-		int noOfIterationsPlusOne = noOfIterations + 1;
+		final int noOfIterationsPlusOne = noOfIterations + 1;
 
 		// B_{ij} matrix
-		RealMatrix aMatrix = new Array2DRowRealMatrix(noOfIterationsPlusOne, noOfIterationsPlusOne);
+		final RealMatrix aMatrix = new Array2DRowRealMatrix(noOfIterationsPlusOne, noOfIterationsPlusOne);
 		// 0,0...,-1 vector
-		RealVector bVector = new ArrayRealVector(noOfIterationsPlusOne);
+		final RealVector bVector = new ArrayRealVector(noOfIterationsPlusOne);
 
 		// set up A x = b to be solved
 		// Populate B_{ij} matrix
@@ -123,8 +120,8 @@ public final class DIISFockExtrapolator implements FockExtrapolator {
 		}
 
 		try {
-			DecompositionSolver solver = new LUDecomposition(aMatrix).getSolver();
-			RealVector solVec = solver.solve(bVector);
+			final DecompositionSolver solver = new LUDecomposition(aMatrix).getSolver();
+			final RealVector solVec = solver.solve(bVector);
 			if (LOG.isDebugEnabled()) {
 				LOG.debug("solVec {}", vf.format(solVec));
 			}
@@ -138,7 +135,7 @@ public final class DIISFockExtrapolator implements FockExtrapolator {
 			}
 			oldFock = currentFock;
 
-		} catch (MathRuntimeException ignored) {
+		} catch (final MathRuntimeException ignored) {
 			if (LOG.isDebugEnabled()) {
 				LOG.debug("No solution: {}", diisStep);
 			}
@@ -166,10 +163,9 @@ public final class DIISFockExtrapolator implements FockExtrapolator {
 	/**
 	 * Set the value of errorThreshold
 	 * 
-	 * @param errorThreshold
-	 *            new value of errorThreshold
+	 * @param errorThreshold new value of errorThreshold
 	 */
-	public void setErrorThreshold(double errorThreshold) {
+	public void setErrorThreshold(final double errorThreshold) {
 		this.errorThreshold = errorThreshold;
 	}
 }

@@ -18,7 +18,7 @@ public abstract class AbstractOptimizer implements Optimizer {
 	 * @param optimizerFunction
 	 *            Function to be optimized.
 	 */
-	public AbstractOptimizer(OptimizerFunction optimizerFunction) {
+	public AbstractOptimizer(final OptimizerFunction optimizerFunction) {
 		this.optimizerFunction = optimizerFunction;
 		variables = null;
 
@@ -50,11 +50,10 @@ public abstract class AbstractOptimizer implements Optimizer {
 	/**
 	 * Set the value of variables
 	 * 
-	 * @param variables
-	 *            new value of variables
+	 * @param variables new value of variables
 	 */
 	@Override
-	public void setVariables(double[] variables) {
+	public void setVariables(final double[] variables) {
 		this.variables = variables;
 	}
 
@@ -75,11 +74,10 @@ public abstract class AbstractOptimizer implements Optimizer {
 	/**
 	 * Setter for property maxIterations.
 	 * 
-	 * @param maxIterations
-	 *            New value of property maxIterations.
+	 * @param maxIterations New value of property maxIterations.
 	 */
 	@Override
-	public void setMaxIterations(int maxIterations) {
+	public void setMaxIterations(final int maxIterations) {
 		this.maxIterations = maxIterations;
 	}
 
@@ -94,16 +92,14 @@ public abstract class AbstractOptimizer implements Optimizer {
 	}
 
 	/**
-	 * Apply the minimizer freezing the variables numbers specified in the
-	 * integer array. The variables are indexed from 0 to total number of
-	 * variables - 1.
+	 * Apply the minimizer freezing the variables numbers specified in the integer
+	 * array. The variables are indexed from 0 to total number of variables - 1.
 	 * 
-	 * @param freezeVariables
-	 *            is an array of indices of variables to be freezed during the
-	 *            minimization process.
+	 * @param freezeVariables is an array of indices of variables to be freezed
+	 *                        during the minimization process.
 	 */
 	@Override
-	public void minimize(int[] freezeVariables) {
+	public void minimize(final int[] freezeVariables) {
 		throw new UnsupportedOperationException("Method not yet implemented!");
 	}
 
@@ -112,11 +108,10 @@ public abstract class AbstractOptimizer implements Optimizer {
 	/**
 	 * Setter for property convergenceCriteria.
 	 * 
-	 * @param convergenceCriteria
-	 *            New value of property convergenceCriteria.
+	 * @param convergenceCriteria New value of property convergenceCriteria.
 	 */
 	@Override
-	public void setConvergenceCriteria(ConvergenceCriteria convergenceCriteria) {
+	public void setConvergenceCriteria(final ConvergenceCriteria convergenceCriteria) {
 		this.convergenceCriteria = convergenceCriteria;
 	}
 

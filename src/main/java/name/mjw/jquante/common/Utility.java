@@ -50,9 +50,9 @@ public final class Utility {
 	 * @throws ArrayIndexOutOfBoundsException If string is greater than two
 	 *                                        characters.
 	 */
-	public static String capitalise(String theString) {
-		String firstChar = theString.substring(0, 1);
-		String restString = theString.substring(1, theString.length());
+	public static String capitalise(final String theString) {
+		final String firstChar = theString.substring(0, 1);
+		final String restString = theString.substring(1, theString.length());
 
 		if (restString == null)
 			return firstChar.toUpperCase();
@@ -75,7 +75,8 @@ public final class Utility {
 	 * @throws org.xml.sax.SAXException     org.xml.sax.SAXException
 	 * @throws java.io.IOException          java.io.IOException
 	 */
-	public static Document parseXML(String xmlFile) throws ParserConfigurationException, SAXException, IOException {
+	public static Document parseXML(final String xmlFile)
+			throws ParserConfigurationException, SAXException, IOException {
 		return parseXML(new FileInputStream(xmlFile));
 	}
 
@@ -94,31 +95,31 @@ public final class Utility {
 	 * @throws org.xml.sax.SAXException     org.xml.sax.SAXException
 	 * @throws java.io.IOException          java.io.IOException
 	 */
-	public static Document parseXML(InputStream xmlStream)
+	public static Document parseXML(final InputStream xmlStream)
 			throws ParserConfigurationException, SAXException, IOException {
 		// we use the JAXP DOM parser for the job!
 		// get an instance of the parser
-		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-		DocumentBuilder db = dbf.newDocumentBuilder();
+		final DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		final DocumentBuilder db = dbf.newDocumentBuilder();
 
 		// set the error handler .. to detect errors(?) in xml
 		// in normal situations, error should never occur because
 		// the xml files parsed here are automatically generated ones
 		db.setErrorHandler(new ErrorHandler() {
 			@Override
-			public void warning(SAXParseException e) throws SAXException {
+			public void warning(final SAXParseException e) throws SAXException {
 				System.err.println("Warning : " + e);
 				e.printStackTrace();
 			}
 
 			@Override
-			public void error(SAXParseException e) throws SAXException {
+			public void error(final SAXParseException e) throws SAXException {
 				System.err.println("Error : " + e);
 				e.printStackTrace();
 			}
 
 			@Override
-			public void fatalError(SAXParseException e) throws SAXException {
+			public void fatalError(final SAXParseException e) throws SAXException {
 				System.err.println("Error : " + e);
 				e.printStackTrace();
 			}
@@ -137,7 +138,7 @@ public final class Utility {
 	 * @return int - the int value intended. if the key is not found in the table a
 	 *         zero is returned instead.
 	 */
-	public static int getInteger(HashMap<?, ?> table, Object key) {
+	public static int getInteger(final HashMap<?, ?> table, final Object key) {
 		int value = 0;
 
 		if (table.containsKey(key)) {
@@ -156,7 +157,7 @@ public final class Utility {
 	 * @return double - the double value intended. if the key is not found in the
 	 *         table a zero is returned instead.
 	 */
-	public static double getDouble(HashMap<?, ?> table, Object key) {
+	public static double getDouble(final HashMap<?, ?> table, final Object key) {
 		double value = 0.0;
 
 		if (table.containsKey(key)) {
@@ -174,7 +175,7 @@ public final class Utility {
 	 * @return String - the String value intended. if the key is not found in the
 	 *         table a blank String is returned instead.
 	 */
-	public static String getString(HashMap<?, ?> table, Object key) {
+	public static String getString(final HashMap<?, ?> table, final Object key) {
 		String value = " ";
 
 		if (table.containsKey(key)) {
