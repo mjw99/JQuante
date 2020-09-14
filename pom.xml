@@ -17,7 +17,7 @@
 		        mvn versions:display-dependency-updates
 
                      to check for updates for these below -->
-		<junit.version>5.6.2</junit.version>
+		<junit.version>5.7.0</junit.version>
 		<log4j.version>2.13.3</log4j.version>
 		<fortranformat.version>1.1.1</fortranformat.version>
 		<jaxb.version>2.3.0</jaxb.version>
