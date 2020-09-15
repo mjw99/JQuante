@@ -11,7 +11,7 @@ jobs:
     strategy:
       matrix:
         # test against latest update of each major Java version:
-        java: [ 8, 11, 14, 15.0.0-ea.31 ]
+        java: [ 8, 11, 15 ]
     name: Java ${{ matrix.java }}
     steps:
       - uses: actions/checkout@v2
