@@ -99,12 +99,12 @@ public class UnrestrictedHartreeFockMethod extends SCFMethod implements
 		int noOfOccupancies = noOfElectrons / 2;
 
 		Overlap overlap = oneEI.getOverlap();
-		LOG.debug("Initial S matrix\n" + overlap);
+		LOG.debug("Initial S matrix\n {}", overlap);
 
-		LOG.debug("S^-1/2 matrix\n" + overlap.getSHalf());
+		LOG.debug("S^-1/2 matrix\n {}", overlap.getSHalf());
 
 		HCore hCore = oneEI.getHCore();
-		LOG.debug("Initial hCore\n" + hCore);
+		LOG.debug("Initial hCore\n {}", hCore);
 
 		boolean converged = false;
 		double oldEnergy = 0.0;
@@ -124,17 +124,17 @@ public class UnrestrictedHartreeFockMethod extends SCFMethod implements
 
 		// TODO: compute initial MOs
 		mosList.get(0).compute(hCore, overlap);
-		LOG.debug("Initial computed MO coefficient matrix as: \n" + mosList.get(0));
+		LOG.debug("Initial computed MO coefficient matrix as: \n {}", mosList.get(0));
 
 		FockExtrapolator diis = new DIISFockExtrapolator();
 
-		LOG.debug("Initial density matrix \n" + densityList.get(0));
+		LOG.debug("Initial density matrix \n {}", densityList.get(0));
 
 		// start the SCF cycle
 		for (scfIteration = 0; scfIteration < maxIteration; scfIteration++) {
 
 			LOG.debug("");
-			LOG.debug("SCF iteration: " + scfIteration);
+			LOG.debug("SCF iteration: {}", scfIteration);
             // make or guess density
             // TODO: will have two parts Da and Db
 			densityList.get(0).compute(this, guessInitialDM && (scfIteration == 0),
@@ -142,7 +142,7 @@ public class UnrestrictedHartreeFockMethod extends SCFMethod implements
 			densityList.get(1).compute(this, guessInitialDM && (scfIteration == 0),
 					densityGuesser, noOfOccupancies, mosList.get(1));
 
-			LOG.debug("Density matrix:\n" + densityList);
+			LOG.debug("Density matrix:\n {}", densityList);
 
             // make the G matrix
             // TODO: G will have two parts Ga = Ja+Jb-Ka and Gb = Ja+Jb-Kb 

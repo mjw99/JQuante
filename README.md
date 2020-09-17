@@ -1,4 +1,4 @@
-# JQuante ![Travis_status](https://travis-ci.org/mjw99/jquante.svg?branch=master)
+# JQuante ![Java CI with Maven](https://github.com/mjw99/jquante/workflows/Java%20CI%20with%20Maven/badge.svg)
 
 JQuante is a basic Java QM toolkit, written in Java, that is inspired by [PyQuante](http://pyquante.sourceforge.net/).
 

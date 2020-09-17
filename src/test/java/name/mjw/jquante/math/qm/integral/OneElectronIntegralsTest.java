@@ -2,15 +2,13 @@ package name.mjw.jquante.math.qm.integral;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.hipparchus.geometry.euclidean.threed.Vector3D;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import name.mjw.jquante.math.qm.OneElectronIntegrals;
 import name.mjw.jquante.math.qm.basis.BasisSetLibrary;
-import name.mjw.jquante.molecule.Atom;
 import name.mjw.jquante.molecule.Molecule;
-import name.mjw.jquante.molecule.impl.MoleculeImpl;
+import name.mjw.jquante.test.Fixtures;
 
 class OneElectronIntegralsTest {
 
@@ -18,17 +16,10 @@ class OneElectronIntegralsTest {
 	static OneElectronIntegrals e1 = null;
 
 	@BeforeAll
-	public static void setUp() {
+	static void setUp() {
 
 		// Create molecule
-		Atom O = new Atom("O", new Vector3D(0.00000000, 0.000000, 0.119748));
-		Atom H1 = new Atom("H", new Vector3D(0.00000000, 0.761561, -0.478993));
-		Atom H2 = new Atom("H", new Vector3D(0.00000000, -0.761561, -0.478993));
-
-		Molecule water = new MoleculeImpl("water");
-		water.addAtom(O);
-		water.addAtom(H1);
-		water.addAtom(H2);
+		Molecule water = Fixtures.getWater();
 
 		// Read Basis
 		BasisSetLibrary bf = null;

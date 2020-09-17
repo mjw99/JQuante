@@ -21,7 +21,7 @@ import net.jafama.FastMath;
  * @author mw529
  * @version 2.0 (Part of MeTA v2.0)
  */
-public final class ContractedGaussian implements Comparable<ContractedGaussian> {
+public class ContractedGaussian implements Comparable<ContractedGaussian> {
 
 	/**
 	 * Holds value of property origin.
@@ -90,6 +90,21 @@ public final class ContractedGaussian implements Comparable<ContractedGaussian> 
 		this(centeredAtom.getAtomCenterInAU(), powers);
 
 		this.centeredAtom = centeredAtom;
+	}
+
+	/**
+	 * Creates a new instance of ContractedGaussian
+	 *
+	 * @param cg ContractedGaussian
+	 */
+	public ContractedGaussian(ContractedGaussian cg) {
+		this.origin = cg.getOrigin();
+		this.powers = cg.getPowers();
+
+		primitives = cg.getPrimitives();
+		exponents = cg.getExponents();
+		coefficients = cg.getCoefficients();
+		primNorms = cg.getPrimNorms();
 	}
 
 	/**
@@ -742,6 +757,12 @@ public final class ContractedGaussian implements Comparable<ContractedGaussian> 
 	}
 
 	  @Override
+	  /**
+	   * Use LibInt ordering:
+	   * 	Sort first by increasing index of center,
+	   * 	then by increasing angular momentum,
+	   *    last by decreasing exponent.
+	   */
 	  public int compareTo( ContractedGaussian other ) {
 	    return ComparisonChain.start()
 	      .compare( basisFunctionIndex, other.basisFunctionIndex )

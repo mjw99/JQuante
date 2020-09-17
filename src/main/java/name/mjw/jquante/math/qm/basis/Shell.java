@@ -1,7 +1,5 @@
 package name.mjw.jquante.math.qm.basis;
 
-import java.util.Objects;
-
 /**
  * A shell is a set of basis function with the same centre and same contracted
  * exponent, for example, sp shell, d shell.
@@ -10,16 +8,14 @@ import java.util.Objects;
  * composed of.
  * 
  */
-public final class Shell {
+public final class Shell extends ContractedGaussian {
 
-	private final ContractedGaussian representativeContractedGaussian;
+	public Shell(ContractedGaussian cg) {
+		super(cg);
+	}
 
 	private int firstBasisFunctionIndex;
 	private int lastBasisFunctionIndex;
-
-	Shell(ContractedGaussian contractedGaussian) {
-		this.representativeContractedGaussian = contractedGaussian;
-	}
 
 	public int getFirstBasisFunctionIndex() {
 		return firstBasisFunctionIndex;
@@ -39,13 +35,7 @@ public final class Shell {
 
 	@Override
 	public String toString() {
-		return Integer.toString(firstBasisFunctionIndex) + "-" + Integer.toString(lastBasisFunctionIndex) + " "
-				+ representativeContractedGaussian.toString();
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(representativeContractedGaussian);
+		return Integer.toString(firstBasisFunctionIndex) + "-" + Integer.toString(lastBasisFunctionIndex) + "\n";
 	}
 
 	@Override
@@ -57,7 +47,7 @@ public final class Shell {
 		if (getClass() != that.getClass())
 			return false;
 		Shell other = (Shell) that;
-		return this.representativeContractedGaussian.isSameShell(other.representativeContractedGaussian);
+		return this.isSameShell(other);
 	}
 
 }

@@ -23,22 +23,11 @@ public final class PowerList {
 
 		thePowerList = new HashMap<>(6);
 
-		// the S orbital
 		thePowerList.put("S", generatePowerList(0));
-
-		// the P orbital
 		thePowerList.put("P", generatePowerList(1));
-
-		// the D orbital
 		thePowerList.put("D", generatePowerList(2));
-
-		// the F orbital
 		thePowerList.put("F", generatePowerList(3));
-
-		// the G orbital
 		thePowerList.put("G", generatePowerList(4));
-
-		// the H orbital
 		thePowerList.put("H", generatePowerList(5));
 	}
 

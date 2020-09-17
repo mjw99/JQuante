@@ -51,7 +51,7 @@ public class Atom implements Cloneable {
 	 *            The nuclear center of the atom in Cartesian coordinates
 	 */
 	public Atom(String symbol, Vector3D atomCenter) {
-		this(symbol, atomCenter, new HashMap<Integer, BondType>(1),
+		this(symbol, atomCenter, new HashMap<>(1),
 				null, 0);
 	}
 
@@ -66,7 +66,7 @@ public class Atom implements Cloneable {
 	 *            The atom index of this atom
 	 */
 	public Atom(String symbol, Vector3D atomCenter, int atomIndex) {
-		this(symbol, atomCenter, new HashMap<Integer, BondType>(1),
+		this(symbol, atomCenter, new HashMap<>(1),
 				null, atomIndex);
 	}
 
@@ -299,8 +299,8 @@ public class Atom implements Cloneable {
 		if (bondType.equals(BondType.NO_BOND) && connectedList.containsKey(key)) {
 			connectedList.remove(key);
 			return;
-		} // end if
-
+		}
+		
 		connectedList.put(key, bondType);
 	}
 
@@ -320,7 +320,7 @@ public class Atom implements Cloneable {
 	 * remove all the connections to this atom
 	 */
 	public void removeAllConnections() {
-		connectedList = new HashMap<Integer, BondType>();
+		connectedList = new HashMap<>();
 	}
 
 	/**
@@ -490,7 +490,7 @@ public class Atom implements Cloneable {
 	}
 
 	/** Position of angle reference in the ZMatrixElement */
-	private final static int ANGLE_REFERENCE_POS = 1;
+	private static final int ANGLE_REFERENCE_POS = 1;
 
 	/**
 	 * Getter for property angleReference.

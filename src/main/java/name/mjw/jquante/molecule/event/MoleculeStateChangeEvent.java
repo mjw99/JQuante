@@ -1,7 +1,6 @@
 package name.mjw.jquante.molecule.event;
 
 import name.mjw.jquante.molecule.Atom;
-import name.mjw.jquante.molecule.SpecialStructureRecognizer;
 
 /**
  * An event used to indicate a change in molecule state.
@@ -54,9 +53,6 @@ public class MoleculeStateChangeEvent extends java.util.EventObject {
 
 	/** Holds value of property atom2. */
 	private Atom atom2;
-
-	/** Holds value of property specialStructureRecognizer. */
-	private SpecialStructureRecognizer specialStructureRecognizer;
 
 	/**
 	 * Creates a new instance of MoleculeStateChangeEvent
@@ -136,28 +132,6 @@ public class MoleculeStateChangeEvent extends java.util.EventObject {
 		this.atom2 = atom2;
 	}
 
-	/**
-	 * Getter for property specialStructureRecognizer. Only relevent if event of
-	 * type STRUCTURE_REMOVED or STRUCTURE_ADDED.
-	 * 
-	 * @return Value of property specialStructureRecognizer.
-	 * 
-	 */
-	public SpecialStructureRecognizer getSpecialStructureRecognizer() {
-		return this.specialStructureRecognizer;
-	}
-
-	/**
-	 * Setter for property specialStructureRecognizer. Only relevent if event of
-	 * type STRUCTURE_REMOVED or STRUCTURE_ADDED.
-	 * 
-	 * @param specialStructureRecognizer
-	 *            New value of property specialStructureRecognizer.
-	 */
-	public void setSpecialStructureRecognizer(
-			SpecialStructureRecognizer specialStructureRecognizer) {
-		this.specialStructureRecognizer = specialStructureRecognizer;
-	}
 
 	/**
 	 * overridden toString()

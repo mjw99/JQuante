@@ -5,32 +5,32 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.hipparchus.geometry.euclidean.threed.Vector3D;
 import org.junit.jupiter.api.Test;
 
-public class MathUtilTest {
+class MathUtilTest {
 	double diff = 0.00001;
 
 	@Test
-	public void factorial2MinusOne() {
+	void factorial2MinusOne() {
 
 		assertEquals(1, MathUtil.factorial2(-1));
 
 	}
 
 	@Test
-	public void factorial2Zero() {
+	void factorial2Zero() {
 
 		assertEquals(1, MathUtil.factorial2(0));
 
 	}
 
 	@Test
-	public void factorial2Nine() {
+	void factorial2Nine() {
 
 		assertEquals(945, MathUtil.factorial2(9));
 
 	}
 
 	@Test
-	public void testfindDihedralAngle1() {
+	void testfindDihedralAngle1() {
 
 		Vector3D i = new Vector3D(60.614941, 67.371346, 12.713049);
 		Vector3D j = new Vector3D(59.104156, 67.044731, 12.827555);
@@ -42,7 +42,7 @@ public class MathUtilTest {
 	}
 
 	@Test
-	public void testfindDihedralAngle2() {
+	void testfindDihedralAngle2() {
 
 		Vector3D i = new Vector3D(30.958572, 73.709137, 38.031029);
 		Vector3D j = new Vector3D(31.924915, 72.577698, 37.985279);

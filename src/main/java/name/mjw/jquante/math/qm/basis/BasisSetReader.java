@@ -1,7 +1,6 @@
 package name.mjw.jquante.math.qm.basis;
 
 import name.mjw.jquante.common.Utility;
-import name.mjw.jquante.common.resource.StringResource;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
@@ -22,54 +21,53 @@ import javax.xml.parsers.ParserConfigurationException;
  * @author V.Ganesh
  * @version 2.0 (Part of MeTA v2.0)
  */
-public class BasisReader {
+public class BasisSetReader {
 
-	private static WeakReference<BasisReader> _basisReader = null;
+	private static WeakReference<BasisSetReader> _basisSetReader = null;
 
 	private BasisSet basisSet;
 	private AtomicBasis atomicBasis;
 	private Orbital orbital;
 
-	/** Creates a new instance of BasisReader */
-	private BasisReader() {
+	/** Creates a new instance of BasisSetReader */
+	private BasisSetReader() {
 	}
 
 	/**
-	 * Get an instance (and the only one) of BasisReader
+	 * Get an instance (and the only one) of BasisSetReader
 	 * 
-	 * @return BasisReader instance
+	 * @return BasisSetReader instance
 	 */
-	public static BasisReader getInstance() {
-		if (_basisReader == null) {
-			_basisReader = new WeakReference<>(new BasisReader());
+	public static BasisSetReader getInstance() {
+		if (_basisSetReader == null) {
+			_basisSetReader = new WeakReference<>(new BasisSetReader());
 		}
 
-		BasisReader basisReader = _basisReader.get();
+		BasisSetReader basisSetReader = _basisSetReader.get();
 
-		if (basisReader == null) {
-			basisReader = new BasisReader();
-			_basisReader = new WeakReference<>(basisReader);
+		if (basisSetReader == null) {
+			basisSetReader = new BasisSetReader();
+			_basisSetReader = new WeakReference<>(basisSetReader);
 		}
 
-		return basisReader;
+		return basisSetReader;
 	}
 
 	/**
 	 * Read a particular basis for the basis library (XML)
 	 * 
-	 * @param basisName
+	 * @param basisSetName
 	 *            the name of basis.
 	 * @return BasisSet object, representing the requested basis set.
 	 * @throws IOException if stream from basisName cannot be read.
 	 * @throws SAXException if there was a problem with parsing the XML.
 	 * @throws ParserConfigurationException if there is a serious configuration error.
 	 */
-	public BasisSet readBasis(String basisName) throws ParserConfigurationException, SAXException, IOException {
-		StringResource strings = StringResource.getInstance();
-
+	public BasisSet readBasisSet(String basisSetName) throws ParserConfigurationException, SAXException, IOException {
+		String basisLibraryPath = "/name/mjw/jquante/math/qm/basis/basis_";
 		// read the XML config file
 		Document basisDoc = Utility
-				.parseXML(getClass().getResourceAsStream(strings.getBasisLibraryPath() + basisName + ".xml"));
+				.parseXML(getClass().getResourceAsStream(basisLibraryPath + basisSetName + ".xml"));
 
 		// and save the basis info. properly
 		saveIt(basisDoc);
@@ -78,19 +76,19 @@ public class BasisReader {
 	}
 
 	/**
-	 * Read a particular basis for the basis library (XML)
+	 * Read a particular basis set from the basis set library (XML)
 	 * 
-	 * @param basisFileName
-	 *            the name of external basis file name.
+	 * @param basisSetFileName
+	 *            the name of external basis set file name.
 	 * @return BasisSet object, representing the requested basis set.
 	 * @throws IOException if stream from basisFileName cannot be read.
 	 * @throws SAXException if there was a problem with parsing the XML.
 	 * @throws ParserConfigurationException if there is a serious configuration error. 
 	 */
-	public BasisSet readExternalBasis(String basisFileName)
+	public BasisSet readExternalBasisSet(String basisSetFileName)
 			throws ParserConfigurationException, SAXException, IOException {
-		// read the XML config file
-		Document basisDoc = Utility.parseXML(getClass().getResourceAsStream(basisFileName));
+		// read the XML basis set file
+		Document basisDoc = Utility.parseXML(getClass().getResourceAsStream(basisSetFileName));
 
 		// and save the basis info. properly
 		saveIt(basisDoc);
@@ -140,13 +138,13 @@ public class BasisReader {
 				for (int i = 0; i < atts.getLength(); i++) {
 					Node att = atts.item(i);
 					saveIt(att);
-				} // end for
-			} // end if
+				}
+			}
 
 			break;
 		default:
 			break;
-		} // end switch..case
+		}
 
 		// save children if any
 		for (Node child = n.getFirstChild(); child != null; child = child.getNextSibling()) {

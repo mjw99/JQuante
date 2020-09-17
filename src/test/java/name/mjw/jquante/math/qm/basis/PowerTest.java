@@ -6,9 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import name.mjw.jquante.math.qm.basis.Power;
-
-public class PowerTest {
+class PowerTest {
 
 	private static Power s;
 	private static Power p;
@@ -26,37 +24,37 @@ public class PowerTest {
 	}
 
 	@Test
-	public void testPowerS() {
+	void testPowerS() {
 		assertEquals(0, s.getL());
 
 	}
 
 	@Test
-	public void testPowerP() {
+	void testPowerP() {
 		assertEquals(1, p.getM());
 
 	}
 
 	@Test
-	public void testGetMaximumAngularMomentumD() {
+	void testGetMaximumAngularMomentumD() {
 		assertEquals(2, d.getMaximumAngularMomentum());
 
 	}
 
 	@Test
-	public void testGetTotalAngularMomentumF() {
+	void testGetTotalAngularMomentumF() {
 		assertEquals(3, f.getTotalAngularMomentum());
 
 	}
 
 	@Test
-	public void testGetMinimumAngularMomentumF() {
+	void testGetMinimumAngularMomentumF() {
 		assertEquals(0, f.getMinimumAngularMomentum());
 
 	}
 
 	@Test
-	public void testToArrayF() {
+	void testToArrayF() {
 		assertArrayEquals(new double[] { 0, 2, 1 }, f.toArray());
 
 	}

@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
@@ -214,19 +215,19 @@ public final class AtomInfo implements Configuration {
 				for (int i = 0; i < atts.getLength(); i++) {
 					Node att = atts.item(i);
 					saveOriginal(att);
-				} // end for
-			} // end if
+				}
+			}
 
 			break;
 		default:
 			break;
-		} // end switch..case
+		}
 
 		// save children if any
 		for (Node child = n.getFirstChild(); child != null; child = child.getNextSibling()) {
 			saveOriginal(child);
-		} // end for
-	} // end of method saveOriginal()
+		}
+	}
 
 	/**
 	 * Recursive routine save DOM tree nodes
@@ -258,7 +259,7 @@ public final class AtomInfo implements Configuration {
 				for (int i = 0; i < atts.getLength(); i++) {
 					Node att = atts.item(i);
 					saveUserNode(att);
-				} // end for
+				}
 
 			} else {
 				if (atts == null)
@@ -267,19 +268,19 @@ public final class AtomInfo implements Configuration {
 				for (int i = 0; i < atts.getLength(); i++) {
 					Node att = atts.item(i);
 					saveUserNode(att);
-				} // end for
-			} // end if
+				}
+			}
 
 			break;
 		default:
 			break;
-		} // end switch..case
+		}
 
 		// save children if any
 		for (Node child = n.getFirstChild(); child != null; child = child.getNextSibling()) {
 			saveUserNode(child);
-		} // end for
-	} // end of method saveUserNode()
+		}
+	}
 
 	/** make a copy of the original */
 	private void copyOriginals() {
@@ -304,38 +305,38 @@ public final class AtomInfo implements Configuration {
 				saveUserNode(configDoc);
 			} else {
 				copyOriginals();
-			} // end if
+			}
 		} catch (Exception e) {
 			System.err.println("Restricted mode copying.");
 			copyOriginals();
-		} // end if
-	} // end of method saveUser()
+		}
+	}
 
 	/**
 	 * Copy one table to another (of strings)
 	 */
 	private void copyTableS(HashMap<String, String> src, HashMap<String, String> dest) {
-		for (String key : src.keySet()) {
-			dest.put(key, src.get(key));
-		} // end for
+		for (Entry<String, String> entry : src.entrySet()) {
+			dest.put(entry.getKey(), entry.getValue());
+		}
 	}
 
 	/**
 	 * Copy one table to another (of ints)
 	 */
 	private void copyTableI(HashMap<String, Integer> src, HashMap<String, Integer> dest) {
-		for (String key : src.keySet()) {
-			dest.put(key, src.get(key));
-		} // end for
+		for (Entry<String, Integer> entry : src.entrySet()) {
+			dest.put(entry.getKey(), entry.getValue());
+		}
 	}
 
 	/**
 	 * Copy one table to another (of doubles)
 	 */
 	private void copyTableD(HashMap<String, Double> src, HashMap<String, Double> dest) {
-		for (String key : src.keySet()) {
-			dest.put(key, src.get(key));
-		} // end for
+		for (Entry<String, Double> entry : src.entrySet()) {
+			dest.put(entry.getKey(), entry.getValue());
+		}
 	}
 
 
@@ -524,11 +525,11 @@ public final class AtomInfo implements Configuration {
 		if (event.getOldValue() != null) {
 			if (event.getOldValue().equals(event.getNewValue()))
 				return;
-		} // end if
+		}
 
 		for (Object listener : listenerList.getListenerList()) {
 			((AtomInfoChangeListener) listener).atomInfoChanged(event);
-		} // end for
+		}
 
 	}
 
@@ -561,7 +562,7 @@ public final class AtomInfo implements Configuration {
 			if (eles.nextElement() == atomicNumber)
 				return keys.nextElement();
 			keys.nextElement();
-		} // end while
+		}
 
 		return "X";
 	}
@@ -597,7 +598,7 @@ public final class AtomInfo implements Configuration {
 			return atomicWeightTable.get(symbol);
 		} catch (Exception e) {
 			return atomicWeightTable.get("X");
-		} // end of try .. catch block
+		}
 	}
 
 	/**

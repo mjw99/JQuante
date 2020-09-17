@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 
 import name.mjw.jquante.math.optimizer.OptimizerFunction;
 import name.mjw.jquante.math.qm.event.SCFEvent;
-import name.mjw.jquante.math.qm.DIISFockExtrapolator;
 import name.mjw.jquante.molecule.Atom;
 import name.mjw.jquante.molecule.Molecule;
 import name.mjw.jquante.molecule.UserDefinedAtomProperty;

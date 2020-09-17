@@ -82,9 +82,9 @@ public final class MolecularOrbitals extends Array2DRowRealMatrix {
 	private void compute(RealMatrix theMat, Overlap overlap) {
 		LOG.debug("");
 		RealMatrix x = overlap.getSHalf();
-		LOG.debug("x: " + x);
+		LOG.debug("x: {}", x);
 		RealMatrix a = x.multiply(theMat).multiply(x.transpose());
-		LOG.debug("a: " + a);
+		LOG.debug("a: {}", a);
 
 		EigenDecomposition eig = new EigenDecomposition(a);
 
@@ -94,7 +94,7 @@ public final class MolecularOrbitals extends Array2DRowRealMatrix {
 
 		this.setSubMatrix(sortedEig.getVT().multiply(x).getData(), 0, 0);
 
-		LOG.debug("MO::values :" + this);
+		LOG.debug("MO values :{}", this);
 	}
 
 	@Override
@@ -116,9 +116,9 @@ class SortedEigenDecomposition {
 	double[] realEigenvalues;
 	RealVector[] eigenvectors;
 
-	int n;
+	final int n;
 
-	public SortedEigenDecomposition(EigenDecomposition eig) {
+	public SortedEigenDecomposition(final EigenDecomposition eig) {
 		n = eig.getRealEigenvalues().length;
 
 		realEigenvalues = eig.getRealEigenvalues();

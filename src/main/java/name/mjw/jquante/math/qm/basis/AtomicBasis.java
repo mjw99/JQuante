@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents a single entity in a BasisSet
+ * Represents a single entity, i.e. an element, in a BasisSet
  * 
  * @author V.Ganesh
  * @version 2.0 (Part of MeTA v2.0)
@@ -12,12 +12,12 @@ import java.util.List;
 public class AtomicBasis {
 
 	/**
-	 * Holds value of property symbol.
+	 * The chemical symbol of the atom.
 	 */
-	private String symbol;
+	private String chemicalSymbol;
 
 	/**
-	 * Holds value of property atomicNumber.
+	 * The atomic number, Z, of the atom.
 	 */
 	private int atomicNumber;
 
@@ -29,16 +29,16 @@ public class AtomicBasis {
 	/**
 	 * Creates a new instance of AtomicBasis
 	 * 
-	 * @param symbol
+	 * @param chemicalSymbol
 	 *            the atomic symbol, of whose this is basis
 	 * @param atomicNumber
 	 *            its atomic number
 	 */
-	public AtomicBasis(String symbol, int atomicNumber) {
-		this.symbol = symbol;
+	public AtomicBasis(String chemicalSymbol, int atomicNumber) {
+		this.chemicalSymbol = chemicalSymbol;
 		this.atomicNumber = atomicNumber;
 
-		orbitals = new ArrayList<>(6);
+		orbitals = new ArrayList<>();
 	}
 
 	/**
@@ -46,8 +46,8 @@ public class AtomicBasis {
 	 * 
 	 * @return Value of property symbol.
 	 */
-	public String getSymbol() {
-		return this.symbol;
+	public String getChemicalSymbol() {
+		return this.chemicalSymbol;
 	}
 
 	/**
@@ -56,8 +56,8 @@ public class AtomicBasis {
 	 * @param symbol
 	 *            New value of property symbol.
 	 */
-	public void setSymbol(String symbol) {
-		this.symbol = symbol;
+	public void setChemicalSymbol(String symbol) {
+		this.chemicalSymbol = symbol;
 	}
 
 	/**

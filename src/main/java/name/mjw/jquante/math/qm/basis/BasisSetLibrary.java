@@ -16,8 +16,6 @@ import com.google.common.collect.Sets;
 import name.mjw.jquante.molecule.Atom;
 import name.mjw.jquante.molecule.Molecule;
 import name.mjw.jquante.molecule.UserDefinedAtomProperty;
-import name.mjw.jquante.molecule.event.MoleculeStateChangeEvent;
-import name.mjw.jquante.molecule.event.MoleculeStateChangeListener;
 
 /**
  * Class to construct basis functions of a given molecule and a basis set
@@ -44,9 +42,6 @@ public final class BasisSetLibrary {
 
 	private List<List<Shell>> uniqueShellPairs;
 
-	private Molecule molecule;
-
-	private MoleculeStateChangeListener molStateChangeListener;
 
 	/**
 	 * Creates a new instance of BasisFunctions.
@@ -60,27 +55,12 @@ public final class BasisSetLibrary {
 		// initialise the basis functions
 		getBasisFunctions(molecule, basisName);
 		this.basisName = basisName;
-		this.molecule = molecule;
 
 		// and initialise the shell list
 		initShellList();
 
 		// Shell Pair list
 		initUniqueShellPairList();
-
-
-		molStateChangeListener = new MoleculeStateChangeListener() {
-			@Override
-			public void moleculeChanged(MoleculeStateChangeEvent event) {
-				try {
-					getBasisFunctions(BasisSetLibrary.this.molecule, BasisSetLibrary.this.basisName);
-					initShellList();
-				} catch (Exception e) {
-					LOG.error("Unable to update basis function! ");
-				}
-			}
-		};
-		molecule.addMoleculeStateChangeListener(molStateChangeListener);
 	}
 
 	/**
@@ -132,7 +112,7 @@ public final class BasisSetLibrary {
 	 * @return Value of property basisFunctions.
 	 */
 	private ArrayList<ContractedGaussian> getBasisFunctions(Molecule molecule, String basisName) throws Exception {
-		BasisSet basis = BasisReader.getInstance().readBasis(basisName);
+		BasisSet basisSet = BasisSetReader.getInstance().readBasisSet(basisName);
 		Iterator<Atom> atoms = molecule.getAtoms();
 
 		basisFunctions = new ArrayList<>();
@@ -141,7 +121,7 @@ public final class BasisSetLibrary {
 		AtomicBasis atomicBasis;
 		while (atoms.hasNext()) { // loop over atoms
 			atom = atoms.next();
-			atomicBasis = basis.getAtomicBasis(atom.getSymbol());
+			atomicBasis = basisSet.getAtomicBasis(atom.getSymbol());
 
 			Iterator<Orbital> orbitals = atomicBasis.getOrbitals().iterator();
 			Orbital orbital;
@@ -181,6 +161,7 @@ public final class BasisSetLibrary {
 		}
 
 		Collections.sort(basisFunctions);
+		basisFunctions.trimToSize();
 		return this.basisFunctions;
 	}
 
@@ -214,6 +195,7 @@ public final class BasisSetLibrary {
 			}
 
 		}
+		shells.trimToSize();
 
 	}
 
@@ -283,10 +265,15 @@ public final class BasisSetLibrary {
 
 	public void printUniqueShellPairList() {
 		System.out.println("");
-		System.out.println("Unique shellpair list");
-		System.out.println("=====================");
+		System.out.println("Unique shellpair list (" + this.uniqueShellPairs.size() + " pairs)");
+		System.out.println("=================================");
 		for (List<Shell> uniqueShellPair : this.uniqueShellPairs) {
-			System.out.print(uniqueShellPair);
+			System.out.print(
+					(shells.indexOf(uniqueShellPair.get(0)) + 1) + " " + (shells.indexOf(uniqueShellPair.get(1)) + 1)+ "\n"
+					//+ uniqueShellPair.get(0)
+					//+ uniqueShellPair.get(1) + "\n"
+					);					
+			
 		}
 	}
 

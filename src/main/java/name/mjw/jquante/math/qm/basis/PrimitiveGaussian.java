@@ -216,7 +216,9 @@ public final class PrimitiveGaussian implements Comparable<PrimitiveGaussian>{
 		double x2 = x * x;
 		double y2 = y * y;
 		double z2 = z * z;
-		int l = powers.getL(), m = powers.getM(), n = powers.getN();
+		int l = powers.getL();
+		int m = powers.getM();
+		int n = powers.getN();
 
 		value = (l * (l - 1) / x2 + m * (m - 1) / y2 + n * (n - 1) / z2) + 4 * exponent * exponent * (x2 + y2 + z2)
 				- 2 * exponent * (2 * (l + m + n) + 3);
@@ -324,7 +326,7 @@ public final class PrimitiveGaussian implements Comparable<PrimitiveGaussian>{
 	}
 
 	/**
-	 * Libint ordering; sort exponents in ascending order.
+	 * Sort exponents in decending order.
 	 */
 	@Override
 	public int compareTo(PrimitiveGaussian other) {

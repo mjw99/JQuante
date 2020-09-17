@@ -76,11 +76,11 @@ public final class GMatrix extends Array2DRowRealMatrix {
 		}
 
 		LOG.debug("makeGMatrix() called");
-		int noOfBasisFunctions = density.getRowDimension();
+		final int noOfBasisFunctions = density.getRowDimension();
 
-		RealVector densityOneD = MathUtil.realMatrixToRealVector(density); // form 1D vector of density
+		final RealVector densityOneD = MathUtil.realMatrixToRealVector(density); // form 1D vector of density
 
-		double[] ints = twoEI.getTwoEIntegrals();
+		final double[] ints = twoEI.getTwoEIntegrals();
 
 		IntStream.range(0, noOfBasisFunctions).parallel().forEach(i -> {
 			IntStream.range(0, i + 1).parallel().forEach(j -> {

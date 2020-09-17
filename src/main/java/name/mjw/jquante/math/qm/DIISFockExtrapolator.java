@@ -64,7 +64,9 @@ public final class DIISFockExtrapolator implements FockExtrapolator {
 		// The commutator of the Fock and density matrices (the orbital gradient)
 		RealVector errorVector = MathUtil.realMatrixToRealVector(fPS.subtract(sPF));
 
-		LOG.debug("errorVector {} ", vf.format(errorVector));
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("errorVector {} ", vf.format(errorVector));
+		}
 		double mxerr = errorVector.getNorm();
 		LOG.debug("errorVector.getNorm() {}", mxerr);
 
@@ -115,14 +117,17 @@ public final class DIISFockExtrapolator implements FockExtrapolator {
 		aMatrix.setEntry(noOfIterations, noOfIterations, 0.0);
 		bVector.setEntry(noOfIterations, -1.0);
 
-		LOG.debug("aMatrix {}", mf.format(aMatrix));
-		LOG.debug("bVector {}", vf.format(bVector));
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("aMatrix {}", mf.format(aMatrix));
+			LOG.debug("bVector {}", vf.format(bVector));
+		}
 
 		try {
 			DecompositionSolver solver = new LUDecomposition(aMatrix).getSolver();
 			RealVector solVec = solver.solve(bVector);
-
-			LOG.debug("solVec {}", vf.format(solVec));
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("solVec {}", vf.format(solVec));
+			}
 
 			newFock = new Fock(newFock.getRowDimension());
 			Fock tmpFock;
@@ -134,15 +139,18 @@ public final class DIISFockExtrapolator implements FockExtrapolator {
 			oldFock = currentFock;
 
 		} catch (MathRuntimeException ignored) {
-			LOG.debug("No solution: " + diisStep);
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("No solution: {}", diisStep);
+			}
 
 			diisStep++;
 			return currentFock;
 
 		}
 		diisStep++;
-
-		LOG.debug("final newFock {}", mf.format(newFock));
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("final newFock {}", mf.format(newFock));
+		}
 		return newFock;
 	}
 

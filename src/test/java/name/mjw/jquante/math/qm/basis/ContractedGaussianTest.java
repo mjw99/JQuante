@@ -8,12 +8,10 @@ import org.hipparchus.geometry.euclidean.threed.Vector3D;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import name.mjw.jquante.math.qm.basis.ContractedGaussian;
-import name.mjw.jquante.math.qm.basis.Power;
 import name.mjw.jquante.molecule.Atom;
 
 
-public class ContractedGaussianTest {
+class ContractedGaussianTest {
 
 	private final double delta = 0.000001;
 
@@ -28,12 +26,12 @@ public class ContractedGaussianTest {
 	}
 
 	@Test
-	public void testAmplitude() {
+	void testAmplitude() {
 		assertEquals(0.712705, cgtoS0.amplitude(new Vector3D(0, 0, 0)), delta);
 	}
 
 	@Test
-	public void testGetCenteredAtom() {
+	void testGetCenteredAtom() {
 		Atom H = new Atom("H", new Vector3D(0, 0, 0));
 		ContractedGaussian cgto = new ContractedGaussian(H, new Power(0, 0, 0));
 
@@ -41,18 +39,18 @@ public class ContractedGaussianTest {
 	}
 
 	@Test
-	public void testGetOrigin() {
+	void testGetOrigin() {
 		assertEquals(new Vector3D(0, 0, 0), cgtoS0.getOrigin());
 	}
 
 	@Test
-	public void testGetPowers() {
+	void testGetPowers() {
 		Power power = new Power(0, 0, 0);
 		assertEquals(power, cgtoS0.getPowers());
 	}
 
 	@Test
-	public void testGetPrimitives() {
+	void testGetPrimitives() {
 		Power power = new Power(0, 0, 0);
 		PrimitiveGaussian pg = new PrimitiveGaussian(new Vector3D(0, 0, 0), power, 1, 1);
 
@@ -60,12 +58,12 @@ public class ContractedGaussianTest {
 	}
 
 	@Test
-	public void testGetNormalization() {
+	void testGetNormalization() {
 		assertEquals(1.0, cgtoS0.getNormalization(), delta);
 	}
 
 	@Test
-	public void sTO_3G_1S_H() {
+	void sTO_3G_1S_H() {
 		// https://bse.pnl.gov/bse/portal
 
 		ContractedGaussian cgto = new ContractedGaussian(new Vector3D(0, 0, 0), new Power(0, 0, 0));
@@ -79,7 +77,7 @@ public class ContractedGaussianTest {
 	}
 
 	@Test
-	public void isSameShell() {
+	void isSameShell() {
 		ContractedGaussian cgtoP0;
 		ContractedGaussian cgtoP1;
 
@@ -101,7 +99,7 @@ public class ContractedGaussianTest {
 	}
 
 	@Test
-	public void order() {
+	void order() {
 		ContractedGaussian cgta = new ContractedGaussian(new Vector3D(0, 0, 0), new Power(0, 0, 2));
 		cgta.addPrimitive(5.0331513, 0.15591627);
 		cgta.addPrimitive(1.1695961, 0.60768372);

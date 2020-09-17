@@ -358,7 +358,7 @@ public class NWChemBasisSetFile {
 	private enum ShellType {
 		S(0), P(1), D(2), F(3), G(4), H(5);
 
-		private int value;
+		private final int value;
 
 		private ShellType(int value) {
 			this.value = value;

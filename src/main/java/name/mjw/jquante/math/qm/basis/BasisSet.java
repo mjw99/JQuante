@@ -11,14 +11,14 @@ import java.util.HashMap;
 public final class BasisSet {
 
 	/**
-	 * Holds value of property name.
+	 * The name of the basis set.
 	 */
 	private String name;
 
 	/**
 	 * Holds the collection of atomic basis, with the symbol as the key
 	 */
-	private HashMap<String, AtomicBasis> basisSet;
+	private HashMap<String, AtomicBasis> atomicBasisSet;
 
 	/**
 	 * Creates a new instance of Basis
@@ -29,7 +29,7 @@ public final class BasisSet {
 	public BasisSet(String name) {
 		this.name = name;
 
-		basisSet = new HashMap<>(80);
+		atomicBasisSet = new HashMap<>();
 	}
 
 	/**
@@ -44,29 +44,29 @@ public final class BasisSet {
 	/**
 	 * Add a relevant atomic basis to this basis set
 	 * 
-	 * @param basis
+	 * @param atomicBasis
 	 *            the instance of AtomicBasis to be added to this basis set
 	 */
-	public void addAtomicBasis(AtomicBasis basis) {
-		basisSet.put(basis.getSymbol(), basis);
+	public void addAtomicBasis(AtomicBasis atomicBasis) {
+		atomicBasisSet.put(atomicBasis.getChemicalSymbol(), atomicBasis);
 	}
 
 	/**
-	 * Returns appropriate basis for a given atomic symbol. Will throw
+	 * Returns appropriate basis for a given chemical symbol. Will throw
 	 * <code>BasisNotFoundException</code> if the basis set does not contain
 	 * atomic basis for the requested atomic symbol.
 	 * 
-	 * @param symbol
+	 * @param chemicalSymbol
 	 *            for which the basis is requested
 	 * @return instance of AtomicBasis
 	 */
-	public AtomicBasis getAtomicBasis(String symbol) {
-		AtomicBasis basis = basisSet.get(symbol);
+	public AtomicBasis getAtomicBasis(String chemicalSymbol) {
+		AtomicBasis atomicBasis = atomicBasisSet.get(chemicalSymbol);
 
-		if (basis == null) {
-			throw new BasisNotFoundException("Basis for atom '" + symbol
+		if (atomicBasis == null) {
+			throw new BasisNotFoundException("Basis for atom '" + chemicalSymbol
 					+ "' is not defined in : " + name);
 		}
-		return basis;
+		return atomicBasis;
 	}
 }

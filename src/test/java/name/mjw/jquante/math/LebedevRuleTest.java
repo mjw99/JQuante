@@ -6,7 +6,7 @@ import org.hipparchus.geometry.euclidean.threed.Vector3D;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class LebedevRuleTest {
+class LebedevRuleTest {
 
 	private double hyperboloid(double x, double y, double z) {
 		return (x * x) + (y * y) - (z * z);
@@ -14,7 +14,7 @@ public class LebedevRuleTest {
 	}
 
 	@Test
-	public void testBasicUsageExample() {
+	void testBasicUsageExample() {
 		final List<LebedevGridPoint> grid = LebedevRule.createGridByOrder(590);
 
 		double result = 0.0;
@@ -28,7 +28,7 @@ public class LebedevRuleTest {
 	}
 
 	@Test
-	public void testSphereIntegration() {
+	void testSphereIntegration() {
 
 		for (int rule = 1; rule <= LebedevRule.MAX_RULE; rule++) {
 			final List<LebedevGridPoint> grid = LebedevRule.createGridForRule(rule);
@@ -57,7 +57,7 @@ public class LebedevRuleTest {
 	}
 
 	@Test
-	public void testGetters() {
+	void testGetters() {
 		final LebedevGridPoint point = LebedevRule.createGridForRule(1).get(0);
 		Assertions.assertEquals(Math.PI / 2., point.getPhi(), 1E-15); // coelevation
 		Assertions.assertEquals(0.0, point.getTheta(), 1E-15); // azimuth
@@ -67,7 +67,7 @@ public class LebedevRuleTest {
 	}
 
 	@Test
-	public void testLebedevBadOrder() {
+	void testLebedevBadOrder() {
 		try {
 			LebedevRule.createGridByOrder(0);
 			Assertions.fail();
