@@ -27,7 +27,7 @@
 		<guava.version>28.2-jre</guava.version>
 		<nd4j.backend>nd4j-native-platform</nd4j.backend>
 		<!--<nd4j.backend>nd4j-cuda-9.2-platform</nd4j.backend> -->
-		<nd4j.version>1.0.0-beta6</nd4j.version>
+		<nd4j.version>1.0.0-beta7</nd4j.version>
 	</properties>
 
 	<description>JQuante is essentially a JAVA QM toolkit that was inspired by PyQuante.</description>
