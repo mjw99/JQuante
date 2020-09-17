@@ -26,7 +26,7 @@
 		<jafama.version>2.3.2</jafama.version>
 		<guava.version>29.0-jre</guava.version>
 		<nd4j.backend>nd4j-native-platform</nd4j.backend>
-		<!--<nd4j.backend>nd4j-cuda-9.2-platform</nd4j.backend> -->
+		<!--<nd4j.backend>nd4j-cuda-10.1-platform</nd4j.backend> -->
 		<nd4j.version>1.0.0-beta7</nd4j.version>
 	</properties>
 
